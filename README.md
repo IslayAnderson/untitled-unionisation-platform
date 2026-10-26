@@ -5,6 +5,6 @@ Untitled unionisation platform is a unified platform aimed at apartment blocks a
 # Docs
 
 * Architecture
-* * docs/architecture/root.md
+  * docs/architecture/root.md
 * Knowledge Base
-* * docs/knowledge-base/root.md
+  * docs/knowledge-base/root.md
