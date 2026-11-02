@@ -184,6 +184,12 @@
         <mxCell id="CxdGvgUjjNjDyXp0arTx-49" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:Contact&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Name = name&lt;br&gt;Address = address&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Telephone = telephone&lt;/p&gt;" vertex="1">
           <mxGeometry height="80" width="160" x="265" y="760" as="geometry" />
         </mxCell>
+        <mxCell id="CxdGvgUjjNjDyXp0arTx-51" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;endArrow=none;endFill=0;entryX=0.358;entryY=0.175;entryDx=0;entryDy=0;entryPerimeter=0;" target="CxdGvgUjjNjDyXp0arTx-29">
+          <mxGeometry relative="1" x="-0.0367" as="geometry" />
+        </mxCell>
+        <mxCell id="CxdGvgUjjNjDyXp0arTx-50" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Users will have their personal QR code that must be scanned by other tenants to be authenticated" vertex="1">
+          <mxGeometry height="30" width="170" x="540" y="990" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
