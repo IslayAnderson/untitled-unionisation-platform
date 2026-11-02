@@ -7,13 +7,13 @@
         <mxCell id="CxdGvgUjjNjDyXp0arTx-5" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-4">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="170" y="360" />
-              <mxPoint x="260" y="360" />
+              <mxPoint x="170" y="320" />
+              <mxPoint x="260" y="320" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="CxdGvgUjjNjDyXp0arTx-1" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:User&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Email = email&lt;br&gt;Password = password&lt;/p&gt;" vertex="1">
-          <mxGeometry height="80" width="160" x="90" y="240" as="geometry" />
+          <mxGeometry height="80" width="160" x="90" y="200" as="geometry" />
         </mxCell>
         <mxCell id="CxdGvgUjjNjDyXp0arTx-3" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-1">
           <mxGeometry relative="1" as="geometry" />
@@ -22,10 +22,10 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="CxdGvgUjjNjDyXp0arTx-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="User Completes new building signup form" vertex="1">
-          <mxGeometry height="100" width="180" x="170" y="80" as="geometry" />
+          <mxGeometry height="100" width="180" x="170" y="40" as="geometry" />
         </mxCell>
         <mxCell id="CxdGvgUjjNjDyXp0arTx-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Send confirmation email" vertex="1">
-          <mxGeometry height="100" width="180" x="170" y="400" as="geometry" />
+          <mxGeometry height="100" width="180" x="170" y="360" as="geometry" />
         </mxCell>
         <mxCell id="CxdGvgUjjNjDyXp0arTx-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Confirmation email complete" vertex="1">
           <mxGeometry height="100" width="100" x="880" y="40" as="geometry" />
@@ -40,7 +40,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="CxdGvgUjjNjDyXp0arTx-9" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:Contact&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Name = name&lt;br&gt;Address = address&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Telephone = telephone&lt;/p&gt;" vertex="1">
-          <mxGeometry height="80" width="160" x="260" y="240" as="geometry" />
+          <mxGeometry height="80" width="160" x="260" y="200" as="geometry" />
         </mxCell>
         <mxCell id="CxdGvgUjjNjDyXp0arTx-16" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-7">
           <mxGeometry relative="1" as="geometry" />
