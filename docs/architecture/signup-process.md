@@ -8,8 +8,10 @@ Clarifies `signup process.drawio`.
 2. **Join building signup form**: reached through a building's signup URL / QR code
    (`/join/{signup_token}`). The same fields, but the building is already known.
 
-Both create a `User`, a `Contact` (name, address, telephone) and a `Unit`, then send the email
-confirmation (Laravel email verification).
+Both create a `User` and a `Contact` (name, address, telephone), then send the email confirmation
+(Laravel email verification). The building/address and unit name are held in
+`contacts.pending_signup` until the email is confirmed; only then is the `Unit` created and the
+tenant placed, so unconfirmed accounts can't create buildings or count towards thresholds.
 
 ## After email confirmation
 * **New building route**: if the address matches an existing building (same address provider and
@@ -19,8 +21,8 @@ confirmation (Laravel email verification).
 * **Join route**: the building is already known, so the user goes straight on.
 
 ## Units
-Tenants type their unit name as free text (e.g. "Flat 4"). It is normalised (lower case, extra
-whitespace collapsed, "flat"/"apartment"/"room" prefixes kept) and reused if a unit with the
+Tenants type their unit name as free text (e.g. "Flat 4"). It is normalised (lower case,
+punctuation treated as spaces, whitespace collapsed, so "FLAT 4." matches "Flat 4") and reused if a unit with the
 same normalised name already exists in that building. Several tenants can share a unit (HMOs).
 
 ## Vouching (tenant authentication)

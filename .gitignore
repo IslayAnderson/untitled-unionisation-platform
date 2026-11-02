@@ -34,3 +34,6 @@ auth.json
 .DS_Store
 .idea/
 *.drawio.bkp
+/public/fonts-manifest.dev.json
+_ide_helper.php
+/database/database.sqlite

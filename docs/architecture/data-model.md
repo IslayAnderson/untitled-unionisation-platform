@@ -52,6 +52,8 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
     tenants so they can be queried by building)
   * `enrolled_at`: when the tenant became a union member
   * `vouch_token`: random token behind the tenant's personal QR code
+  * `pending_signup` (JSON): the building/address and unit chosen at signup, held until the email is
+    confirmed and the tenant is placed in a building, then cleared
 * `units`
   * `normalised_name`: used to dedupe free-text unit names per building (unique with `building_id`)
 
@@ -60,6 +62,11 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
   tenant scanning another's QR code.
 * `contact_mailing_list`, `contact_role`: pivots (see above).
 
+## Lookup data
+`landlord_types` (Individual, Company, Housing association, Local authority) and `contact_types`
+(Tenant, Landlord, Letting agent, Building management) are seeded by the migration.
+
 ## Users and contacts
-A User is a login (`email`, `password`, `email_verified_at`) that belongs to one Contact. Contacts
+A User is a login (`email`, `password`, `email_verified_at`) that belongs to one Contact. The
+default Laravel `users.name` column is dropped; the name lives on the Contact. Contacts
 also represent people without logins, such as landlord or agent staff.
