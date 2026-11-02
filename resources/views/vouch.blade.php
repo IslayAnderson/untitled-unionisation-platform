@@ -1,4 +1,4 @@
-<x-layouts.app title="Vouch for {{ $vouchee->name }}">
+<x-layouts.app :title="'Vouch for '.$vouchee->name">
     <h1 class="mb-2 text-2xl font-semibold">Vouch for {{ $vouchee->name }}</h1>
     @if ($vouchee->unit)
         <p class="mb-6 text-stone-600">{{ $vouchee->unit->name }}, {{ $vouchee->building?->name }}</p>

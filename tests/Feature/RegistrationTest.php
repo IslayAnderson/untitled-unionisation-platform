@@ -83,3 +83,10 @@ it('logs a tenant in and out', function () {
     $this->post('/logout')->assertRedirect('/');
     $this->assertGuest();
 });
+
+it('does not double-escape names in the page title', function () {
+    $building = Building::factory()->create(['name' => "Example Court Tenants' Union"]);
+
+    $this->get("/join/{$building->signup_token}")
+        ->assertSee("<title>Join Example Court Tenants&#039; Union", false);
+});

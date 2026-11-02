@@ -1,4 +1,4 @@
-<x-layouts.app title="Join {{ $building->name }}">
+<x-layouts.app :title="'Join '.$building->name">
     <h1 class="mb-2 text-2xl font-semibold">Join {{ $building->name }}</h1>
     <p class="mb-6 text-stone-600">{{ $building->formattedAddress() }}</p>
 
