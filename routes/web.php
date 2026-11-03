@@ -168,6 +168,8 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::delete('/unions/{building}/warn', [AdminUnionController::class, 'cancelWarning'])->name('unions.warn.cancel');
     Route::delete('/unions/{building}', [AdminUnionController::class, 'destroy'])->name('unions.destroy');
 
+    Route::get('/printables', [InviteMaterialsController::class, 'campaign'])->name('printables');
+
     Route::get('/cleanup', [CleanupController::class, 'index'])->name('cleanup.index');
     Route::post('/cleanup/accounts/{tool}/warn', [CleanupController::class, 'warnAccounts'])
         ->whereIn('tool', CleanupController::ACCOUNT_TOOLS)

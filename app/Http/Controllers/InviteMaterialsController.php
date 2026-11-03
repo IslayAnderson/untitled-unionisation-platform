@@ -10,7 +10,8 @@ use Illuminate\View\View;
 
 /**
  * Posters and flyers with the building's join link, for tenants to print and
- * put up. Nothing on them names a member.
+ * put up. Nothing on them names a member. Admins can also print generic ones,
+ * not tied to a building, for leafleting campaigns.
  */
 class InviteMaterialsController extends Controller
 {
@@ -19,6 +20,13 @@ class InviteMaterialsController extends Controller
         'Fed up waiting for repairs?',
         'Rent going up? Let\'s talk.',
         'Your neighbours are organising',
+    ];
+
+    public const CAMPAIGN_HEADLINES = [
+        'Start a tenants\' union in your building',
+        'Fed up waiting for repairs?',
+        'Rent going up? Organise your building.',
+        'Stronger together than alone',
     ];
 
     public function show(Request $request): View
@@ -39,25 +47,66 @@ class InviteMaterialsController extends Controller
         return $this->materials(Building::where('is_demo', true)->firstOrFail());
     }
 
+    /**
+     * Generic posters and flyers for admins' leafleting campaigns. They name no building and take
+     * tenants to the home page, to start a union for their building or find one a neighbour started.
+     */
+    public function campaign(): View
+    {
+        $joinUrl = route('home');
+        $demoUrl = $this->demoUrl();
+
+        return view('invite.print', [
+            'context' => 'campaign',
+            'union' => config('app.name'),
+            'features' => $this->features(ConstitutionRules::fromArray([])),
+            'versions' => $this->versions($demoUrl, 'tenants'),
+            'joinUrl' => $joinUrl,
+            'joinQr' => QrCode::dataUri($joinUrl),
+            'joinTitle' => 'Scan to start a union for your building',
+            'joinText' => 'Or join the one a neighbour has started. Neighbours confirm each other in person, so landlords can\'t get in.',
+            'demoUrl' => $demoUrl,
+            'demoQr' => $demoUrl ? QrCode::dataUri($demoUrl) : null,
+            'headlines' => self::CAMPAIGN_HEADLINES,
+            'message' => 'Get together with your neighbours to get repairs done, keep rents fair and look out for each other. Register your building and invite the people who live there. It\'s free.',
+        ]);
+    }
+
     private function materials(Building $building): View
     {
         $joinUrl = $building->joinUrl();
-        $demoUrl = ! $building->is_demo && config('demo.enabled') && Building::where('is_demo', true)->exists() ? route('demo.show') : null;
+        $demoUrl = $building->is_demo ? null : $this->demoUrl();
 
         return view('invite.print', [
-            'building' => $building,
+            'context' => $building->is_demo ? 'demo' : 'union',
+            'union' => $building->name,
             'features' => $this->features($building->rules()),
-            'versions' => array_filter([
-                'invite' => ['Invitation', 'A headline, your message and the sign-up code'],
-                'info' => ['Information', 'Also explains how the union works and what members can do'],
-                'demo' => $demoUrl ? ['Demo', 'Invites neighbours to look around a demo union before they join'] : null,
-            ]),
+            'versions' => $this->versions($demoUrl, 'neighbours'),
             'joinUrl' => $joinUrl,
             'joinQr' => QrCode::dataUri($joinUrl),
+            'joinTitle' => 'Scan to sign up',
+            'joinText' => 'Neighbours who are already members will meet you to confirm you live here.',
             'demoUrl' => $demoUrl,
             'demoQr' => $demoUrl ? QrCode::dataUri($demoUrl) : null,
             'headlines' => self::HEADLINES,
             'message' => "Tenants of {$building->formattedAddress()} are getting together to get repairs done, keep rents fair and look out for each other. It's free to join.",
+        ]);
+    }
+
+    private function demoUrl(): ?string
+    {
+        return config('demo.enabled') && Building::where('is_demo', true)->exists() ? route('demo.show') : null;
+    }
+
+    /**
+     * @return array<string, array{string, string}> Version => [label, hint]
+     */
+    private function versions(?string $demoUrl, string $readers): array
+    {
+        return array_filter([
+            'invite' => ['Invitation', 'A headline, your message and the sign-up code'],
+            'info' => ['Information', 'Also explains how the union works and what members can do'],
+            'demo' => $demoUrl ? ['Demo', "Invites {$readers} to look around a demo union before they join"] : null,
         ]);
     }
 

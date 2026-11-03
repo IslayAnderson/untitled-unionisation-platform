@@ -57,3 +57,28 @@ it('links to the print page from the dashboard', function () {
 it('hides the print page from users without a building', function () {
     $this->actingAs(User::factory()->create())->get(route('invite.print'))->assertNotFound();
 });
+
+it('gives admins generic leaflets for campaigns, linking to the home page', function () {
+    $building = Building::factory()->create(['name' => 'Example Court Tenants\' Union']);
+    $admin = User::factory()->create()->forceFill(['is_admin' => true]);
+    $admin->save();
+
+    config(['demo.enabled' => true]);
+    app(DemoUnion::class)->build();
+
+    $this->actingAs($admin)->get(route('admin.printables'))
+        ->assertOk()
+        ->assertSeeText(config('app.name'))
+        ->assertSeeText('Scan to start a union for your building')
+        ->assertSee(route('home'))
+        ->assertSeeText('Scan to look around a demo union')
+        ->assertSeeText('Sets to cut and staple')
+        ->assertDontSeeText('Example Court Tenants\' Union')
+        ->assertDontSee(route('join', $building->signup_token));
+});
+
+it('keeps the campaign leaflets to admins', function () {
+    $tenant = Contact::factory()->tenantOf(Building::factory()->create())->enrolled()->create();
+
+    $this->actingAs($tenant->user)->get(route('admin.printables'))->assertNotFound();
+});

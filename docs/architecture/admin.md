@@ -21,6 +21,16 @@ Admins run the platform. They aren't union officers and have no say in any union
 Admins see **counts only**: never members' names or emails, or anything a union has written. The
 union's name and address are shown because they identify the union, not a person.
 
+## Campaign printables
+`/admin/printables` (`InviteMaterialsController::campaign`) prints posters, flyers and door slips for
+leafleting buildings that don't have a union yet. It's the tenants' print page, with the same sizes,
+versions and bulk sets to cut and staple, except that the leaflets:
+* are headed with the platform's name, not a union's, and name no building or address;
+* have a QR code to the home page, where tenants start a union for their building or find one a
+  neighbour has started;
+* explain how a union works using the default constitution's numbers;
+* offer the demo version when the demo is on.
+
 ## Clean-up tools
 At `/admin/cleanup` (`App\Services\Cleanup`). Admin accounts are never cleaned up. Every action is
 logged with the admin's ID.

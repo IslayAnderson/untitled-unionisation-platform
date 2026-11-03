@@ -6,7 +6,7 @@
     ];
 @endphp
 
-<x-layouts.app title="Print flyers and posters" :back-link="$building->is_demo ? route('demo.show') : route('dashboard')" main-class="app-print-page">
+<x-layouts.app title="Print flyers and posters" :back-link="match ($context) { 'demo' => route('demo.show'), 'campaign' => route('admin.unions.index'), default => route('dashboard') }" main-class="app-print-page">
     <div x-data="{
         kind: 'invite',
         design: 'poster',
@@ -39,8 +39,17 @@
     }">
         <div class="govuk-grid-row govuk-!-display-none-print">
             <div class="govuk-grid-column-two-thirds">
+                @if ($context === 'campaign')
+                    <span class="govuk-caption-l">Admin</span>
+                @endif
                 <h1 class="govuk-heading-l">Print flyers and posters</h1>
-                @if ($building->is_demo)
+                @if ($context === 'campaign')
+                    <p class="govuk-body">
+                        Leaflets for a campaign, to put through doors in buildings that don't have a union yet. They don't
+                        name a building: the code takes tenants to the home page, to start a union for their building or
+                        join one a neighbour has started.
+                    </p>
+                @elseif ($context === 'demo')
                     <p class="govuk-body">
                         These are the demo union's flyers and posters, as its members would print them. A real union's code
                         takes neighbours to its building's sign-up page; the demo's takes them to
@@ -179,20 +188,20 @@
                             <div class="app-invite-sheet">
                                 <template x-if="design === 'poster'">
                                     <div class="app-invite-sheet__layout">
-                                        <x-invite-card size="poster" :building="$building" :join-url="$joinUrl" :demo-url="$demoUrl" :features="$features" />
+                                        <x-invite-card size="poster" :union="$union" :join-url="$joinUrl" :join-title="$joinTitle" :join-text="$joinText" :demo-url="$demoUrl" :features="$features" />
                                     </div>
                                 </template>
                                 <template x-if="design === 'flyers'">
                                     <div class="app-invite-sheet__layout app-invite-sheet__layout--flyers">
                                         @foreach (range(1, 2) as $i)
-                                            <x-invite-card size="flyer" :building="$building" :join-url="$joinUrl" :demo-url="$demoUrl" :features="$features" cut />
+                                            <x-invite-card size="flyer" :union="$union" :join-url="$joinUrl" :join-title="$joinTitle" :join-text="$joinText" :demo-url="$demoUrl" :features="$features" cut />
                                         @endforeach
                                     </div>
                                 </template>
                                 <template x-if="design === 'slips'">
                                     <div class="app-invite-sheet__layout app-invite-sheet__layout--slips">
                                         @foreach (range(1, 4) as $i)
-                                            <x-invite-card size="slip" :building="$building" :join-url="$joinUrl" :demo-url="$demoUrl" :features="$features" cut />
+                                            <x-invite-card size="slip" :union="$union" :join-url="$joinUrl" :join-title="$joinTitle" :join-text="$joinText" :demo-url="$demoUrl" :features="$features" cut />
                                         @endforeach
                                     </div>
                                 </template>
