@@ -175,6 +175,7 @@
                         @endif
                     </ul>
                     <p class="govuk-body-s govuk-!-margin-bottom-0">{{ config('app.name') }} is run by tenants, for tenants. It isn't a government service.</p>
+                    <p class="govuk-body-s govuk-!-margin-top-2 govuk-!-margin-bottom-0">{{ config('app.name') }} is developed and maintained by <a class="govuk-footer__link" href="https://islayanderson.co.uk">Islay Anderson</a>.</p>
                 </div>
             </div>
         </div>
