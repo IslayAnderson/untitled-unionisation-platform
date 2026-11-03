@@ -15,16 +15,20 @@
             <a href="{{ route('home') }}" class="font-semibold">{{ config('app.name') }}</a>
             <nav class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
                 @auth
-                    <a href="{{ route('dashboard') }}" class="hover:underline">Your union</a>
+                    <a href="{{ route('dashboard') }}" @class(['hover:underline', 'font-semibold' => request()->routeIs('dashboard')])>Your union</a>
                     @if (auth()->user()->contact?->isEnrolled())
-                        <a href="{{ route('bulletins.index') }}" class="hover:underline">Bulletins</a>
-                        <a href="{{ route('threads.index') }}" class="hover:underline">Discussions</a>
-                        <a href="{{ route('referendums.index') }}" class="hover:underline">Referendums</a>
-                        <a href="{{ route('policies.index') }}" class="hover:underline">Policies</a>
-                        <a href="{{ route('constitution.show') }}" class="hover:underline">Constitution</a>
-                        <a href="{{ route('mail.index') }}" class="hover:underline">Mail</a>
-                        <a href="{{ route('contacts.index') }}" class="hover:underline">Contacts</a>
-                        <a href="{{ route('mailing-lists.index') }}" class="hover:underline">Mailing lists</a>
+                        <a href="{{ route('bulletins.index') }}" @class(['hover:underline', 'font-semibold' => request()->routeIs('bulletins.*')])>Bulletins</a>
+                        <a href="{{ route('threads.index') }}" @class(['hover:underline', 'font-semibold' => request()->routeIs('threads.*')])>Discussions</a>
+                        <x-nav-menu label="Decisions" :links="[
+                            'Referendums' => ['referendums.index', 'referendums.*'],
+                            'Policies' => ['policies.index', 'policies.*'],
+                            'Constitution' => ['constitution.show', 'constitution.*'],
+                        ]" />
+                        <x-nav-menu label="Outreach" :links="[
+                            'Mail' => ['mail.index', 'mail.*'],
+                            'Contacts' => ['contacts.index', 'contacts.*'],
+                            'Mailing lists' => ['mailing-lists.index', 'mailing-lists.*'],
+                        ]" />
                     @endif
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
