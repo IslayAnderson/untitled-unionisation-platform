@@ -1,0 +1,37 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// What a proposed change does to a text, paragraph by paragraph.
+.app-text-diff {
+  @include govuk-font($size: 19);
+  color: govuk-functional-colour(text);
+}
+
+.app-text-diff__paragraph {
+  margin: 0 0 govuk-spacing(3);
+  padding: govuk-spacing(2) govuk-spacing(3);
+  border-left: $govuk-border-width-wide solid transparent;
+}
+
+.app-text-diff__paragraph--removed {
+  border-left-color: govuk-functional-colour(error);
+  background: govuk-colour("red", $variant: "tint-95");
+
+  .app-text-diff__text {
+    text-decoration: line-through;
+  }
+}
+
+.app-text-diff__paragraph--added {
+  border-left-color: govuk-functional-colour(success);
+  background: govuk-colour("green", $variant: "tint-95");
+}
+
+.app-text-diff__paragraph--unchanged {
+  color: govuk-functional-colour(secondary-text);
+}
+
+.app-text-diff__label {
+  @include govuk-font($size: 16, $weight: bold);
+  display: block;
+  margin-bottom: govuk-spacing(1);
+}

@@ -1,7 +1,11 @@
-<div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-    <h1 class="text-2xl font-semibold">{{ $title }}</h1>
-    <nav class="flex gap-4 text-sm">
-        <a href="{{ route('admin.unions.index') }}" @class(['hover:underline', 'font-semibold' => request()->routeIs('admin.unions.*')])>Unions</a>
-        <a href="{{ route('admin.cleanup.index') }}" @class(['hover:underline', 'font-semibold' => request()->routeIs('admin.cleanup.*')])>Clean up</a>
-    </nav>
-</div>
+<span class="govuk-caption-l">Admin</span>
+<h1 class="govuk-heading-l">{{ $title }}</h1>
+<nav class="app-sub-navigation" aria-label="Admin">
+    <ul class="app-sub-navigation__list">
+        @foreach (['Unions' => ['admin.unions.index', 'admin.unions.*'], 'Clean up' => ['admin.cleanup.index', 'admin.cleanup.*']] as $text => [$route, $pattern])
+            <li>
+                <a href="{{ route($route) }}" class="app-sub-navigation__link" @if (request()->routeIs($pattern)) aria-current="page" @endif>{{ $text }}</a>
+            </li>
+        @endforeach
+    </ul>
+</nav>

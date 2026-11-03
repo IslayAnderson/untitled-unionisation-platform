@@ -89,7 +89,7 @@ it('saves nothing a demo visitor does', function () {
     $this->actingAs($visitor)->from(route('bulletins.create'))
         ->post(route('bulletins.store'), ['title' => 'Hello', 'body' => '<p>Hi</p>'])
         ->assertRedirect(route('bulletins.create'))
-        ->assertSessionHas('status', fn (string $status) => str_contains($status, 'This is a demo'));
+        ->assertSessionHas('notice', fn (string $status) => str_contains($status, 'This is a demo'));
     $this->actingAs($visitor)->post(route('referendums.votes.store', $referendum), ['answer' => 'for']);
     $this->actingAs($visitor)->postJson(route('uploads.images.store'))->assertForbidden();
 

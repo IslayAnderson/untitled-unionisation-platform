@@ -1,4 +1,5 @@
 import Alpine from 'alpinejs';
+import { initAll } from 'govuk-frontend';
 
 /**
  * Address autocomplete for the new building signup form. Fills a hidden
@@ -45,6 +46,9 @@ Alpine.data('addressSearch', (searchUrl, initial = { id: '', label: '' }) => ({
 
 window.Alpine = Alpine;
 Alpine.start();
+
+// GOV.UK Frontend's components (error summary, service navigation menu, notification banners).
+initAll();
 
 if (document.querySelector('textarea[data-rich-text]')) {
     import('./rich-editor.js').then(({ initRichEditors }) => initRichEditors());

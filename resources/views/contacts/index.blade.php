@@ -1,63 +1,64 @@
 <x-layouts.app title="Contacts">
-    <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <h1 class="text-2xl font-semibold">Contacts</h1>
-        <div class="flex gap-2">
-            <a href="{{ route('landlords.create') }}" class="rounded-md border border-stone-300 px-3 py-2 text-sm font-medium hover:bg-stone-100">Add landlord or agent</a>
-            <a href="{{ route('contacts.create') }}" class="rounded-md bg-stone-900 px-3 py-2 text-sm font-medium text-white hover:bg-stone-700">Add contact</a>
-        </div>
-    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Contacts</h1>
+            <p class="govuk-body">
+                The landlords, agents and other people {{ $building->name }} deals with. Only members can see this.
+            </p>
+            <div class="govuk-button-group">
+                <a href="{{ route('contacts.create') }}" role="button" draggable="false" class="govuk-button" data-module="govuk-button">Add contact</a>
+                <a href="{{ route('landlords.create') }}" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">Add landlord or agent</a>
+            </div>
 
-    <p class="mb-6 text-stone-600">
-        The landlords, agents and other people {{ $building->name }} deals with. Only members can see this.
-    </p>
+            @if ($landlords->isEmpty() && $unaffiliated->isEmpty())
+                <p class="app-item-list__empty">No contacts yet. Start by adding your building owner or managing agent.</p>
+            @endif
 
-    @if ($landlords->isEmpty() && $unaffiliated->isEmpty())
-        <div class="rounded-lg border border-dashed border-stone-300 p-8 text-center text-stone-600">
-            No contacts yet. Start by adding your building owner or managing agent.
-        </div>
-    @endif
-
-    <div class="space-y-6">
-        @foreach ($landlords as $landlord)
-            <section class="rounded-lg border border-stone-200 bg-white p-5">
-                <div class="flex flex-wrap items-start justify-between gap-3">
-                    <div>
-                        <h2 class="text-lg font-semibold">
+            @foreach ($landlords as $landlord)
+                <div class="govuk-summary-card">
+                    <div class="govuk-summary-card__title-wrapper">
+                        <h2 class="govuk-summary-card__title">
                             {{ $landlord->name }}
                             @if ($building->building_owner_id === $landlord->id)
-                                <span class="ml-2 rounded bg-amber-100 px-2 py-0.5 align-middle text-xs font-medium text-amber-900">Building owner</span>
+                                <strong class="govuk-tag govuk-tag--yellow govuk-!-margin-left-1">Building owner</strong>
                             @endif
                         </h2>
-                        <p class="text-sm text-stone-600">
-                            {{ collect([$landlord->type?->type, $landlord->company_number ? "Company no. {$landlord->company_number}" : null])->filter()->implode(' · ') }}
-                        </p>
-                        <x-contact-details :email="$landlord->email" :telephone="$landlord->telephone" :address="$landlord->address" />
+                        <ul class="govuk-summary-card__actions">
+                            <li class="govuk-summary-card__action">
+                                <a href="{{ route('contacts.create', ['landlord' => $landlord->id]) }}" class="govuk-link">Add person<span class="govuk-visually-hidden"> at {{ $landlord->name }}</span></a>
+                            </li>
+                            <li class="govuk-summary-card__action">
+                                <a href="{{ route('landlords.edit', $landlord) }}" class="govuk-link">Change<span class="govuk-visually-hidden"> {{ $landlord->name }}</span></a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="flex items-center gap-3 text-sm">
-                        <a href="{{ route('contacts.create', ['landlord' => $landlord->id]) }}" class="hover:underline">Add person</a>
-                        <a href="{{ route('landlords.edit', $landlord) }}" class="hover:underline">Edit</a>
+                    <div class="govuk-summary-card__content">
+                        @php($details = collect([$landlord->type?->type, $landlord->company_number ? "Company no. {$landlord->company_number}" : null])->filter()->implode(' · '))
+                        @if ($details)
+                            <p class="govuk-body-s govuk-!-margin-bottom-1">{{ $details }}</p>
+                        @endif
+                        <x-contact-details :email="$landlord->email" :telephone="$landlord->telephone" :address="$landlord->address" />
+
+                        @if ($landlord->contacts->isNotEmpty())
+                            <h3 class="govuk-heading-s govuk-!-margin-top-4 govuk-!-margin-bottom-0">People</h3>
+                            <ul class="app-item-list govuk-!-margin-bottom-0">
+                                @foreach ($landlord->contacts as $contact)
+                                    <x-contact-row :contact="$contact" :primary="$landlord->primary_contact_id === $contact->id" />
+                                @endforeach
+                            </ul>
+                        @endif
                     </div>
                 </div>
+            @endforeach
 
-                @if ($landlord->contacts->isNotEmpty())
-                    <ul class="mt-4 divide-y divide-stone-100 border-t border-stone-100">
-                        @foreach ($landlord->contacts as $contact)
-                            <x-contact-row :contact="$contact" :primary="$landlord->primary_contact_id === $contact->id" />
-                        @endforeach
-                    </ul>
-                @endif
-            </section>
-        @endforeach
-
-        @if ($unaffiliated->isNotEmpty())
-            <section class="rounded-lg border border-stone-200 bg-white p-5">
-                <h2 class="text-lg font-semibold">Other contacts</h2>
-                <ul class="mt-2 divide-y divide-stone-100">
+            @if ($unaffiliated->isNotEmpty())
+                <h2 class="govuk-heading-m">Other contacts</h2>
+                <ul class="app-item-list">
                     @foreach ($unaffiliated as $contact)
                         <x-contact-row :contact="$contact" />
                     @endforeach
                 </ul>
-            </section>
-        @endif
+            @endif
+        </div>
     </div>
 </x-layouts.app>

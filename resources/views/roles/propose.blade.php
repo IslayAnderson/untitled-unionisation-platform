@@ -6,27 +6,32 @@
     };
 @endphp
 
-<x-layouts.app :title="$heading">
-    <h1 class="mb-2 text-2xl font-semibold">{{ $heading }}</h1>
-    <p class="mb-6 text-stone-600">{{ $intro }}</p>
+<x-layouts.app :title="$heading" :back-link="route('roles.show', $role)">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <span class="govuk-caption-l">{{ $role->title }}</span>
+            <h1 class="govuk-heading-l">{{ $heading }}</h1>
+            <p class="govuk-body">{{ $intro }}</p>
 
-    <form method="POST" action="{{ route('roles.propose.store', [$role, $change]) }}" class="space-y-4">
-        @csrf
-        @if ($change !== 'abolish')
-            @if ($candidates->isEmpty())
-                <p class="rounded-md bg-stone-100 p-3 text-sm text-stone-700">
-                    {{ $change === 'elect' ? 'Every member already holds this role.' : 'Nobody holds this role.' }}
-                </p>
-            @else
-                <x-select name="contact_id" :label="$change === 'elect' ? 'Member to elect' : 'Member to remove'"
-                    :options="$candidates->pluck('name', 'id')" :value="$selected" placeholder="Choose a member" required />
-            @endif
-        @else
-            @error('contact_id')
-                <p class="text-sm text-red-700">{{ $message }}</p>
-            @enderror
-        @endif
-        <x-textarea name="reason" label="Why? (optional)" rows="3" maxlength="5000" hint="Starts the discussion. Members see it next to the vote." />
-        <x-button>Put it to a referendum</x-button>
-    </form>
+            <form method="POST" action="{{ route('roles.propose.store', [$role, $change]) }}" novalidate>
+                @csrf
+                @if ($change !== 'abolish')
+                    @if ($candidates->isEmpty())
+                        <div class="govuk-inset-text">
+                            {{ $change === 'elect' ? 'Every member already holds this role.' : 'Nobody holds this role.' }}
+                        </div>
+                    @else
+                        <x-select name="contact_id" :label="$change === 'elect' ? 'Member to elect' : 'Member to remove'"
+                            :options="$candidates->pluck('name', 'id')" :value="$selected" placeholder="Choose a member" required />
+                    @endif
+                @else
+                    @error('contact_id')
+                        <p id="contact_id" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> {{ $message }}</p>
+                    @enderror
+                @endif
+                <x-textarea name="reason" label="Why? (optional)" rows="3" maxlength="5000" hint="Starts the discussion. Members see it next to the vote." />
+                <x-button>Put it to a referendum</x-button>
+            </form>
+        </div>
+    </div>
 </x-layouts.app>

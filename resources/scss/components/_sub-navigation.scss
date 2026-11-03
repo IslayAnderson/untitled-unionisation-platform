@@ -1,0 +1,41 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// Links between the pages of one section (admin), under its heading.
+.app-sub-navigation {
+  @include govuk-responsive-margin(6, "bottom");
+  border-bottom: 1px solid govuk-functional-colour(border);
+}
+
+.app-sub-navigation__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 govuk-spacing(5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.app-sub-navigation__link {
+  @include govuk-font($size: 19);
+  @include govuk-link-common;
+  @include govuk-link-style-no-visited-state;
+  display: block;
+  padding: govuk-spacing(2) 0;
+  border-bottom: $govuk-border-width-wide solid transparent;
+
+  &[aria-current="page"] {
+    border-bottom-color: govuk-functional-colour(brand);
+    font-weight: $govuk-font-weight-bold;
+    text-decoration: none;
+  }
+}
+
+// A wide table that scrolls sideways on small screens rather than squashing.
+.app-table-wrapper {
+  overflow-x: auto;
+  @include govuk-responsive-margin(6, "bottom");
+
+  .govuk-table {
+    margin-bottom: 0;
+  }
+}

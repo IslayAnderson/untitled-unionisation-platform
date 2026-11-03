@@ -2,7 +2,7 @@
 ## Tech
 * Laravel
 * Blades
-* Tailwind CSS + Alpine.js (via Vite)
+* GOV.UK Frontend (Sass) + Alpine.js (via Vite)
 * MySQL/MariaDB (SQLite in-memory for tests)
 * Pest for tests
 * "node": "22.23.4"
@@ -39,6 +39,8 @@
   * Platform admin: usage numbers per union and clean-up tools
 * /docs/architecture/demo.md
   * The public read-only demo union, Larkspur House
+* /docs/architecture/frontend.md
+  * The GOV.UK Design System: how pages are built, and the app's own components
 
 ## Milestones
 1. Scaffold the app, migrate every entity in the entity diagram, build the signup flow end to end

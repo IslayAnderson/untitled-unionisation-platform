@@ -1,0 +1,30 @@
+// GOV.UK Frontend (https://design-system.service.gov.uk), configured for a
+// service that isn't on GOV.UK: no GDS Transport font, crown or GOV.UK logotype.
+// Components the Design System doesn't have are in ./components, named app-*
+// as the Design System recommends, and built from its Sass helpers.
+@use "pkg:govuk-frontend" with (
+  $govuk-font-family: (arial, sans-serif),
+  $govuk-include-default-font-face: false
+);
+
+@use "components/link-button";
+@use "components/rich-text";
+@use "components/item-list";
+@use "components/poll";
+@use "components/text-diff";
+@use "components/reply";
+@use "components/qr-code";
+@use "components/address-search";
+@use "components/rich-editor";
+@use "components/invite";
+@use "components/related";
+@use "components/sub-navigation";
+
+[x-cloak] {
+  display: none !important;
+}
+
+// Text that keeps the line breaks it was written with, such as an address.
+.app-pre-line {
+  white-space: pre-line;
+}

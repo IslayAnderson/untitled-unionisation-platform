@@ -27,6 +27,6 @@ class DemoIsReadOnly
             return response()->json(['message' => self::MESSAGE], 403);
         }
 
-        return back()->with('status', self::MESSAGE);
+        return back()->with('notice', self::MESSAGE);
     }
 }

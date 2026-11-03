@@ -1,0 +1,47 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// A list of bulletins, discussions or similar: each item a linked heading,
+// a line of details and an optional summary, separated by rules like the
+// Summary list component's rows.
+.app-item-list {
+  margin: 0;
+  @include govuk-responsive-margin(6, "bottom");
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid govuk-functional-colour(border);
+}
+
+.app-item-list__item {
+  padding: govuk-spacing(3) 0;
+  border-bottom: 1px solid govuk-functional-colour(border);
+}
+
+.app-item-list__title {
+  @include govuk-font($size: 19, $weight: bold);
+  margin: 0 0 govuk-spacing(1);
+
+  .govuk-tag {
+    margin-left: govuk-spacing(1);
+    vertical-align: text-top;
+  }
+}
+
+.app-item-list__meta {
+  @include govuk-font($size: 16);
+  margin: 0;
+  color: govuk-functional-colour(secondary-text);
+}
+
+.app-item-list__summary {
+  @include govuk-font($size: 16);
+  color: govuk-functional-colour(text);
+  margin: govuk-spacing(1) 0 0;
+}
+
+.app-item-list__empty {
+  @include govuk-font($size: 19);
+  margin: 0;
+  padding: govuk-spacing(3) 0;
+  color: govuk-functional-colour(secondary-text);
+  border-bottom: 1px solid govuk-functional-colour(border);
+}

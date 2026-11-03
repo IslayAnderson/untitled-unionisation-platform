@@ -1,53 +1,56 @@
 <x-layouts.app title="Admin">
-    @include('admin.nav', ['title' => 'Admin'])
+    @include('admin.nav', ['title' => 'Unions'])
 
-    <p class="mb-6 text-stone-600">
-        Numbers only. Admins can't see members' names or anything a union has written.
-    </p>
+    <p class="govuk-body">Numbers only. Admins can't see members' names or anything a union has written.</p>
 
-    <dl class="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-5">
-        @foreach ($totals as $label => $value)
-            <div class="rounded-lg border border-stone-200 bg-white p-4">
-                <dt class="text-xs text-stone-500">{{ $label }}</dt>
-                <dd class="mt-1 text-2xl font-semibold tabular-nums">{{ number_format($value) }}</dd>
-            </div>
-        @endforeach
-    </dl>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+            <dl class="govuk-summary-list">
+                @foreach ($totals as $label => $value)
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">{{ $label }}</dt>
+                        <dd class="govuk-summary-list__value govuk-!-font-tabular-numbers">{{ number_format($value) }}</dd>
+                    </div>
+                @endforeach
+            </dl>
+        </div>
+    </div>
 
     @if ($unions->isEmpty())
-        <div class="rounded-lg border border-dashed border-stone-300 p-8 text-center text-stone-600">No unions yet.</div>
+        <p class="app-item-list__empty">No unions yet.</p>
     @else
-        <div class="overflow-x-auto rounded-lg border border-stone-200 bg-white">
-            <table class="w-full text-sm">
-                <thead class="border-b border-stone-200 text-left text-xs text-stone-500">
-                    <tr>
-                        <th class="px-4 py-2 font-medium">Union</th>
-                        <th class="px-3 py-2 text-right font-medium">Members</th>
-                        <th class="px-3 py-2 text-right font-medium">Waiting</th>
-                        <th class="px-3 py-2 text-right font-medium">Bulletins</th>
-                        <th class="px-3 py-2 text-right font-medium">Discussions</th>
-                        <th class="px-3 py-2 text-right font-medium">Mail sent</th>
-                        <th class="px-3 py-2 text-right font-medium">Referendums</th>
-                        <th class="px-4 py-2 font-medium">Last active</th>
+        <div class="app-table-wrapper">
+            <table class="govuk-table">
+                <caption class="govuk-table__caption govuk-table__caption--m">Unions</caption>
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Union</th>
+                        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Members</th>
+                        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Waiting</th>
+                        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Bulletins</th>
+                        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Discussions</th>
+                        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Mail sent</th>
+                        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Referendums</th>
+                        <th scope="col" class="govuk-table__header">Last active</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-stone-100">
+                <tbody class="govuk-table__body">
                     @foreach ($unions as $union)
-                        <tr class="hover:bg-stone-50">
-                            <td class="px-4 py-2">
-                                <a href="{{ route('admin.unions.show', $union) }}" class="font-medium hover:underline">{{ $union->name }}</a>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">
+                                <a href="{{ route('admin.unions.show', $union) }}" class="govuk-link">{{ $union->name }}</a>
                                 @if ($union->is_demo)
-                                    <span class="ml-1 rounded bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-900">Demo</span>
+                                    <strong class="govuk-tag govuk-tag--yellow">Demo</strong>
                                 @endif
-                                <span class="block text-xs text-stone-500">Started {{ $union->created_at->format('j M Y') }}</span>
-                            </td>
-                            <td class="px-3 py-2 text-right tabular-nums">{{ $union->members_count }}</td>
-                            <td class="px-3 py-2 text-right tabular-nums">{{ $union->waiting_count }}</td>
-                            <td class="px-3 py-2 text-right tabular-nums">{{ $union->bulletins_count }}</td>
-                            <td class="px-3 py-2 text-right tabular-nums">{{ $union->threads_count }}</td>
-                            <td class="px-3 py-2 text-right tabular-nums">{{ $union->mail_sent_count }}</td>
-                            <td class="px-3 py-2 text-right tabular-nums">{{ $union->referendums_count }}</td>
-                            <td class="px-4 py-2 text-stone-600">{{ $union->last_active_at?->diffForHumans() ?? 'Never' }}</td>
+                                <span class="govuk-hint govuk-!-font-size-16 govuk-!-font-weight-regular govuk-!-margin-bottom-0">Started {{ $union->created_at->format('j M Y') }}</span>
+                            </th>
+                            <td class="govuk-table__cell govuk-table__cell--numeric">{{ $union->members_count }}</td>
+                            <td class="govuk-table__cell govuk-table__cell--numeric">{{ $union->waiting_count }}</td>
+                            <td class="govuk-table__cell govuk-table__cell--numeric">{{ $union->bulletins_count }}</td>
+                            <td class="govuk-table__cell govuk-table__cell--numeric">{{ $union->threads_count }}</td>
+                            <td class="govuk-table__cell govuk-table__cell--numeric">{{ $union->mail_sent_count }}</td>
+                            <td class="govuk-table__cell govuk-table__cell--numeric">{{ $union->referendums_count }}</td>
+                            <td class="govuk-table__cell">{{ $union->last_active_at?->diffForHumans() ?? 'Never' }}</td>
                         </tr>
                     @endforeach
                 </tbody>

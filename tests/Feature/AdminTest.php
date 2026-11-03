@@ -156,7 +156,7 @@ it('emails abandoned unions and deletes those nobody came back to', function () 
 
     $this->actingAs($this->admin)->get(route('admin.cleanup.index'))
         ->assertSeeText($abandoned->name)
-        ->assertSeeText('not emailed yet')
+        ->assertSeeText('Not emailed yet')
         ->assertDontSeeText($recentSignups->name)
         ->assertDontSeeText($working->name);
 

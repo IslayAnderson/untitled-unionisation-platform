@@ -1,0 +1,26 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// A QR code to scan from a screen.
+.app-qr-code {
+  display: block;
+  width: 180px;
+  height: 180px;
+  @include govuk-responsive-margin(2, "bottom");
+
+  @include govuk-media-query($from: tablet) {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+.app-qr-code--small {
+  width: 140px;
+  height: 140px;
+}
+
+// A long URL shown under a QR code.
+.app-url {
+  @include govuk-font($size: 16);
+  overflow-wrap: anywhere;
+  font-family: monospace;
+}

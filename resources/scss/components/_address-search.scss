@@ -1,0 +1,42 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// Suggestions under the address search input, like an autocomplete menu.
+.app-address-search {
+  position: relative;
+}
+
+.app-address-search__results {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: $govuk-border-width-form-element solid govuk-functional-colour(input-border);
+  border-top: 0;
+  background: govuk-colour("white");
+}
+
+.app-address-search__option {
+  @include govuk-font($size: 19);
+  display: block;
+  width: 100%;
+  padding: govuk-spacing(2);
+  border: 0;
+  border-bottom: 1px solid govuk-functional-colour(border);
+  background: none;
+  color: govuk-functional-colour(text);
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: govuk-colour("black", $variant: "tint-95");
+  }
+
+  &:focus {
+    @include govuk-focused-text;
+  }
+}
+
+.app-address-search__status {
+  @include govuk-font($size: 16);
+  margin: govuk-spacing(1) 0 0;
+  color: govuk-functional-colour(secondary-text);
+}

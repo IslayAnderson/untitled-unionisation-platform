@@ -22,7 +22,7 @@ class PollController extends Controller
         Gate::authorize('manage-union-record', $bulletin);
 
         if ($bulletin->author_id !== $request->user()->contact->id || $bulletin->isVouching()) {
-            return redirect()->route('bulletins.show', $bulletin)->with('status', 'Only the bulletin\'s author can add a poll to it.');
+            return redirect()->route('bulletins.show', $bulletin)->with('notice', 'Only the bulletin\'s author can add a poll to it.');
         }
 
         return view('polls.create', ['bulletin' => $bulletin]);

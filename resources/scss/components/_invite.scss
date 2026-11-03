@@ -1,0 +1,404 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// Printable posters, flyers and door slips (invite/print.blade.php). An A4
+// sheet holds one poster, two flyers or four door slips. Card sizes are in
+// container query units (1cqw = 1% of the card's width), so the preview on
+// screen and the printed sheet match.
+
+// Sheets in the preview, and each sheet's label.
+.app-invite-preview {
+  display: flex;
+  flex-direction: column;
+  gap: govuk-spacing(6);
+
+  @media print {
+    display: block;
+  }
+}
+
+// Bulk printing renders every set, but only the first is shown on screen.
+@media screen {
+  .app-invite-preview__repeat {
+    display: none;
+  }
+}
+
+.app-invite-preview__label {
+  @include govuk-font($size: 16);
+  margin: 0 0 govuk-spacing(2);
+  color: govuk-functional-colour(secondary-text);
+
+  @media print {
+    display: none;
+  }
+}
+
+.app-invite-sheet__layout {
+  height: 100%;
+}
+
+.app-invite-sheet__layout--flyers {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.app-invite-sheet__layout--slips {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+@media screen {
+  .app-invite-sheet {
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.app-invite-card {
+  @include govuk-typography-common;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  color: govuk-colour("black");
+  background: govuk-colour("white");
+}
+
+.app-invite-card__union {
+  margin: 0;
+  color: govuk-colour("black", $variant: "tint-25");
+  font-weight: $govuk-font-weight-bold;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.app-invite-card__headline {
+  margin: 0;
+  font-weight: $govuk-font-weight-bold;
+  line-height: 1.15;
+}
+
+.app-invite-card__message {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.app-invite-card__subhead {
+  margin: 0;
+  font-weight: $govuk-font-weight-bold;
+}
+
+.app-invite-card__feature-list {
+  display: grid;
+  margin: 0;
+
+  dt {
+    font-weight: $govuk-font-weight-bold;
+  }
+
+  dd {
+    margin: 0;
+    color: govuk-colour("black", $variant: "tint-25");
+    line-height: 1.35;
+  }
+}
+
+.app-invite-card__join {
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+}
+
+.app-invite-card__qr {
+  flex-shrink: 0;
+}
+
+.app-invite-card__how p {
+  margin: 0;
+}
+
+.app-invite-card__how-title {
+  font-weight: $govuk-font-weight-bold;
+}
+
+.app-invite-card__url {
+  overflow-wrap: anywhere;
+  color: govuk-colour("black", $variant: "tint-25");
+  font-family: monospace;
+}
+
+// The print page leaves only the sheets when printed.
+@media print {
+  .app-print-page {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+.app-invite-sheet {
+  width: 210mm;
+  height: 297mm;
+  max-width: 100%;
+  aspect-ratio: 210 / 297;
+  overflow: hidden;
+  background: white;
+  print-color-adjust: exact;
+}
+
+@media screen {
+  .app-invite-sheet {
+    height: auto;
+  }
+}
+
+// Bulk printing puts each sheet on its own page.
+@media print {
+  .app-invite-sheet {
+    break-after: page;
+  }
+}
+
+.app-invite-card {
+  container-type: inline-size;
+  overflow: hidden;
+}
+
+.app-invite-card--cut {
+  border: 0.3mm dashed govuk-colour("black", $variant: "tint-50");
+}
+
+.app-invite-card--poster {
+  padding: 9cqw;
+  gap: 4cqw;
+}
+
+.app-invite-card--poster .app-invite-card__union {
+  font-size: 3.2cqw;
+}
+
+.app-invite-card--poster .app-invite-card__headline {
+  font-size: 11cqw;
+}
+
+.app-invite-card--poster .app-invite-card__message {
+  font-size: 4.2cqw;
+}
+
+.app-invite-card--poster .app-invite-card__join {
+  gap: 5cqw;
+}
+
+.app-invite-card--poster .app-invite-card__qr {
+  width: 40cqw;
+}
+
+.app-invite-card--poster .app-invite-card__how {
+  font-size: 3cqw;
+}
+
+.app-invite-card--flyer {
+  padding: 6cqw 8cqw;
+  gap: 2.5cqw;
+}
+
+.app-invite-card--flyer .app-invite-card__union {
+  font-size: 2.6cqw;
+}
+
+.app-invite-card--flyer .app-invite-card__headline {
+  font-size: 7.5cqw;
+}
+
+.app-invite-card--flyer .app-invite-card__message {
+  font-size: 3.1cqw;
+}
+
+.app-invite-card--flyer .app-invite-card__join {
+  gap: 4cqw;
+}
+
+.app-invite-card--flyer .app-invite-card__qr {
+  width: 26cqw;
+}
+
+.app-invite-card--flyer .app-invite-card__how {
+  font-size: 2.6cqw;
+}
+
+.app-invite-card--slip {
+  padding: 7cqw;
+  gap: 3cqw;
+}
+
+.app-invite-card--slip .app-invite-card__union {
+  font-size: 4.5cqw;
+}
+
+.app-invite-card--slip .app-invite-card__headline {
+  font-size: 10cqw;
+}
+
+.app-invite-card--slip .app-invite-card__message {
+  display: none;
+}
+
+.app-invite-card--slip .app-invite-card__join {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3cqw;
+}
+
+.app-invite-card--slip .app-invite-card__qr {
+  width: 50cqw;
+}
+
+.app-invite-card--slip .app-invite-card__how {
+  font-size: 4.2cqw;
+}
+
+.app-invite-card__how > * + * {
+  margin-top: 0.4em;
+}
+
+// The information version: the same sizes, with "How the union works".
+.app-invite-card__subhead {
+  border-top: 0.4cqw solid govuk-colour("black");
+}
+
+.app-invite-card--poster.app-invite-card--info {
+  padding: 8cqw;
+  gap: 3cqw;
+}
+
+.app-invite-card--poster.app-invite-card--info .app-invite-card__union {
+  font-size: 2.8cqw;
+}
+
+.app-invite-card--poster.app-invite-card--info .app-invite-card__headline {
+  font-size: 8cqw;
+}
+
+.app-invite-card--poster.app-invite-card--info .app-invite-card__message {
+  font-size: 3.2cqw;
+}
+
+.app-invite-card--poster .app-invite-card__subhead {
+  margin: 1cqw 0 3cqw;
+  padding-top: 2.5cqw;
+  font-size: 3.4cqw;
+}
+
+.app-invite-card--poster .app-invite-card__feature-list {
+  grid-template-columns: 1fr 1fr;
+  column-gap: 5cqw;
+  row-gap: 3.5cqw;
+  font-size: 2.6cqw;
+}
+
+.app-invite-card--poster .app-invite-card__feature-list dt {
+  font-size: 2.9cqw;
+  margin-bottom: 0.5cqw;
+}
+
+.app-invite-card--poster.app-invite-card--info .app-invite-card__join {
+  gap: 4cqw;
+}
+
+.app-invite-card--poster.app-invite-card--info .app-invite-card__qr {
+  width: 24cqw;
+}
+
+.app-invite-card--poster.app-invite-card--info .app-invite-card__how {
+  font-size: 2.6cqw;
+}
+
+.app-invite-card--flyer.app-invite-card--info {
+  padding: 4.5cqw 7cqw;
+  gap: 1.4cqw;
+}
+
+.app-invite-card--flyer.app-invite-card--info .app-invite-card__headline {
+  font-size: 5cqw;
+}
+
+// No room for the message alongside the features.
+.app-invite-card--flyer.app-invite-card--info .app-invite-card__message {
+  display: none;
+}
+
+.app-invite-card--flyer .app-invite-card__subhead {
+  margin-bottom: 1.5cqw;
+  padding-top: 1.5cqw;
+  font-size: 2.3cqw;
+}
+
+.app-invite-card--flyer .app-invite-card__feature-list {
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 3cqw;
+  row-gap: 1.5cqw;
+  font-size: 1.75cqw;
+}
+
+.app-invite-card--flyer .app-invite-card__feature-list dt {
+  font-size: 1.9cqw;
+}
+
+.app-invite-card--flyer.app-invite-card--info .app-invite-card__qr {
+  width: 15cqw;
+}
+
+.app-invite-card--flyer.app-invite-card--info .app-invite-card__how {
+  font-size: 1.9cqw;
+}
+
+// Door slips only have room for the feature titles, as a list.
+.app-invite-card--slip.app-invite-card--info {
+  gap: 2.5cqw;
+}
+
+.app-invite-card--slip.app-invite-card--info .app-invite-card__headline {
+  font-size: 8cqw;
+}
+
+.app-invite-card--slip .app-invite-card__subhead {
+  margin-bottom: 1.5cqw;
+  padding-top: 2cqw;
+  font-size: 4.2cqw;
+}
+
+.app-invite-card--slip .app-invite-card__feature-list {
+  row-gap: 1.2cqw;
+  font-size: 4.6cqw;
+}
+
+.app-invite-card--slip .app-invite-card__feature-list dt {
+  font-weight: 400;
+}
+
+.app-invite-card--slip .app-invite-card__feature-list dt::before {
+  content: '✓ ';
+  font-weight: 700;
+}
+
+.app-invite-card--slip .app-invite-card__feature-list dd {
+  display: none;
+}
+
+.app-invite-card--slip.app-invite-card--info .app-invite-card__join {
+  flex-direction: row;
+  align-items: center;
+}
+
+.app-invite-card--slip.app-invite-card--info .app-invite-card__qr {
+  width: 40cqw;
+}
+
+.app-invite-card--slip.app-invite-card--info .app-invite-card__how {
+  font-size: 3.4cqw;
+}

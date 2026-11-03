@@ -1,0 +1,43 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// A form button that looks like a link, for actions that change something
+// (log out, withdraw) but sit where a link would.
+.app-link-button {
+  @include govuk-font($size: 19);
+  @include govuk-link-common;
+  @include govuk-link-style-default;
+  padding: 0;
+  border: 0;
+  background: none;
+  // A button never matches :link, so set the colour the link mixins give links.
+  color: govuk-functional-colour(link);
+
+  &:hover {
+    color: govuk-functional-colour(link-hover);
+  }
+
+  &:focus {
+    color: govuk-functional-colour(focus-text);
+  }
+  cursor: pointer;
+  text-align: left;
+}
+
+.app-link-button--small {
+  @include govuk-font-size($size: 16);
+}
+
+.app-link-button--warning {
+  &,
+  &:hover {
+    color: govuk-functional-colour(error);
+  }
+
+  &:focus {
+    color: govuk-functional-colour(focus-text);
+  }
+}
+
+.app-inline-form {
+  display: inline;
+}

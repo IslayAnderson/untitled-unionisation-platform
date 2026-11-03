@@ -111,6 +111,6 @@ class ThreadController extends Controller
     private function cannotChange(Thread $thread): RedirectResponse
     {
         return redirect()->route('threads.show', $thread)
-            ->with('status', 'Only the author can change a discussion, and only until someone replies.');
+            ->with('notice', 'Only the author can change a discussion, and only until someone replies.');
     }
 }

@@ -1,16 +1,14 @@
 @props(['email' => null, 'telephone' => null, 'address' => null])
 
 @if ($email || $telephone || $address)
-    <div class="mt-1 space-y-0.5 text-sm text-stone-700">
-        @if ($email || $telephone)
-            <p>
-                @if ($email)<a href="mailto:{{ $email }}" class="hover:underline">{{ $email }}</a>@endif
-                @if ($email && $telephone) · @endif
-                @if ($telephone)<a href="tel:{{ $telephone }}" class="hover:underline">{{ $telephone }}</a>@endif
-            </p>
-        @endif
-        @if ($address)
-            <p class="whitespace-pre-line text-stone-500">{{ $address }}</p>
-        @endif
-    </div>
+    @if ($email || $telephone)
+        <p class="govuk-body-s govuk-!-margin-bottom-1">
+            @if ($email)<a href="mailto:{{ $email }}" class="govuk-link">{{ $email }}</a>@endif
+            @if ($email && $telephone) · @endif
+            @if ($telephone)<a href="tel:{{ $telephone }}" class="govuk-link">{{ $telephone }}</a>@endif
+        </p>
+    @endif
+    @if ($address)
+        <p class="govuk-body-s govuk-!-margin-bottom-0 app-pre-line">{{ $address }}</p>
+    @endif
 @endif

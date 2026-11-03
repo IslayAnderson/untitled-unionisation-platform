@@ -151,7 +151,7 @@ it('hides the results from everyone, including the author, until the poll closes
     $this->travelTo($poll->closes_at->addSecond());
 
     $this->actingAs($this->author->user)->get(route('bulletins.show', $this->bulletin))
-        ->assertSeeInOrder(['Strike now', '2 votes · 100%', 'Wait until spring', '0 votes · 0%', '2 members voted.'])
+        ->assertSeeInOrder(['Strike now', '2 votes (100%)', 'Wait until spring', '0 votes (0%)', '2 members voted.'])
         ->assertDontSee('Close now');
 });
 

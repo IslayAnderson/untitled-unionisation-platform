@@ -1,20 +1,26 @@
-@php($limits = config('uploads.attachments'))
+@php
+    $limits = config('uploads.attachments');
+    $error = $errors->first('attachments') ?: $errors->first('attachments.*');
+@endphp
 
-<div>
-    <label for="attachments" class="block text-sm font-medium">Attachments (optional)</label>
-    <input id="attachments" name="attachments[]" type="file" multiple
-        accept="{{ collect([...$limits['document_types'], 'jpg', 'jpeg', 'png', 'gif', 'webp'])->map(fn ($type) => ".{$type}")->implode(',') }}"
-        class="mt-1 block w-full text-sm text-stone-700 file:mr-3 file:rounded-md file:border-0 file:bg-stone-100 file:px-3 file:py-2 file:text-sm file:font-medium hover:file:bg-stone-200">
-    <p class="mt-1 text-xs text-stone-500">
+{{-- The File upload component, for several files. --}}
+<div @class(['govuk-form-group', 'govuk-form-group--error' => $error])>
+    <label class="govuk-label" for="attachments">Attachments (optional)</label>
+    <div id="attachments-hint" class="govuk-hint">
         Up to {{ $limits['max_files'] }} files, {{ $limits['max_file_kb'] / 1024 }} MB each and {{ $limits['max_total_kb'] / 1024 }} MB in total:
         PDFs, documents, spreadsheets or images. Approvers can open them before deciding.
         Images are compressed and their location data removed. Documents are sent exactly as they are, so check
         they don't contain your name (for example the author in File › Properties).
-    </p>
-    @if ($errors->has('attachments') || $errors->has('attachments.*'))
-        <p class="mt-1 text-sm text-red-700">{{ $errors->first('attachments') ?: $errors->first('attachments.*') }}</p>
+    </div>
+    @if ($error)
+        <p id="attachments-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> {{ $error }}</p>
     @endif
     @if ($errors->any())
-        <p class="mt-1 text-sm text-amber-800">If you chose any files, choose them again: browsers don't keep them when a form is sent back.</p>
+        <div class="govuk-inset-text govuk-!-margin-top-0">If you chose any files, choose them again: browsers don't keep them when a form is sent back.</div>
     @endif
+    <div class="govuk-file-upload-wrapper" data-module="govuk-file-upload">
+        <input @class(['govuk-file-upload', 'govuk-file-upload--error' => $error]) id="attachments" name="attachments[]" type="file" multiple
+            aria-describedby="attachments-hint{{ $error ? ' attachments-error' : '' }}"
+            accept="{{ collect([...$limits['document_types'], 'jpg', 'jpeg', 'png', 'gif', 'webp'])->map(fn ($type) => ".{$type}")->implode(',') }}">
+    </div>
 </div>

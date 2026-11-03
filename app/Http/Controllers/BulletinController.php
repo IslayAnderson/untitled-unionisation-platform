@@ -135,7 +135,7 @@ class BulletinController extends Controller
 
         if ($bulletin->author_id !== $member->id || $bulletin->hasActiveMail()) {
             return redirect()->route('bulletins.show', $bulletin)
-                ->with('status', 'Only the bulletin\'s author can send it as mail, and only once.');
+                ->with('notice', 'Only the bulletin\'s author can send it as mail, and only once.');
         }
 
         return view('bulletins.mail', [
@@ -179,6 +179,6 @@ class BulletinController extends Controller
     private function cannotChange(Bulletin $bulletin): RedirectResponse
     {
         return redirect()->route('bulletins.show', $bulletin)
-            ->with('status', 'Only the author can change a bulletin, and only until it has replies, polls or mail.');
+            ->with('notice', 'Only the author can change a bulletin, and only until it has replies, polls or mail.');
     }
 }

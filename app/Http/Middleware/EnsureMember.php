@@ -18,7 +18,7 @@ class EnsureMember
     {
         if (! $request->user()?->contact?->isEnrolled()) {
             return redirect()->route('dashboard')
-                ->with('status', 'Only union members can use that. Get vouched for by your neighbours first.');
+                ->with('notice', 'Only union members can use that. Get vouched for by your neighbours first.');
         }
 
         return $next($request);

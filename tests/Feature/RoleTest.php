@@ -118,7 +118,7 @@ it('lets a member step down from a role without a vote', function () {
     $this->actingAs($this->candidate->user)->post(route('roles.step-down', $this->role))->assertRedirect(route('roles.show', $this->role));
     expect($this->role->contacts()->count())->toBe(0);
 
-    $this->actingAs($this->member->user)->post(route('roles.step-down', $this->role))->assertSessionHas('status', 'You don\'t hold this role.');
+    $this->actingAs($this->member->user)->post(route('roles.step-down', $this->role))->assertSessionHas('notice', 'You don\'t hold this role.');
 });
 
 it('doesn\'t elect a nominee who left the union while the vote was open', function () {

@@ -1,4 +1,12 @@
-<x-layouts.app title="Print flyers and posters">
+@php
+    $sizes = [
+        'poster' => ['Poster', 'One A4 sheet, for noticeboards and lifts'],
+        'flyers' => ['Flyers', 'Two A5 flyers per A4 sheet'],
+        'slips' => ['Door slips', 'Four small slips per A4 sheet'],
+    ];
+@endphp
+
+<x-layouts.app title="Print flyers and posters" :back-link="$building->is_demo ? route('demo.show') : route('dashboard')" main-class="app-print-page">
     <div x-data="{
         kind: 'invite',
         design: 'poster',
@@ -29,160 +37,162 @@
             }
         },
     }">
-        <div class="print:hidden">
-            <h1 class="mb-2 text-2xl font-semibold">Print flyers and posters</h1>
-            @if ($building->is_demo)
-                <p class="mb-6 text-stone-600">
-                    These are the demo union's flyers and posters, as its members would print them. A real union's code
-                    takes neighbours to its building's sign-up page; the demo's takes them to
-                    <a href="{{ route('demo.show') }}" class="underline">the demo</a>. Try every version and size, and
-                    print one if you like.
-                </p>
-            @else
-                <p class="mb-6 text-stone-600">
-                    Put them up in shared spaces or through doors. The code takes neighbours to your building's sign-up page.
-                    They never name you or any other member.
-                </p>
-            @endif
+        <div class="govuk-grid-row govuk-!-display-none-print">
+            <div class="govuk-grid-column-two-thirds">
+                <h1 class="govuk-heading-l">Print flyers and posters</h1>
+                @if ($building->is_demo)
+                    <p class="govuk-body">
+                        These are the demo union's flyers and posters, as its members would print them. A real union's code
+                        takes neighbours to its building's sign-up page; the demo's takes them to
+                        <a href="{{ route('demo.show') }}" class="govuk-link">the demo</a>. Try every version and size, and
+                        print one if you like.
+                    </p>
+                @else
+                    <p class="govuk-body">
+                        Put them up in shared spaces or through doors. The code takes neighbours to your building's sign-up page.
+                        They never name you or any other member.
+                    </p>
+                @endif
 
-            <div class="space-y-5 rounded-lg border border-stone-200 bg-white p-5">
-                <fieldset>
-                    <legend class="text-sm font-medium">Size</legend>
-                    <div class="mt-2 grid gap-2 sm:grid-cols-3">
-                        @foreach (['poster' => ['Poster', 'One A4 sheet, for noticeboards and lifts'], 'flyers' => ['Flyers', 'Two A5 flyers per A4 sheet'], 'slips' => ['Door slips', 'Four small slips per A4 sheet']] as $value => [$label, $hint])
-                            <label class="flex cursor-pointer gap-2 rounded-md border border-stone-200 p-3 has-[:checked]:border-stone-900 has-[:checked]:bg-stone-50">
-                                <input type="radio" name="design" value="{{ $value }}" x-model="design" class="mt-1 border-stone-300">
-                                <span>
-                                    <span class="block text-sm font-medium">{{ $label }}</span>
-                                    <span class="block text-xs text-stone-500">{{ $hint }}</span>
-                                </span>
-                            </label>
-                        @endforeach
-                    </div>
-                </fieldset>
-
-                <fieldset>
-                    <legend class="text-sm font-medium">How many</legend>
-                    <div class="mt-2 grid gap-2 sm:grid-cols-2">
-                        @foreach (['one' => [false, 'One sheet', 'Print a single sheet of one version'], 'sets' => [true, 'Sets to cut and staple', 'Lots of sheets, in order, so each pile you cut is ready to staple']] as $value => [$bulk, $label, $hint])
-                            <label class="flex cursor-pointer gap-2 rounded-md border border-stone-200 p-3 has-[:checked]:border-stone-900 has-[:checked]:bg-stone-50">
-                                <input type="radio" name="bulk" value="{{ $value }}" @checked(! $bulk) @change="bulk = @js($bulk)" class="mt-1 border-stone-300">
-                                <span>
-                                    <span class="block text-sm font-medium">{{ $label }}</span>
-                                    <span class="block text-xs text-stone-500">{{ $hint }}</span>
-                                </span>
-                            </label>
-                        @endforeach
-                    </div>
-                </fieldset>
-
-                <fieldset x-show="! bulk">
-                    <legend class="text-sm font-medium">Version</legend>
-                    <div @class(['mt-2 grid gap-2', 'sm:grid-cols-2' => count($versions) === 2, 'sm:grid-cols-3' => count($versions) === 3])>
-                        @foreach ($versions as $value => [$label, $hint])
-                            <label class="flex cursor-pointer gap-2 rounded-md border border-stone-200 p-3 has-[:checked]:border-stone-900 has-[:checked]:bg-stone-50">
-                                <input type="radio" name="kind" value="{{ $value }}" x-model="kind" class="mt-1 border-stone-300">
-                                <span>
-                                    <span class="block text-sm font-medium">{{ $label }}</span>
-                                    <span class="block text-xs text-stone-500">{{ $hint }}</span>
-                                </span>
-                            </label>
-                        @endforeach
-                    </div>
-                </fieldset>
-
-                <div x-show="bulk" x-cloak class="space-y-4">
-                    <fieldset>
-                        <legend class="text-sm font-medium">In each set</legend>
-                        <div @class(['mt-2 grid gap-2', 'sm:grid-cols-2' => count($versions) === 2, 'sm:grid-cols-3' => count($versions) === 3])>
-                            @foreach ($versions as $value => [$label, $hint])
-                                <label class="flex cursor-pointer gap-2 rounded-md border border-stone-200 p-3 has-[:checked]:border-stone-900 has-[:checked]:bg-stone-50">
-                                    <input type="checkbox" value="{{ $value }}" x-model="setKinds" class="mt-1 rounded border-stone-300">
-                                    <span>
-                                        <span class="block text-sm font-medium">{{ $label }}</span>
-                                        <span class="block text-xs text-stone-500">{{ $hint }}</span>
-                                    </span>
-                                </label>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Size</legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            @foreach ($sizes as $value => [$label, $hint])
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="design-{{ $value }}" name="design" type="radio" value="{{ $value }}" x-model="design" aria-describedby="design-{{ $value }}-hint">
+                                    <label class="govuk-label govuk-radios__label" for="design-{{ $value }}">{{ $label }}</label>
+                                    <div id="design-{{ $value }}-hint" class="govuk-hint govuk-radios__hint">{{ $hint }}</div>
+                                </div>
                             @endforeach
                         </div>
                     </fieldset>
+                </div>
 
-                    <div>
-                        <label for="copies" class="block text-sm font-medium">Sheets of each version</label>
-                        <input id="copies" type="number" min="1" max="50" x-model="copies"
-                            class="mt-1 block w-28 rounded-md border border-stone-300 bg-white px-3 py-2 shadow-sm">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">How many</legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            @foreach (['one' => [false, 'One sheet', 'Print a single sheet of one version'], 'sets' => [true, 'Sets to cut and staple', 'Lots of sheets, in order, so each pile you cut is ready to staple']] as $value => [$bulk, $label, $hint])
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="bulk-{{ $value }}" name="bulk" type="radio" value="{{ $value }}" @checked(! $bulk) @change="bulk = @js($bulk)" aria-describedby="bulk-{{ $value }}-hint">
+                                    <label class="govuk-label govuk-radios__label" for="bulk-{{ $value }}">{{ $label }}</label>
+                                    <div id="bulk-{{ $value }}-hint" class="govuk-hint govuk-radios__hint">{{ $hint }}</div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="govuk-form-group" x-show="! bulk">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Version</legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            @foreach ($versions as $value => [$label, $hint])
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="kind-{{ $value }}" name="kind" type="radio" value="{{ $value }}" x-model="kind" aria-describedby="kind-{{ $value }}-hint">
+                                    <label class="govuk-label govuk-radios__label" for="kind-{{ $value }}">{{ $label }}</label>
+                                    <div id="kind-{{ $value }}-hint" class="govuk-hint govuk-radios__hint">{{ $hint }}</div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div x-show="bulk" x-cloak>
+                    <div class="govuk-form-group" :class="! orderedSetKinds.length && 'govuk-form-group--error'">
+                        <fieldset class="govuk-fieldset" aria-describedby="set-kinds-hint">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">In each set</legend>
+                            <div id="set-kinds-hint" class="govuk-hint">Select all that apply.</div>
+                            <p class="govuk-error-message" x-show="! orderedSetKinds.length"><span class="govuk-visually-hidden">Error:</span> Select at least one version for each set</p>
+                            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                                @foreach ($versions as $value => [$label, $hint])
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="set-{{ $value }}" type="checkbox" value="{{ $value }}" x-model="setKinds" aria-describedby="set-{{ $value }}-hint">
+                                        <label class="govuk-label govuk-checkboxes__label" for="set-{{ $value }}">{{ $label }}</label>
+                                        <div id="set-{{ $value }}-hint" class="govuk-hint govuk-checkboxes__hint">{{ $hint }}</div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </fieldset>
                     </div>
 
-                    <div class="rounded-md bg-stone-50 px-4 py-3 text-sm text-stone-700" x-show="orderedSetKinds.length">
-                        <p class="font-medium" x-text="`${copyCount * orderedSetKinds.length} sheets, making ${copyCount * cardsPerSheet[design]} ${copyCount * cardsPerSheet[design] === 1 ? 'set' : 'sets'} of ${orderedSetKinds.map(version => versions[version].toLowerCase()).join(', ')}.`"></p>
-                        <p class="mt-1">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-label--s" for="copies">Sheets of each version</label>
+                        <div id="copies-hint" class="govuk-hint">Up to 50.</div>
+                        <input class="govuk-input govuk-input--width-3" id="copies" type="text" inputmode="numeric" spellcheck="false" x-model="copies" aria-describedby="copies-hint">
+                    </div>
+
+                    <div class="govuk-inset-text" x-show="orderedSetKinds.length">
+                        <p class="govuk-body govuk-!-font-weight-bold" x-text="`${copyCount * orderedSetKinds.length} sheets, making ${copyCount * cardsPerSheet[design]} ${copyCount * cardsPerSheet[design] === 1 ? 'set' : 'sets'} of ${orderedSetKinds.map(version => versions[version].toLowerCase()).join(', ')}.`"></p>
+                        <p class="govuk-body govuk-!-margin-bottom-0">
                             The sheets print in order: one of each version, then the next set.
                             <span x-show="design !== 'poster'">Print single-sided and keep the sheets in the order they come out. Square up the stack, cut along the dashed lines through the whole stack, and each pile is in order.</span>
                             <span x-show="design === 'poster'">Print single-sided and keep the sheets in the order they come out.</span>
                             <span x-show="orderedSetKinds.length > 1" x-text="`Staple each group of ${orderedSetKinds.length} from the top.`"></span>
                         </p>
                     </div>
-                    <p class="text-sm text-red-700" x-show="! orderedSetKinds.length">Pick at least one version for each set.</p>
                 </div>
 
                 <div x-show="sheetKinds.some(version => version !== 'demo')">
-                    <label for="headline-choice" class="block text-sm font-medium">Headline</label>
-                    <select id="headline-choice" class="mt-1 block w-full rounded-md border border-stone-300 bg-white px-3 py-2 shadow-sm"
-                        @change="custom = $event.target.value === ''; if (! custom) headline = $event.target.value">
-                        @foreach ($headlines as $option)
-                            <option value="{{ $option }}">{{ $option }}</option>
-                        @endforeach
-                        <option value="">Write your own…</option>
-                    </select>
-                    <input x-show="custom" x-cloak type="text" x-model="headline" maxlength="60" aria-label="Your headline"
-                        class="mt-2 block w-full rounded-md border border-stone-300 bg-white px-3 py-2 shadow-sm">
-                    <p class="mt-1 text-xs text-stone-500" x-show="sheetKinds.includes('demo')">The demo version has its own headline and message.</p>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-label--m" for="headline-choice">Headline</label>
+                        <div id="headline-choice-hint" class="govuk-hint" x-show="sheetKinds.includes('demo')">The demo version has its own headline and message.</div>
+                        <select id="headline-choice" class="govuk-select" aria-describedby="headline-choice-hint"
+                            @change="custom = $event.target.value === ''; if (! custom) headline = $event.target.value">
+                            @foreach ($headlines as $option)
+                                <option value="{{ $option }}">{{ $option }}</option>
+                            @endforeach
+                            <option value="">Write your own</option>
+                        </select>
+                    </div>
+                    <div class="govuk-form-group" x-show="custom" x-cloak>
+                        <label class="govuk-label" for="headline">Your headline</label>
+                        <input class="govuk-input" id="headline" type="text" x-model="headline" maxlength="60">
+                    </div>
+
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-label--m" for="message">Message</label>
+                        <div id="message-hint" class="govuk-hint">
+                            Keep it short. Do not add names, flat numbers or phone numbers: anyone can read a poster.
+                            <span x-show="design === 'slips' || (sheetKinds.includes('info') && design === 'flyers')">This size leaves the message out to fit.</span>
+                            <span x-show="sheetKinds.includes('info') && design === 'slips'">Information door slips list what the union does, without the details.</span>
+                        </div>
+                        <textarea class="govuk-textarea" id="message" rows="3" maxlength="300" x-model="message" aria-describedby="message-hint"></textarea>
+                    </div>
                 </div>
 
-                <div x-show="sheetKinds.some(version => version !== 'demo')">
-                    <label for="message" class="block text-sm font-medium">Message</label>
-                    <textarea id="message" x-model="message" rows="3" maxlength="300"
-                        class="mt-1 block w-full rounded-md border border-stone-300 bg-white px-3 py-2 shadow-sm"></textarea>
-                    <p class="mt-1 text-xs text-stone-500">
-                        Keep it short. Don't add names, flat numbers or phone numbers: anyone can read a poster.
-                        <span x-show="design === 'slips' || (sheetKinds.includes('info') && design === 'flyers')">This size leaves the message out to fit.</span>
-                        <span x-show="sheetKinds.includes('info') && design === 'slips'">Information door slips list what the union does, without the details.</span>
-                    </p>
-                </div>
+                <x-button type="button" @click="window.print()" x-bind:disabled="! sheetKinds.length">Print</x-button>
+                <p class="govuk-body-s">Print on A4 at 100% scale, with headers and footers turned off.</p>
 
-                <div class="flex flex-wrap items-center gap-3">
-                    <x-button type="button" @click="window.print()" x-bind:disabled="! sheetKinds.length">Print</x-button>
-                    <span class="text-xs text-stone-500">Print on A4 at 100% scale, with headers and footers turned off.</span>
-                </div>
+                <h2 class="govuk-heading-m govuk-!-margin-top-6" x-text="bulk ? 'Preview of the first set' : 'Preview'">Preview</h2>
             </div>
-
-            <h2 class="mb-2 mt-8 text-sm font-semibold text-stone-600" x-text="bulk ? 'Preview of the first set' : 'Preview'">Preview</h2>
         </div>
 
         {{-- The printed sheets: one, or each set in turn. Only the first set is shown on screen. --}}
-        <div class="space-y-8 print:space-y-0">
+        <div class="app-invite-preview">
             <template x-for="copy in copyCount" :key="copy">
-                <div class="space-y-8 print:space-y-0" :class="copy > 1 && 'hidden print:block'">
+                <div class="app-invite-preview" :class="copy > 1 && 'app-invite-preview__repeat'">
                     <template x-for="(kind, sheet) in sheetKinds" :key="kind">
                         <div>
-                            <p class="mb-2 text-xs text-stone-500 print:hidden" x-show="bulk" x-text="`Sheet ${sheet + 1}: ${versions[kind]}`"></p>
-                            <div class="invite-sheet mx-auto shadow-md print:shadow-none">
+                            <p class="app-invite-preview__label" x-show="bulk" x-text="`Sheet ${sheet + 1}: ${versions[kind]}`"></p>
+                            <div class="app-invite-sheet">
                                 <template x-if="design === 'poster'">
-                                    <div class="h-full">
+                                    <div class="app-invite-sheet__layout">
                                         <x-invite-card size="poster" :building="$building" :join-url="$joinUrl" :demo-url="$demoUrl" :features="$features" />
                                     </div>
                                 </template>
                                 <template x-if="design === 'flyers'">
-                                    <div class="grid h-full grid-rows-2">
+                                    <div class="app-invite-sheet__layout app-invite-sheet__layout--flyers">
                                         @foreach (range(1, 2) as $i)
-                                            <x-invite-card size="flyer" :building="$building" :join-url="$joinUrl" :demo-url="$demoUrl" :features="$features" class="invite-cut" />
+                                            <x-invite-card size="flyer" :building="$building" :join-url="$joinUrl" :demo-url="$demoUrl" :features="$features" cut />
                                         @endforeach
                                     </div>
                                 </template>
                                 <template x-if="design === 'slips'">
-                                    <div class="grid h-full grid-cols-2 grid-rows-2">
+                                    <div class="app-invite-sheet__layout app-invite-sheet__layout--slips">
                                         @foreach (range(1, 4) as $i)
-                                            <x-invite-card size="slip" :building="$building" :join-url="$joinUrl" :demo-url="$demoUrl" :features="$features" class="invite-cut" />
+                                            <x-invite-card size="slip" :building="$building" :join-url="$joinUrl" :demo-url="$demoUrl" :features="$features" cut />
                                         @endforeach
                                     </div>
                                 </template>

@@ -1,0 +1,41 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// A poll's results: each answer with a bar showing its share of the votes.
+.app-poll-results {
+  margin: 0;
+  @include govuk-responsive-margin(4, "bottom");
+  padding: 0;
+  list-style: none;
+}
+
+.app-poll-results__answer {
+  margin-bottom: govuk-spacing(3);
+}
+
+.app-poll-results__label {
+  @include govuk-font($size: 19);
+  color: govuk-functional-colour(text);
+  display: flex;
+  justify-content: space-between;
+  gap: govuk-spacing(3);
+  margin-bottom: govuk-spacing(1);
+}
+
+.app-poll-results__count {
+  @include govuk-font-tabular-numbers;
+  white-space: nowrap;
+}
+
+.app-poll-results__bar {
+  height: govuk-spacing(3);
+  background: govuk-colour("black", $variant: "tint-95");
+}
+
+.app-poll-results__fill {
+  height: 100%;
+  background: govuk-functional-colour(brand);
+
+  @media (forced-colors: active) {
+    background: CanvasText;
+  }
+}

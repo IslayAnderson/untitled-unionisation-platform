@@ -15,7 +15,7 @@ it('sends tenants who are not yet members back to the dashboard', function () {
 
     $this->actingAs($tenant)->get('/contacts')
         ->assertRedirect(route('dashboard'))
-        ->assertSessionHas('status', 'Only union members can use that. Get vouched for by your neighbours first.');
+        ->assertSessionHas('notice', 'Only union members can use that. Get vouched for by your neighbours first.');
 });
 
 it('sends guests to log in', function () {

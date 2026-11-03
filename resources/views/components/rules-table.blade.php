@@ -1,19 +1,23 @@
 @props(['rules', 'previous' => null])
 
-{{-- The constitution's numbers. With $previous, shows only those that change. --}}
+{{-- The constitution's numbers, as a Summary list. With $previous, shows only those that change. --}}
 @php($current = $rules->toArray())
 @php($before = $previous?->toArray())
+@php($unit = fn (array $field, int $value) => $value.($field['unit'] === '%' ? '%' : ' '.$field['unit']))
 
-<dl {{ $attributes->merge(['class' => 'divide-y divide-stone-100 text-sm']) }}>
+<dl {{ $attributes->class(['govuk-summary-list']) }}>
     @foreach (App\Support\ConstitutionRules::FIELDS as $name => $field)
         @continue($before && $before[$name] === $current[$name])
-        <div class="flex justify-between gap-4 py-2">
-            <dt class="text-stone-700">{{ $field['label'] }}</dt>
-            <dd class="shrink-0 font-medium">
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">{{ $field['label'] }}</dt>
+            <dd class="govuk-summary-list__value">
                 @if ($before)
-                    <span class="text-red-800 line-through">{{ $before[$name] }}{{ $field['unit'] === '%' ? '%' : '' }}</span> →
+                    <del>{{ $unit($field, $before[$name]) }}</del>
+                    <span class="govuk-visually-hidden">changes to</span><span aria-hidden="true">→</span>
+                    <ins>{{ $unit($field, $current[$name]) }}</ins>
+                @else
+                    {{ $unit($field, $current[$name]) }}
                 @endif
-                <span @class(['text-emerald-800' => $before])>{{ $current[$name] }}{{ $field['unit'] === '%' ? '%' : ' '.$field['unit'] }}</span>
             </dd>
         </div>
     @endforeach

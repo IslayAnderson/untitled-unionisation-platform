@@ -57,7 +57,7 @@ export function initRichEditors() {
             license_key: 'gpl',
             skin_url: 'default',
             content_css: 'default',
-            content_style: 'body { font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif; font-size: 16px; } img { max-width: 100%; height: auto; }',
+            content_style: 'body { font-family: arial, sans-serif; font-size: 19px; line-height: 1.32; color: #0b0c0c; } a { color: #1d70b8; } img { max-width: 100%; height: auto; }',
             menubar: false,
             statusbar: false,
             promotion: false,

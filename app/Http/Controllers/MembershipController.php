@@ -36,7 +36,7 @@ class MembershipController extends Controller
         try {
             $membership->leave($request->user()->contact);
         } catch (MembershipRefused $e) {
-            return back()->with('status', $e->getMessage());
+            return back()->with('notice', $e->getMessage());
         }
 
         return redirect()->route('dashboard')->with('status', 'You\'ve left the union. If you want to rejoin, neighbours who are members can vouch for you again.');

@@ -1,0 +1,40 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// One post in a thread: who wrote it, when, and what they said.
+.app-reply {
+  @include govuk-responsive-margin(4, "bottom");
+  padding: govuk-spacing(3) govuk-spacing(3) govuk-spacing(3) govuk-spacing(4);
+  border-left: $govuk-border-width-wide solid govuk-functional-colour(border);
+}
+
+.app-reply--email {
+  border-left-color: govuk-functional-colour(brand);
+}
+
+.app-reply__header {
+  @include govuk-font($size: 16);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: govuk-spacing(1) govuk-spacing(2);
+  margin-bottom: govuk-spacing(2);
+  color: govuk-functional-colour(secondary-text);
+}
+
+.app-reply__author {
+  @include govuk-font($size: 16, $weight: bold);
+  color: govuk-functional-colour(text);
+}
+
+.app-reply__actions {
+  @include govuk-font($size: 16);
+  display: flex;
+  gap: govuk-spacing(3);
+  margin-top: govuk-spacing(2);
+}
+
+.app-reply-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

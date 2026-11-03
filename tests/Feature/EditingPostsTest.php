@@ -18,7 +18,7 @@ beforeEach(function () {
 it('lets authors edit and delete bulletins and discussions with cleaned text', function (string $kind) {
     $record = $kind === 'bulletins' ? $this->bulletin : $this->thread;
 
-    $this->actingAs($this->author->user)->get(route("{$kind}.show", $record))->assertSee('Until someone replies');
+    $this->actingAs($this->author->user)->get(route("{$kind}.show", $record))->assertSee('(until someone replies)');
     $this->actingAs($this->author->user)->put(route("{$kind}.update", $record), ['title' => 'New title', 'body' => '<p>Fixed <em>typo</em>.</p><script>x()</script>'])
         ->assertRedirect(route("{$kind}.show", $record));
 
@@ -32,8 +32,8 @@ it('stops changes once a bulletin or discussion has replies, and by anyone but t
     $record = $kind === 'bulletins' ? $this->bulletin : $this->thread;
 
     $this->actingAs($this->other->user)->put(route("{$kind}.update", $record), ['title' => 'Hijacked', 'body' => '<p>x</p>'])
-        ->assertSessionHas('status');
-    $this->actingAs($this->other->user)->get(route("{$kind}.show", $record))->assertDontSee('Until someone replies');
+        ->assertSessionHas('notice');
+    $this->actingAs($this->other->user)->get(route("{$kind}.show", $record))->assertDontSee('(until someone replies)');
 
     Reply::factory()->create(['replyable_type' => str($kind)->singular()->toString(), 'replyable_id' => $record->id, 'author_id' => $this->other->id]);
 

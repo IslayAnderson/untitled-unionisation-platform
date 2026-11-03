@@ -1,41 +1,51 @@
 <x-layouts.app title="Register your building">
-    <h1 class="mb-2 text-2xl font-semibold">Register your building</h1>
-    <p class="mb-6 text-stone-600">If your building is already registered, you'll be added to its union instead.</p>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Register your building</h1>
+            <p class="govuk-body">If your building is already registered, you'll be added to its union instead.</p>
 
-    <form method="POST" action="{{ route('register') }}" class="space-y-4">
-        @csrf
+            <form method="POST" action="{{ route('register') }}" novalidate>
+                @csrf
 
-        <div x-data="addressSearch(@js(route('address.search')))" class="relative">
-            <label for="address_query" class="block text-sm font-medium">Building address</label>
-            <input
-                id="address_query"
-                type="text"
-                x-model="query"
-                @input="search()"
-                @keydown.escape="open = false"
-                autocomplete="off"
-                placeholder="Start typing the street address"
-                class="mt-1 block w-full rounded-md border border-stone-300 bg-white px-3 py-2 shadow-sm focus:border-stone-500 focus:outline-none focus:ring-1 focus:ring-stone-500"
-            >
-            <input type="hidden" name="address_id" :value="selectedId">
+                @php($addressError = $errors->first('address_id'))
+                <div x-data="addressSearch(@js(route('address.search')))" @class(['govuk-form-group', 'app-address-search', 'govuk-form-group--error' => $addressError])>
+                    <label class="govuk-label" for="address_id">Building address</label>
+                    <div id="address_id-hint" class="govuk-hint">Start typing the street address of the building, not your flat. You'll add your flat below.</div>
+                    @if ($addressError)
+                        <p id="address_id-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> {{ $addressError }}</p>
+                    @endif
+                    <input
+                        id="address_id"
+                        type="text"
+                        x-model="query"
+                        @input="search()"
+                        @keydown.escape="open = false"
+                        autocomplete="off"
+                        spellcheck="false"
+                        role="combobox"
+                        aria-autocomplete="list"
+                        aria-controls="address-results"
+                        :aria-expanded="open"
+                        aria-describedby="address_id-hint{{ $addressError ? ' address_id-error' : '' }}"
+                        @class(['govuk-input', 'govuk-input--error' => $addressError])
+                    >
+                    <input type="hidden" name="address_id" :value="selectedId">
 
-            <ul x-show="open" x-cloak @click.outside="open = false" class="absolute z-10 mt-1 w-full overflow-hidden rounded-md border border-stone-200 bg-white shadow-lg">
-                <template x-for="result in results" :key="result.id">
-                    <li>
-                        <button type="button" @click="choose(result)" class="block w-full px-3 py-2 text-left text-sm hover:bg-stone-100" x-text="result.label"></button>
-                    </li>
-                </template>
-                <li x-show="results.length === 0" class="px-3 py-2 text-sm text-stone-500">No matching addresses.</li>
-            </ul>
+                    <ul id="address-results" role="listbox" x-show="open" x-cloak @click.outside="open = false" class="app-address-search__results">
+                        <template x-for="result in results" :key="result.id">
+                            <li role="option">
+                                <button type="button" @click="choose(result)" class="app-address-search__option" x-text="result.label"></button>
+                            </li>
+                        </template>
+                        <li x-show="results.length === 0" class="app-address-search__option">No matching addresses</li>
+                    </ul>
+                    <p class="app-address-search__status" x-show="loading" x-cloak aria-live="polite">Searching…</p>
+                </div>
 
-            <p class="mt-1 text-xs text-stone-500">Enter the building, not your flat. You'll add your flat below.</p>
-            @error('address_id')
-                <p class="mt-1 text-sm text-red-700">{{ $message }}</p>
-            @enderror
+                <x-tenant-fields />
+
+                <x-button>Sign up</x-button>
+            </form>
         </div>
-
-        <x-tenant-fields />
-
-        <x-button>Sign up</x-button>
-    </form>
+    </div>
 </x-layouts.app>

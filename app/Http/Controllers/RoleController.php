@@ -120,7 +120,7 @@ class RoleController extends Controller
         try {
             $referendums->stepDown($request->user()->contact, $role);
         } catch (ReferendumRefused $e) {
-            return back()->with('status', $e->getMessage());
+            return back()->with('notice', $e->getMessage());
         }
 
         return redirect()->route('roles.show', $role)->with('status', "You've stepped down as {$role->title}.");

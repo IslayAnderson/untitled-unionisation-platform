@@ -1,46 +1,43 @@
-<x-layouts.app :title="$list->name">
-    <div class="mb-2 flex flex-wrap items-center justify-between gap-3">
-        <h1 class="text-2xl font-semibold">{{ $list->name }}</h1>
-        <a href="{{ route('mailing-lists.edit', $list) }}" class="text-sm hover:underline">Edit list</a>
+<x-layouts.app :title="$list->name" :back-link="route('mailing-lists.index')">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            @php($caption = collect([$list->type?->type, $list->landlord?->name])->filter()->implode(' · '))
+            @if ($caption)
+                <span class="govuk-caption-l">{{ $caption }}</span>
+            @endif
+            <h1 class="govuk-heading-l">{{ $list->name }}</h1>
+            <p class="govuk-body"><a href="{{ route('mailing-lists.edit', $list) }}" class="govuk-link">Edit list</a></p>
+
+            <h2 class="govuk-heading-m">On this list</h2>
+            @if ($list->contacts->isEmpty())
+                <p class="govuk-body">Nobody yet. <a href="{{ route('mailing-lists.edit', $list) }}" class="govuk-link">Add contacts</a>.</p>
+            @else
+                <ul class="govuk-list">
+                    @foreach ($list->contacts as $contact)
+                        <li>
+                            {{ $contact->name }}
+                            <span class="govuk-hint govuk-!-display-inline">{{ $contact->email ?? '(no email, won\'t receive messages)' }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+
+            <h2 class="govuk-heading-m">Send mail to this list</h2>
+            <p class="govuk-body">
+                Mail to this list needs members' approval. Write <a href="{{ route('mail.create', ['list' => $list->id]) }}" class="govuk-link">instant mail</a>
+                for something urgent, or <a href="{{ route('bulletins.create') }}" class="govuk-link">write a bulletin</a> and send it as bulletin mail.
+            </p>
+
+            <h2 class="govuk-heading-m">Mail to this list</h2>
+            @if ($mails->isEmpty())
+                <p class="app-item-list__empty">Nothing yet.</p>
+            @else
+                <ul class="app-item-list">
+                    @foreach ($mails as $mail)
+                        <x-mail-row :mail="$mail" />
+                    @endforeach
+                </ul>
+            @endif
+        </div>
     </div>
-    <p class="mb-6 text-sm text-stone-600">
-        {{ collect([$list->type?->type, $list->landlord?->name])->filter()->implode(' · ') }}
-    </p>
-
-    <section class="rounded-lg border border-stone-200 bg-white p-5">
-        <h2 class="text-lg font-semibold">On this list</h2>
-        @if ($list->contacts->isEmpty())
-            <p class="mt-1 text-sm text-stone-600">Nobody yet. <a href="{{ route('mailing-lists.edit', $list) }}" class="underline">Add contacts</a>.</p>
-        @else
-            <ul class="mt-2 space-y-1 text-sm">
-                @foreach ($list->contacts as $contact)
-                    <li>
-                        {{ $contact->name }}
-                        <span class="text-stone-500">{{ $contact->email ?? '(no email, won\'t receive messages)' }}</span>
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-    </section>
-
-    <section class="mt-6 rounded-lg border border-stone-200 bg-white p-5">
-        <h2 class="text-lg font-semibold">Send mail to this list</h2>
-        <p class="mt-1 text-sm text-stone-600">
-            Mail to this list needs members' approval. Write <a href="{{ route('mail.create', ['list' => $list->id]) }}" class="underline">instant mail</a>
-            for something urgent, or <a href="{{ route('bulletins.create') }}" class="underline">write a bulletin</a> and send it as bulletin mail.
-        </p>
-    </section>
-
-    <section class="mt-6">
-        <h2 class="mb-2 text-lg font-semibold">Mail to this list</h2>
-        @if ($mails->isEmpty())
-            <p class="text-sm text-stone-600">Nothing yet.</p>
-        @else
-            <ul class="divide-y divide-stone-200 rounded-lg border border-stone-200 bg-white">
-                @foreach ($mails as $mail)
-                    <x-mail-row :mail="$mail" />
-                @endforeach
-            </ul>
-        @endif
-    </section>
 </x-layouts.app>

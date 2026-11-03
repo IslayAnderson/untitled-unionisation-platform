@@ -1,3 +1,6 @@
-<button {{ $attributes->merge(['type' => 'submit', 'class' => 'inline-flex items-center rounded-md bg-stone-900 px-4 py-2 text-sm font-medium text-white hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2']) }}>
+@props(['variant' => null])
+
+{{-- The Button component. $variant: "secondary", "warning" or "inverse". --}}
+<button {{ $attributes->merge(['type' => 'submit'])->class(['govuk-button', "govuk-button--{$variant}" => $variant]) }} data-module="govuk-button" data-prevent-double-click="true">
     {{ $slot }}
 </button>

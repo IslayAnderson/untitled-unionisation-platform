@@ -1,16 +1,24 @@
 <x-layouts.app title="Log in">
-    <h1 class="mb-6 text-2xl font-semibold">Log in</h1>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Log in</h1>
 
-    <form method="POST" action="{{ route('login') }}" class="max-w-md space-y-4">
-        @csrf
-        <x-field name="email" label="Email" type="email" required autofocus autocomplete="email" />
-        <x-field name="password" label="Password" type="password" required autocomplete="current-password" />
+            <form method="POST" action="{{ route('login') }}" novalidate>
+                @csrf
+                <x-field name="email" label="Email address" type="email" required autofocus autocomplete="email" spellcheck="false" />
+                <x-field name="password" label="Password" type="password" required autocomplete="current-password" width="20" />
 
-        <label class="flex items-center gap-2 text-sm">
-            <input type="checkbox" name="remember" class="rounded border-stone-300">
-            Remember me
-        </label>
+                <div class="govuk-form-group">
+                    <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="remember" name="remember" type="checkbox" value="1">
+                            <label class="govuk-label govuk-checkboxes__label" for="remember">Remember me on this device</label>
+                        </div>
+                    </div>
+                </div>
 
-        <x-button>Log in</x-button>
-    </form>
+                <x-button>Log in</x-button>
+            </form>
+        </div>
+    </div>
 </x-layouts.app>
