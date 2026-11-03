@@ -29,14 +29,11 @@ login) are never shown, edited or added to mailing lists here.
 A named group of the union's external contacts, optionally tied to a contact type and/or a
 landlord (e.g. "Managing agent – repairs").
 
-### Sending
-* A member writes a subject and plain-text message to a list. The platform emails each contact on
-  the list that has an email address, **separately** (recipients don't see each other).
-* Emails come from the platform's address, with the union's name as the sender name, and are
-  signed by the union. **The sending member is never named**, to protect tenants from retaliation.
-* Replies go to the union's reply-to address (`buildings.contact_email`, set by members on the
-  mailing lists page), or to the platform address if none is set.
-* Each send is logged (`mailing_list_messages`: subject, body, recipient count, sent time, and the
-  sending member for internal accountability). Members can see the log; the sender is shown to
-  members only.
-* Emails are queued, so a queue worker (`php artisan queue:work`) must be running to deliver them.
+Mail to a list goes through approval: see `mail.md`. Every email:
+* goes to each contact on the list that has an email address, **separately** (recipients don't see
+  each other);
+* comes from the platform's address with the union's name as the sender name, and is signed by the
+  union. **The author is never named**, to protect tenants from retaliation;
+* has replies going to the union's reply-to address (`buildings.contact_email`, set by members on the
+  mailing lists page), or to the platform address if none is set;
+* is queued, so a queue worker (`php artisan queue:work`) must be running to deliver it.

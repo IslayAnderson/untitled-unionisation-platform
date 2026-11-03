@@ -9,6 +9,20 @@
             </p>
         </section>
 
+        @if ($awaitingApproval->isNotEmpty())
+            <section class="rounded-lg border-2 border-sky-300 bg-white p-6">
+                <h2 class="text-lg font-semibold">Mail waiting for your approval</h2>
+                <ul class="mt-2 space-y-1">
+                    @foreach ($awaitingApproval as $mail)
+                        <li>
+                            <a href="{{ route('mail.show', $mail) }}" class="underline">{{ $mail->subject }}</a>
+                            <span class="text-sm text-stone-500">· {{ $mail->kind->label() }} · expires {{ $mail->expires_at->format('j M, H:i') }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+            </section>
+        @endif
+
         <section class="rounded-lg border border-stone-200 bg-white p-6">
             @if ($contact->isEnrolled())
                 <h2 class="text-lg font-semibold">You're a member</h2>

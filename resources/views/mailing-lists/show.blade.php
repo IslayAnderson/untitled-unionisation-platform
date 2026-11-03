@@ -24,33 +24,23 @@
     </section>
 
     <section class="mt-6 rounded-lg border border-stone-200 bg-white p-5">
-        <h2 class="text-lg font-semibold">Send a message</h2>
+        <h2 class="text-lg font-semibold">Send mail to this list</h2>
         <p class="mt-1 text-sm text-stone-600">
-            Each contact gets their own copy from <strong>{{ $list->building->name }}</strong>. Your name isn't included.
+            Mail to this list needs members' approval. Write <a href="{{ route('mail.create', ['list' => $list->id]) }}" class="underline">instant mail</a>
+            for something urgent, or <a href="{{ route('bulletins.create') }}" class="underline">write a bulletin</a> and send it as bulletin mail.
         </p>
-        <form method="POST" action="{{ route('mailing-lists.messages.store', $list) }}" class="mt-4 space-y-4">
-            @csrf
-            <x-field name="subject" label="Subject" required />
-            <x-textarea name="body" label="Message" rows="8" required :hint="'Plain text. It will be signed “'.$list->building->name.'”.'" />
-            <x-button>Send</x-button>
-        </form>
     </section>
 
     <section class="mt-6">
-        <h2 class="mb-2 text-lg font-semibold">Sent</h2>
-        @forelse ($messages as $message)
-            <details class="mb-2 rounded-lg border border-stone-200 bg-white px-5 py-3">
-                <summary class="cursor-pointer">
-                    <span class="font-medium">{{ $message->subject }}</span>
-                    <span class="text-sm text-stone-500">
-                        · {{ $message->sent_at->format('j M Y, H:i') }} · {{ $message->recipient_count }} {{ Str::plural('recipient', $message->recipient_count) }}
-                        · sent by {{ $message->sender?->name ?? 'a former member' }}
-                    </span>
-                </summary>
-                <p class="mt-3 whitespace-pre-line text-sm text-stone-700">{{ $message->body }}</p>
-            </details>
-        @empty
-            <p class="text-sm text-stone-600">Nothing sent yet.</p>
-        @endforelse
+        <h2 class="mb-2 text-lg font-semibold">Mail to this list</h2>
+        @if ($mails->isEmpty())
+            <p class="text-sm text-stone-600">Nothing yet.</p>
+        @else
+            <ul class="divide-y divide-stone-200 rounded-lg border border-stone-200 bg-white">
+                @foreach ($mails as $mail)
+                    <x-mail-row :mail="$mail" />
+                @endforeach
+            </ul>
+        @endif
     </section>
 </x-layouts.app>

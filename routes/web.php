@@ -4,12 +4,13 @@ use App\Http\Controllers\AddressSearchController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\BulletinController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandlordController;
 use App\Http\Controllers\MailingListController;
-use App\Http\Controllers\MailingListMessageController;
 use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\UnionMailController;
 use App\Http\Controllers\VouchController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,7 +60,16 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
 
     Route::patch('/mailing-lists/reply-to', [MailingListController::class, 'updateReplyTo'])->name('mailing-lists.reply-to');
     Route::resource('mailing-lists', MailingListController::class);
-    Route::post('/mailing-lists/{mailing_list}/messages', [MailingListMessageController::class, 'store'])
+
+    Route::resource('bulletins', BulletinController::class)->only(['index', 'create', 'store', 'show']);
+    Route::post('/bulletins/{bulletin}/mail', [BulletinController::class, 'mail'])
         ->middleware('throttle:10,1')
-        ->name('mailing-lists.messages.store');
+        ->name('bulletins.mail');
+
+    Route::get('/mail', [UnionMailController::class, 'index'])->name('mail.index');
+    Route::get('/mail/create', [UnionMailController::class, 'create'])->name('mail.create');
+    Route::post('/mail', [UnionMailController::class, 'store'])->middleware('throttle:10,1')->name('mail.store');
+    Route::get('/mail/{unionMail}', [UnionMailController::class, 'show'])->name('mail.show');
+    Route::post('/mail/{unionMail}/decision', [UnionMailController::class, 'decide'])->name('mail.decide');
+    Route::post('/mail/{unionMail}/withdraw', [UnionMailController::class, 'withdraw'])->name('mail.withdraw');
 });

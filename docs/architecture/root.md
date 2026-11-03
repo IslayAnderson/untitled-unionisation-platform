@@ -27,6 +27,8 @@
   * Swappable address lookup harness (Geoapify by default)
 * /docs/architecture/contacts.md
   * Landlords, external contacts and mailing lists (milestone 4)
+* /docs/architecture/mail.md
+  * Instant mail and bulletin mail: how union email is approved and sent
 
 ## Milestones
 1. Scaffold the app, migrate every entity in the entity diagram, build the signup flow end to end

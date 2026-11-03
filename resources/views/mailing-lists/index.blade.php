@@ -5,7 +5,8 @@
     </div>
 
     <p class="mb-6 text-stone-600">
-        Email groups of your contacts. Emails are signed by {{ $building->name }} and never name the member who sent them.
+        Groups of your contacts that the union can email. Mail needs members' approval, is signed by
+        {{ $building->name }} and never names the member who wrote it.
     </p>
 
     @if ($lists->isEmpty())

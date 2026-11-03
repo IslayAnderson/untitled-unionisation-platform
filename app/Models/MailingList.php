@@ -49,10 +49,10 @@ class MailingList extends Model
     }
 
     /**
-     * @return HasMany<MailingListMessage, $this>
+     * @return HasMany<UnionMail, $this>
      */
-    public function messages(): HasMany
+    public function mails(): HasMany
     {
-        return $this->hasMany(MailingListMessage::class);
+        return $this->hasMany(UnionMail::class);
     }
 }

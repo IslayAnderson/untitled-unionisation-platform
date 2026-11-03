@@ -163,6 +163,14 @@ class Building extends Model
     }
 
     /**
+     * @return HasMany<UnionMail, $this>
+     */
+    public function unionMails(): HasMany
+    {
+        return $this->hasMany(UnionMail::class);
+    }
+
+    /**
      * @return HasMany<MailingList, $this>
      */
     public function mailingLists(): HasMany

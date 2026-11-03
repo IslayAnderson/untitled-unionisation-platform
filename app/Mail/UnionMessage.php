@@ -39,8 +39,8 @@ class UnionMessage extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'mail.union-message',
-            text: 'mail.union-message-text',
+            view: 'emails.union-message',
+            text: 'emails.union-message-text',
         );
     }
 }

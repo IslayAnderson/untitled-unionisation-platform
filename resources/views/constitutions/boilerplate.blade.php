@@ -19,11 +19,19 @@
 <p>Everyday decisions are made by polls of members. Policies and changes to this constitution are made by referendum.</p>
 <p>A referendum is valid if at least {{ $rules->referendumQuorumPercent }}% of members vote, and passes if more than {{ $rules->referendumPassPercent }}% of the votes cast for or against are in favour. Abstentions count towards the quorum but not towards the result.</p>
 
-<h2>5. Roles</h2>
+<h2>5. Mail</h2>
+<p>No member may email anyone on the Union's behalf alone. Mail is signed by the Union, never by the member who wrote it, and must never include personal or private information.</p>
+<ul>
+    <li><strong>Instant mail</strong> is approved by members picked at random: {{ $rules->instantMailApproverPercent }}% of members are asked, and it is sent once {{ $rules->instantMailApprovalPercent }}% of members have approved. It expires after {{ $rules->instantMailExpiryHours }} hours. Once sent, it is posted as a bulletin.</li>
+    <li><strong>Bulletin mail</strong> begins as a bulletin. Its author may ask to send it, and it is sent once {{ $rules->bulletinMailApprovalPercent }}% of members have approved. It expires after {{ intdiv($rules->bulletinMailExpiryHours, 24) }} days.</li>
+</ul>
+<p>The author of a mail cannot approve it. Percentages are rounded up.</p>
+
+<h2>6. Roles</h2>
 <p>Members may create roles (such as secretary or repairs coordinator) and elect members to them. Roles carry only the responsibilities members give them.</p>
 
-<h2>6. Conduct</h2>
+<h2>7. Conduct</h2>
 <p>Members treat each other with respect. Members do not share other members' personal details outside the Union without consent.</p>
 
-<h2>7. Amendments</h2>
-<p>This constitution, including the numbers in sections 3 and 4, may be changed by referendum.</p>
+<h2>8. Amendments</h2>
+<p>This constitution, including the numbers in sections 3, 4 and 5, may be changed by referendum.</p>

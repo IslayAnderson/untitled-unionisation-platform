@@ -10,12 +10,14 @@
 </head>
 <body class="min-h-screen bg-stone-50 text-stone-900 antialiased">
     <header class="border-b border-stone-200 bg-white">
-        <div class="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
+        <div class="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-2 px-4 py-3">
             <a href="{{ route('home') }}" class="font-semibold">{{ config('app.name') }}</a>
-            <nav class="flex items-center gap-4 text-sm">
+            <nav class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
                 @auth
                     <a href="{{ route('dashboard') }}" class="hover:underline">Your union</a>
                     @if (auth()->user()->contact?->isEnrolled())
+                        <a href="{{ route('bulletins.index') }}" class="hover:underline">Bulletins</a>
+                        <a href="{{ route('mail.index') }}" class="hover:underline">Mail</a>
                         <a href="{{ route('contacts.index') }}" class="hover:underline">Contacts</a>
                         <a href="{{ route('mailing-lists.index') }}" class="hover:underline">Mailing lists</a>
                     @endif

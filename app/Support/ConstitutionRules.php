@@ -12,6 +12,11 @@ final readonly class ConstitutionRules
         'vouches_required' => 2,
         'referendum_quorum_percent' => 50,
         'referendum_pass_percent' => 50,
+        'instant_mail_approval_percent' => 10,
+        'instant_mail_approver_percent' => 20,
+        'instant_mail_expiry_hours' => 48,
+        'bulletin_mail_approval_percent' => 50,
+        'bulletin_mail_expiry_hours' => 168,
     ];
 
     public function __construct(
@@ -19,6 +24,11 @@ final readonly class ConstitutionRules
         public int $vouchesRequired,
         public int $referendumQuorumPercent,
         public int $referendumPassPercent,
+        public int $instantMailApprovalPercent,
+        public int $instantMailApproverPercent,
+        public int $instantMailExpiryHours,
+        public int $bulletinMailApprovalPercent,
+        public int $bulletinMailExpiryHours,
     ) {}
 
     /**
@@ -33,6 +43,11 @@ final readonly class ConstitutionRules
             vouchesRequired: (int) $rules['vouches_required'],
             referendumQuorumPercent: (int) $rules['referendum_quorum_percent'],
             referendumPassPercent: (int) $rules['referendum_pass_percent'],
+            instantMailApprovalPercent: (int) $rules['instant_mail_approval_percent'],
+            instantMailApproverPercent: (int) $rules['instant_mail_approver_percent'],
+            instantMailExpiryHours: (int) $rules['instant_mail_expiry_hours'],
+            bulletinMailApprovalPercent: (int) $rules['bulletin_mail_approval_percent'],
+            bulletinMailExpiryHours: (int) $rules['bulletin_mail_expiry_hours'],
         );
     }
 
@@ -46,6 +61,11 @@ final readonly class ConstitutionRules
             'vouches_required' => $this->vouchesRequired,
             'referendum_quorum_percent' => $this->referendumQuorumPercent,
             'referendum_pass_percent' => $this->referendumPassPercent,
+            'instant_mail_approval_percent' => $this->instantMailApprovalPercent,
+            'instant_mail_approver_percent' => $this->instantMailApproverPercent,
+            'instant_mail_expiry_hours' => $this->instantMailExpiryHours,
+            'bulletin_mail_approval_percent' => $this->bulletinMailApprovalPercent,
+            'bulletin_mail_expiry_hours' => $this->bulletinMailExpiryHours,
         ];
     }
 }

@@ -50,6 +50,9 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
     * `vouches_required`: 2, the vouches needed to enrol
     * `referendum_quorum_percent`: 50
     * `referendum_pass_percent`: 50 (strictly more than this share of for+against votes)
+    * `instant_mail_approval_percent`: 10, `instant_mail_approver_percent`: 20,
+      `instant_mail_expiry_hours`: 48
+    * `bulletin_mail_approval_percent`: 50, `bulletin_mail_expiry_hours`: 168
   * Each building starts with the boilerplate constitution and can amend it by referendum.
 * `contacts`
   * `building_id`: the union the contact belongs to (Contacts already link to a Unit; this is set for
@@ -65,8 +68,12 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
 * `vouches`: `voucher_contact_id`, `vouchee_contact_id`, timestamps. Unique on the pair. Records one
   tenant scanning another's QR code.
 * `contact_mailing_list`, `contact_role`: pivots (see above).
-* `mailing_list_messages`: `mailing_list_id`, `sender_contact_id`, `subject`, `body`,
-  `recipient_count`, `sent_at`. A log of emails sent to a mailing list.
+* `union_mails`: an email from the union to a mailing list, and its approval state (see `mail.md`).
+  `kind` (instant | bulletin), `status` (pending | sent | rejected | expired | withdrawn),
+  `building_id`, `mailing_list_id`, `author_contact_id`, `bulletin_id` (the source bulletin, or the
+  bulletin created when an instant mail is sent), `subject`, `body`, `approvals_required`,
+  `expires_at`, `decided_at`, `recipient_count`.
+* `union_mail_approvers`: who may approve a mail and their `decision` (approve | reject).
 
 ## Lookup data
 `landlord_types` (Individual, Company, Housing association, Local authority) and `contact_types`

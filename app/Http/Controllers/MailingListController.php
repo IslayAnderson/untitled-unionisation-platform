@@ -53,7 +53,7 @@ class MailingListController extends Controller
 
         return view('mailing-lists.show', [
             'list' => $mailingList->load(['type', 'landlord', 'contacts' => fn ($query) => $query->orderBy('name')]),
-            'messages' => $mailingList->messages()->with('sender')->latest('sent_at')->get(),
+            'mails' => $mailingList->mails()->latest()->get(),
         ]);
     }
 

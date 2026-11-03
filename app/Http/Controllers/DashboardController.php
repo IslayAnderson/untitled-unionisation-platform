@@ -33,6 +33,13 @@ class DashboardController extends Controller
             'joinQr' => QrCode::dataUri($joinUrl),
             'vouchUrl' => $vouchUrl,
             'vouchQr' => QrCode::dataUri($vouchUrl),
+            'awaitingApproval' => $contact->isEnrolled()
+                ? $building->unionMails()->pending()
+                    ->where('expires_at', '>', now())
+                    ->whereHas('approvers', fn ($query) => $query->where('contact_id', $contact->id)->whereNull('decision'))
+                    ->latest()
+                    ->get()
+                : collect(),
         ]);
     }
 }
