@@ -1,7 +1,14 @@
 <x-layouts.app :title="$bulletin->title">
     <h1 class="text-2xl font-semibold">{{ $bulletin->title }}</h1>
-    <p class="mb-6 text-sm text-stone-600">
-        {{ $bulletin->author?->name ?? 'A former member' }} · {{ $bulletin->published_at->format('j M Y, H:i') }}
+    <p class="mb-6 flex flex-wrap items-center gap-x-2 text-sm text-stone-600">
+        @if ($bulletin->pinned_at)
+            <span class="rounded bg-violet-100 px-1.5 py-0.5 text-xs font-medium text-violet-800">Pinned</span>
+        @endif
+        @if ($bulletin->isVouching())
+            <span>For everyone who has signed up to {{ $bulletin->building->name }}</span>
+        @else
+            <span>{{ $bulletin->author?->name ?? 'A former member' }} · {{ $bulletin->published_at->format('j M Y, H:i') }}</span>
+        @endif
     </p>
 
     {{-- Cleaned by App\Support\RichText before it was stored. --}}
@@ -21,7 +28,11 @@
     <section class="mt-6">
         <h2 class="text-lg font-semibold">Replies</h2>
         <p class="mb-3 text-sm text-stone-600">
-            Email replies to this bulletin's mail appear here. Members' posts stay inside the union and are never emailed.
+            @if ($bulletin->isVouching())
+                Members and neighbours waiting to be vouched for can read and reply here. Nothing here is emailed.
+            @else
+                Email replies to this bulletin's mail appear here. Members' posts stay inside the union and are never emailed.
+            @endif
         </p>
 
         @if ($bulletin->replies->isNotEmpty())
@@ -40,9 +51,14 @@
                                 @unless ($reply->contact)
                                     <span class="rounded bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-800" title="The sender's address isn't on the mailing list this was sent to.">Not on the mailing list</span>
                                 @endunless
-                            @else
+                            @elseif ($reply->author?->isEnrolled())
                                 <span class="rounded bg-stone-100 px-1.5 py-0.5 text-xs font-medium text-stone-700">Member</span>
-                                <span class="font-medium">{{ $reply->author?->name ?? 'A former member' }}</span>
+                                <span class="font-medium">{{ $reply->author->name }}</span>
+                            @elseif ($reply->author)
+                                <span class="rounded bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-800" title="Hasn't been vouched for by members yet, so may not live here.">Not yet vouched for</span>
+                                <span class="font-medium">{{ $reply->author->name }}</span>
+                            @else
+                                <span class="font-medium">Someone who has left</span>
                             @endif
                             <span class="text-stone-500">· {{ $reply->published_at->format('j M Y, H:i') }}</span>
                         </p>
@@ -55,8 +71,15 @@
 
         <form method="POST" action="{{ route('bulletins.replies.store', $bulletin) }}" class="mt-4 space-y-3 rounded-lg border border-stone-200 bg-white p-4">
             @csrf
-            <x-rich-editor name="reply" label="Reply to members" compact
-                hint="Only members of your union can see this. To answer an email, write instant mail or send a bulletin as mail." />
+            @if ($isMember)
+                <x-rich-editor name="reply" :label="$bulletin->isVouching() ? 'Reply' : 'Reply to members'" compact
+                    :hint="$bulletin->isVouching()
+                        ? 'Neighbours who haven\'t been vouched for yet can read this too.'
+                        : 'Only members of your union can see this. To answer an email, write instant mail or send a bulletin as mail.'" />
+            @else
+                <x-textarea name="reply" label="Reply" rows="3" maxlength="2000"
+                    hint="Text only until you've been vouched for. Everyone who has signed up can read this, so don't share your flat number or phone number." />
+            @endif
             <x-button>Post reply</x-button>
         </form>
     </section>

@@ -7,6 +7,7 @@ use App\Models\Contact;
 use App\Models\Unit;
 use App\Services\AddressLookup\AddressResult;
 use App\Support\BoilerplateConstitution;
+use App\Support\VouchingBulletin;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
 
@@ -77,6 +78,7 @@ class PlaceTenant
                 ]);
 
                 BoilerplateConstitution::createFor($building);
+                VouchingBulletin::createFor($building);
 
                 return $building;
             });

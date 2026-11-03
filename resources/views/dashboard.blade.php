@@ -29,18 +29,21 @@
                 <p class="mt-1 text-stone-600">
                     When a neighbour shows you their QR code, scan it with your phone's camera to vouch for them.
                 </p>
+                <x-vouching-bulletin-link :bulletin="$vouchingBulletin" text="See who's waiting and arrange to meet" />
             @elseif (! $vouchingOpen)
                 <h2 class="text-lg font-semibold">Waiting for neighbours</h2>
                 <p class="mt-1 text-stone-600">
                     {{ $confirmedCount }} of {{ $rules->minSignups }} tenants have signed up. Vouching starts when
                     {{ $rules->minSignups }} have. Share your building's link below.
                 </p>
+                <x-vouching-bulletin-link :bulletin="$vouchingBulletin" text="Say hello to your neighbours" />
             @else
                 <h2 class="text-lg font-semibold">Get vouched for</h2>
                 <p class="mt-1 text-stone-600">
                     Show this code to neighbours in person. You'll become a member when
                     {{ $rules->vouchesRequired }} of them have scanned it ({{ $vouchCount }} so far).
                 </p>
+                <x-vouching-bulletin-link :bulletin="$vouchingBulletin" text="Arrange to meet members" />
                 <img src="{{ $vouchQr }}" alt="Your personal vouching QR code" class="mt-4 h-56 w-56">
                 <p class="mt-2 break-all text-xs text-stone-500">{{ $vouchUrl }}</p>
             @endif

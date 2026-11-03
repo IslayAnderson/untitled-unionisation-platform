@@ -82,6 +82,9 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
   bulletin created when an instant mail is sent), `reply_token` (in the mail's Reply-To address),
   `subject`, `body` (HTML), `approvals_required`, `expires_at`, `decided_at`, `recipient_count`.
 * `union_mail_approvers`: who may approve a mail and their `decision` (approve | reject).
+* `bulletins`: `pinned_at` (pinned bulletins are listed first) and `system_key` (bulletins the
+  platform creates; `vouching` for each union's vouching bulletin). Unique on
+  (`building_id`, `system_key`).
 * `uploaded_images`: images uploaded into rich text (see `uploads.md`). `building_id`,
   `uploader_contact_id`, `disk`, `path`, `mime_type`, `width`, `height`, `size`, `original_size`,
   `original_name`, `cache_warmed_at`.

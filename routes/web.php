@@ -54,6 +54,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/vouch/{contact:vouch_token}', [VouchController::class, 'show'])->name('vouch.show');
     Route::post('/vouch/{contact:vouch_token}', [VouchController::class, 'store'])->name('vouch.store');
+
+    // Open to tenants waiting to be vouched for, but only for the vouching bulletin (the view-bulletin gate).
+    Route::get('/bulletins/{bulletin}', [BulletinController::class, 'show'])->whereNumber('bulletin')->name('bulletins.show');
+    Route::post('/bulletins/{bulletin}/replies', [BulletinReplyController::class, 'store'])
+        ->whereNumber('bulletin')
+        ->middleware('throttle:30,1')
+        ->name('bulletins.replies.store');
 });
 
 Route::middleware(['auth', 'verified', 'member'])->group(function () {
@@ -63,17 +70,13 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
     Route::patch('/mailing-lists/reply-to', [MailingListController::class, 'updateReplyTo'])->name('mailing-lists.reply-to');
     Route::resource('mailing-lists', MailingListController::class);
 
-    Route::resource('bulletins', BulletinController::class)->only(['index', 'create', 'store', 'show']);
+    Route::resource('bulletins', BulletinController::class)->only(['index', 'create', 'store']);
     Route::post('/bulletins/{bulletin}/mail', [BulletinController::class, 'mail'])
         ->middleware('throttle:10,1')
         ->name('bulletins.mail');
     Route::post('/uploads/images', [ImageUploadController::class, 'store'])
         ->middleware('throttle:30,1')
         ->name('uploads.images.store');
-
-    Route::post('/bulletins/{bulletin}/replies', [BulletinReplyController::class, 'store'])
-        ->middleware('throttle:30,1')
-        ->name('bulletins.replies.store');
 
     Route::get('/mail', [UnionMailController::class, 'index'])->name('mail.index');
     Route::get('/mail/create', [UnionMailController::class, 'create'])->name('mail.create');

@@ -170,5 +170,5 @@ it('cleans bulletin HTML when it is posted', function () {
         'body' => '<h2 style="color:red">Our response</h2><p><a href="javascript:alert(1)">bad</a> <a href="https://example.org">good</a></p><script>x()</script>',
     ])->assertRedirect();
 
-    expect(Bulletin::sole()->rich_text)->toBe('<h2>Our response</h2><p><a rel="noopener noreferrer nofollow">bad</a> <a href="https://example.org" rel="noopener noreferrer nofollow">good</a></p>');
+    expect(Bulletin::whereNull('system_key')->sole()->rich_text)->toBe('<h2>Our response</h2><p><a rel="noopener noreferrer nofollow">bad</a> <a href="https://example.org" rel="noopener noreferrer nofollow">good</a></p>');
 });

@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Support\ConstitutionRules;
+use App\Support\VouchingBulletin;
 use Database\Factories\BuildingFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
 /**
@@ -152,6 +154,14 @@ class Building extends Model
     public function bulletins(): HasMany
     {
         return $this->hasMany(Bulletin::class);
+    }
+
+    /**
+     * @return HasOne<Bulletin, $this>
+     */
+    public function vouchingBulletin(): HasOne
+    {
+        return $this->hasOne(Bulletin::class)->where('system_key', VouchingBulletin::KEY);
     }
 
     /**

@@ -10,22 +10,33 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 /**
- * Members' posts in a bulletin's reply thread. They stay inside the union and
- * are never emailed.
+ * Posts in a bulletin's reply thread. They stay inside the union and are never
+ * emailed. Tenants waiting to be vouched for can only reply to the vouching
+ * bulletin, and only in plain text.
  */
 class BulletinReplyController extends Controller
 {
     public function store(Request $request, Bulletin $bulletin): RedirectResponse
     {
-        Gate::authorize('manage-union-record', $bulletin);
+        Gate::authorize('view-bulletin', $bulletin);
 
-        $data = $request->validate([
-            'reply' => ['required', 'string', 'max:100000', new FilledRichText],
-        ]);
+        $contact = $request->user()->contact;
+
+        if ($contact->isEnrolled()) {
+            $data = $request->validate([
+                'reply' => ['required', 'string', 'max:100000', new FilledRichText],
+            ]);
+            $richText = RichText::clean($data['reply']);
+        } else {
+            $data = $request->validate([
+                'reply' => ['required', 'string', 'max:2000'],
+            ]);
+            $richText = RichText::fromPlainText($data['reply']);
+        }
 
         $reply = $bulletin->replies()->create([
-            'author_id' => $request->user()->contact->id,
-            'rich_text' => RichText::clean($data['reply']),
+            'author_id' => $contact->id,
+            'rich_text' => $richText,
             'published_at' => now(),
         ]);
 

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Building;
 use App\Support\BoilerplateConstitution;
+use App\Support\VouchingBulletin;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -28,6 +29,9 @@ class BuildingFactory extends Factory
 
     public function configure(): static
     {
-        return $this->afterCreating(fn (Building $building) => BoilerplateConstitution::createFor($building));
+        return $this->afterCreating(function (Building $building) {
+            BoilerplateConstitution::createFor($building);
+            VouchingBulletin::createFor($building);
+        });
     }
 }

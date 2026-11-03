@@ -14,8 +14,11 @@
                 <li>
                     <a href="{{ route('bulletins.show', $bulletin) }}" class="block px-5 py-4 hover:bg-stone-50">
                         <span class="font-medium">{{ $bulletin->title }}</span>
+                        @if ($bulletin->pinned_at)
+                            <span class="ml-1 rounded bg-violet-100 px-1.5 py-0.5 text-xs font-medium text-violet-800">Pinned</span>
+                        @endif
                         <span class="block text-sm text-stone-500">
-                            {{ $bulletin->author?->name ?? 'A former member' }} · {{ $bulletin->published_at->format('j M Y') }}
+                            {{ $bulletin->isVouching() ? 'For everyone who has signed up' : ($bulletin->author?->name ?? 'A former member') }} · {{ $bulletin->published_at->format('j M Y') }}
                             @if ($bulletin->replies_count)
                                 · {{ $bulletin->replies_count }} {{ Str::plural('reply', $bulletin->replies_count) }}
                             @endif

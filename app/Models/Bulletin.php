@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UnionMailStatus;
+use App\Support\VouchingBulletin;
 use Database\Factories\BulletinFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * A post on the union's noticeboard, visible to all its members. rich_text
  * is HTML cleaned by App\Support\RichText.
  */
-#[Fillable(['building_id', 'author_id', 'title', 'rich_text', 'published_at'])]
+#[Fillable(['building_id', 'author_id', 'title', 'rich_text', 'published_at', 'pinned_at', 'system_key'])]
 class Bulletin extends Model
 {
     /** @use HasFactory<BulletinFactory> */
@@ -25,7 +26,17 @@ class Bulletin extends Model
     {
         return [
             'published_at' => 'datetime',
+            'pinned_at' => 'datetime',
         ];
+    }
+
+    /**
+     * The union's pinned bulletin for arranging vouching, which tenants who
+     * aren't members yet can also read and reply to.
+     */
+    public function isVouching(): bool
+    {
+        return $this->system_key === VouchingBulletin::KEY;
     }
 
     /**

@@ -25,6 +25,7 @@ class BulletinController extends Controller
             'bulletins' => $request->user()->contact->building->bulletins()
                 ->with('author')
                 ->withCount('replies')
+                ->orderByDesc('pinned_at')
                 ->latest('published_at')
                 ->get(),
         ]);
@@ -56,9 +57,10 @@ class BulletinController extends Controller
 
     public function show(Request $request, Bulletin $bulletin): View
     {
-        Gate::authorize('manage-union-record', $bulletin);
+        Gate::authorize('view-bulletin', $bulletin);
 
-        $member = $request->user()->contact;
+        $viewer = $request->user()->contact;
+        $isMember = $viewer->isEnrolled();
 
         return view('bulletins.show', [
             'bulletin' => $bulletin->load([
@@ -66,9 +68,10 @@ class BulletinController extends Controller
                 'mails' => fn ($query) => $query->latest(),
                 'replies' => fn ($query) => $query->with(['author', 'contact'])->oldest('published_at')->oldest('id'),
             ]),
-            'canMail' => $bulletin->author_id === $member->id && ! $bulletin->hasActiveMail(),
-            'lists' => $member->building->mailingLists()->orderBy('name')->get(),
-            'rules' => $member->building->rules(),
+            'isMember' => $isMember,
+            'canMail' => $isMember && $bulletin->author_id === $viewer->id && ! $bulletin->hasActiveMail(),
+            'lists' => $isMember ? $viewer->building->mailingLists()->orderBy('name')->get() : collect(),
+            'rules' => $viewer->building->rules(),
         ]);
     }
 

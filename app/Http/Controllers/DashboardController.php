@@ -33,6 +33,7 @@ class DashboardController extends Controller
             'joinQr' => QrCode::dataUri($joinUrl),
             'vouchUrl' => $vouchUrl,
             'vouchQr' => QrCode::dataUri($vouchUrl),
+            'vouchingBulletin' => $building->vouchingBulletin()->withCount('replies')->first(),
             'awaitingApproval' => $contact->isEnrolled()
                 ? $building->unionMails()->pending()
                     ->where('expires_at', '>', now())

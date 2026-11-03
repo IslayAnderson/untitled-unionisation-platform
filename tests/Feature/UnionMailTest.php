@@ -223,7 +223,7 @@ it('sends bulletin mail once half the union approves, without a new bulletin', f
 
     expect($mail->status)->toBe(UnionMailStatus::Sent)
         ->and($mail->bulletin_id)->toBe($bulletin->id)
-        ->and(Bulletin::count())->toBe(1);
+        ->and(Bulletin::whereNull('system_key')->count())->toBe(1);
     Mail::assertQueuedCount(2);
 });
 
@@ -298,7 +298,7 @@ it('turns a bulletin into mail through the bulletin page', function () {
     [$author] = members($this->building, 3);
 
     $this->actingAs($author->user)->post('/bulletins', ['title' => 'Rent rise', 'body' => 'We oppose the rent rise.'])->assertRedirect();
-    $bulletin = Bulletin::sole();
+    $bulletin = Bulletin::whereNull('system_key')->sole();
 
     $this->actingAs($author->user)->get("/bulletins/{$bulletin->id}")
         ->assertOk()
@@ -320,5 +320,6 @@ it('shows bulletins only to members of the same union', function () {
 
     $this->actingAs($member->user)->get('/bulletins')->assertSee('Our bulletin')->assertDontSee('Their bulletin');
     $this->actingAs($member->user)->get("/bulletins/{$otherBulletin->id}")->assertNotFound();
-    $this->actingAs($tenant->user)->get("/bulletins/{$bulletin->id}")->assertRedirect(route('dashboard'));
+    $this->actingAs($tenant->user)->get("/bulletins/{$bulletin->id}")->assertNotFound();
+    $this->actingAs($tenant->user)->get('/bulletins')->assertRedirect(route('dashboard'));
 });

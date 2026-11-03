@@ -65,5 +65,17 @@ class AppServiceProvider extends ServiceProvider
 
             return $allowed ? Response::allow() : Response::denyAsNotFound();
         });
+
+        // Members may read and reply to any of their union's bulletins. Tenants
+        // waiting to be vouched for may only see the vouching bulletin.
+        Gate::define('view-bulletin', function (User $user, Bulletin $bulletin): Response {
+            $contact = $user->contact;
+
+            $allowed = $contact
+                && $bulletin->building_id === $contact->building_id
+                && ($contact->isEnrolled() || ($bulletin->isVouching() && $contact->isConfirmedTenant()));
+
+            return $allowed ? Response::allow() : Response::denyAsNotFound();
+        });
     }
 }
