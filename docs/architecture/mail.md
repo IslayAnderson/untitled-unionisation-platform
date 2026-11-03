@@ -44,8 +44,11 @@ Examples: 10 members needs 1 approval from 2 random members; 11 members needs 2 
 For considered messages that the whole union stands behind.
 
 * Begins as a **bulletin** posted on the union's noticeboard.
-* The bulletin's author can turn it into a mail by picking a mailing list. The bulletin's title and
-  text become the subject and message.
+* The bulletin's author can turn it into a mail. The compose page starts with the bulletin's title
+  and text as the subject and message, and shows the bulletin's replies, so the author can rework the
+  mail to reflect the discussion before asking for approval. The bulletin itself is unchanged; the
+  mail links back to it.
+* Approvers approve the mail as written, and it's locked from then on like all union mail.
 * Every other member is an approver.
 * It needs `bulletin_mail_approval_percent` (default **50%**) of members to approve.
 * It expires after `bulletin_mail_expiry_hours` (default **168**, 7 days).

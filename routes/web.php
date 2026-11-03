@@ -71,6 +71,7 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
     Route::resource('mailing-lists', MailingListController::class);
 
     Route::resource('bulletins', BulletinController::class)->only(['index', 'create', 'store']);
+    Route::get('/bulletins/{bulletin}/mail', [BulletinController::class, 'composeMail'])->name('bulletins.mail.create');
     Route::post('/bulletins/{bulletin}/mail', [BulletinController::class, 'mail'])
         ->middleware('throttle:10,1')
         ->name('bulletins.mail');

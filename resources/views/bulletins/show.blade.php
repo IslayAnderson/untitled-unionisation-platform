@@ -93,19 +93,11 @@
                 {{ intdiv($rules->bulletinMailExpiryHours, 24) }} days.
             </p>
 
-            <x-privacy-reminder class="mt-4" />
-
-            @if ($lists->isEmpty())
-                <p class="mt-4 text-sm text-stone-700">You need a mailing list first. <a href="{{ route('mailing-lists.create') }}" class="underline">Create one</a>.</p>
-            @else
-                <form method="POST" action="{{ route('bulletins.mail', $bulletin) }}" class="mt-4 flex max-w-xl items-end gap-3">
-                    @csrf
-                    <div class="flex-1">
-                        <x-select name="mailing_list_id" label="To" :options="$lists->pluck('name', 'id')" placeholder="Choose a mailing list" required />
-                    </div>
-                    <x-button>Ask the union</x-button>
-                </form>
-            @endif
+            <p class="mt-2 text-sm text-stone-600">
+                You can rework the subject and message first, for example to reflect the discussion in the replies.
+                The bulletin itself stays as it is.
+            </p>
+            <a href="{{ route('bulletins.mail.create', $bulletin) }}" class="mt-4 inline-block rounded-md bg-stone-900 px-3 py-2 text-sm font-medium text-white hover:bg-stone-700">Write the mail</a>
         </section>
     @endif
 </x-layouts.app>

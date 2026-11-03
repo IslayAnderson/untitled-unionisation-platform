@@ -303,13 +303,56 @@ it('turns a bulletin into mail through the bulletin page', function () {
     $this->actingAs($author->user)->get("/bulletins/{$bulletin->id}")
         ->assertOk()
         ->assertSee('Send as mail')
-        ->assertSee('Never include personal or private information.');
+        ->assertSee(route('bulletins.mail.create', $bulletin));
 
-    $this->actingAs($author->user)->post("/bulletins/{$bulletin->id}/mail", ['mailing_list_id' => $this->list->id])->assertRedirect();
+    $this->actingAs($author->user)->get(route('bulletins.mail.create', $bulletin))
+        ->assertOk()
+        ->assertSee('Never include personal or private information.')
+        ->assertSee('value="Rent rise"', false)
+        ->assertSee('We oppose the rent rise.');
 
-    expect(UnionMail::sole()->kind)->toBe(UnionMailKind::Bulletin);
+    $this->actingAs($author->user)->post(route('bulletins.mail', $bulletin), [
+        'mailing_list_id' => $this->list->id,
+        'subject' => 'Our response to the rent rise',
+        'body' => '<p>We oppose the rent rise and ask to meet.</p><script>x()</script>',
+    ])->assertRedirect();
+
+    expect(UnionMail::sole())
+        ->kind->toBe(UnionMailKind::Bulletin)
+        ->subject->toBe('Our response to the rent rise')
+        ->body->toBe('<p>We oppose the rent rise and ask to meet.</p>')
+        ->and($bulletin->fresh()->title)->toBe('Rent rise');
 
     $this->actingAs($author->user)->get("/bulletins/{$bulletin->id}")->assertDontSee('Send as mail');
+    $this->actingAs($author->user)->get(route('bulletins.mail.create', $bulletin))->assertRedirect(route('bulletins.show', $bulletin));
+});
+
+it('shows the discussion while writing bulletin mail, only to the author', function () {
+    [$author, $other] = members($this->building, 3);
+    $bulletin = Bulletin::factory()->create(['building_id' => $this->building->id, 'author_id' => $author->id]);
+    $bulletin->replies()->create(['author_id' => $other->id, 'rich_text' => '<p>Mention the boiler too.</p>', 'published_at' => now()]);
+
+    $this->actingAs($author->user)->get(route('bulletins.mail.create', $bulletin))
+        ->assertOk()
+        ->assertSeeInOrder(['Discussion so far', $other->name, 'Mention the boiler too.']);
+
+    $this->actingAs($other->user)->get(route('bulletins.mail.create', $bulletin))->assertRedirect(route('bulletins.show', $bulletin));
+    $this->actingAs($other->user)->post(route('bulletins.mail', $bulletin), [
+        'mailing_list_id' => $this->list->id, 'subject' => 'Hijack', 'body' => '<p>Not mine</p>',
+    ])->assertSessionHasErrors('mailing_list_id');
+
+    expect(UnionMail::count())->toBe(0);
+});
+
+it('needs a subject and message for bulletin mail', function () {
+    [$author] = members($this->building, 3);
+    $bulletin = Bulletin::factory()->create(['building_id' => $this->building->id, 'author_id' => $author->id]);
+
+    $this->actingAs($author->user)->post(route('bulletins.mail', $bulletin), [
+        'mailing_list_id' => $this->list->id, 'subject' => '', 'body' => '<p>&nbsp;</p>',
+    ])->assertSessionHasErrors(['subject', 'body']);
+
+    expect(UnionMail::count())->toBe(0);
 });
 
 it('shows bulletins only to members of the same union', function () {

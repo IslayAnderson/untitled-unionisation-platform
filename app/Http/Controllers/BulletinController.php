@@ -75,6 +75,27 @@ class BulletinController extends Controller
         ]);
     }
 
+    /**
+     * Write the bulletin mail, starting from the bulletin and informed by its replies.
+     */
+    public function composeMail(Request $request, Bulletin $bulletin): View|RedirectResponse
+    {
+        Gate::authorize('manage-union-record', $bulletin);
+
+        $member = $request->user()->contact;
+
+        if ($bulletin->author_id !== $member->id || $bulletin->hasActiveMail()) {
+            return redirect()->route('bulletins.show', $bulletin)
+                ->with('status', 'Only the bulletin\'s author can send it as mail, and only once.');
+        }
+
+        return view('bulletins.mail', [
+            'bulletin' => $bulletin->load(['replies' => fn ($query) => $query->with(['author', 'contact'])->oldest('published_at')->oldest('id')]),
+            'lists' => $member->building->mailingLists()->orderBy('name')->get(),
+            'rules' => $member->building->rules(),
+        ]);
+    }
+
     public function mail(Request $request, Bulletin $bulletin, MailApprovals $approvals): RedirectResponse
     {
         Gate::authorize('manage-union-record', $bulletin);
@@ -83,12 +104,20 @@ class BulletinController extends Controller
 
         $data = $request->validate([
             'mailing_list_id' => ['required', 'integer', Rule::exists('mailing_lists', 'id')->where('building_id', $member->building_id)],
+            'subject' => ['required', 'string', 'max:200'],
+            'body' => ['required', 'string', 'max:100000', new FilledRichText],
         ]);
 
         try {
-            $mail = $approvals->createFromBulletin($member, $bulletin, MailingList::findOrFail($data['mailing_list_id']));
+            $mail = $approvals->createFromBulletin(
+                $member,
+                $bulletin,
+                MailingList::findOrFail($data['mailing_list_id']),
+                $data['subject'],
+                RichText::clean($data['body']),
+            );
         } catch (UnionMailRefused $e) {
-            return back()->withErrors(['mailing_list_id' => $e->getMessage()]);
+            return back()->withInput()->withErrors(['mailing_list_id' => $e->getMessage()]);
         }
 
         return redirect()->route('mail.show', $mail)->with('status', 'Your bulletin mail is waiting for approval from the union.');

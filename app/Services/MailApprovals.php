@@ -46,9 +46,13 @@ class MailApprovals
     }
 
     /**
+     * Bulletin mail. The author can rework the subject and message from the
+     * bulletin (for example after discussion in its replies); otherwise the
+     * bulletin's title and text are used.
+     *
      * @throws UnionMailRefused
      */
-    public function createFromBulletin(Contact $author, Bulletin $bulletin, MailingList $list): UnionMail
+    public function createFromBulletin(Contact $author, Bulletin $bulletin, MailingList $list, ?string $subject = null, ?string $body = null): UnionMail
     {
         if ($bulletin->author_id !== $author->id) {
             throw new UnionMailRefused('Only the author of a bulletin can turn it into mail.');
@@ -64,8 +68,8 @@ class MailApprovals
         return $this->create($author, $list, [
             'kind' => UnionMailKind::Bulletin,
             'bulletin_id' => $bulletin->id,
-            'subject' => $bulletin->title,
-            'body' => $bulletin->rich_text,
+            'subject' => $subject ?? $bulletin->title,
+            'body' => $body ?? $bulletin->rich_text,
             'approvals_required' => $this->percentOf($members->count() + 1, $rules->bulletinMailApprovalPercent),
             'expires_at' => now()->addHours($rules->bulletinMailExpiryHours),
         ], $members);
