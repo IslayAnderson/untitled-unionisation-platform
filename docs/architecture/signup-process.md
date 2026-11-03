@@ -61,7 +61,9 @@ config. Each building starts with the boilerplate values and can change them by 
 ## Flyers and posters
 Any confirmed tenant can print recruitment material from the dashboard's "Invite your neighbours"
 section (`GET /invite/print`). They choose an A4 poster, two A5 flyers or four door slips per A4
-sheet, pick or write a headline and edit a short message. Each one shows the union's name, the
+sheet, or an A4 information leaflet explaining how the union works (vouching, the private
+noticeboard, anonymous union mail, secret ballots, the constitution and elected roles, with numbers
+taken from the constitution), pick or write a headline and edit a short message. Each one shows the union's name, the
 building's join link and its QR code (SVG, so it prints sharply). Nothing is stored, and the material
 never names a member. The page hides the app's header when printing and sets `@page` to A4 with no
 margin.

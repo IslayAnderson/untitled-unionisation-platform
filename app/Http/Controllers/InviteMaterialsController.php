@@ -29,6 +29,7 @@ class InviteMaterialsController extends Controller
 
         return view('invite.print', [
             'building' => $building,
+            'rules' => $building->rules(),
             'joinUrl' => $joinUrl,
             'joinQr' => QrCode::dataUri($joinUrl),
             'headlines' => self::HEADLINES,

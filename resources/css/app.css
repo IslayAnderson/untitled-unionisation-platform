@@ -180,3 +180,50 @@
 .invite-card__how > * + * {
     margin-top: 0.4em;
 }
+
+.invite-card--leaflet {
+    padding: 8cqw;
+    gap: 3cqw;
+}
+
+.invite-card--leaflet .invite-card__union {
+    font-size: 2.8cqw;
+}
+
+.invite-card--leaflet .invite-card__headline {
+    font-size: 8cqw;
+}
+
+.invite-card--leaflet .invite-card__message {
+    font-size: 3.2cqw;
+}
+
+.invite-leaflet__subhead {
+    margin-top: 1cqw;
+    border-top: 0.4cqw solid var(--color-stone-900);
+    padding-top: 2.5cqw;
+    font-size: 3.4cqw;
+}
+
+.invite-leaflet__features {
+    column-gap: 5cqw;
+    row-gap: 3.5cqw;
+    font-size: 2.6cqw;
+}
+
+.invite-leaflet__features dt {
+    font-size: 2.9cqw;
+    margin-bottom: 0.5cqw;
+}
+
+.invite-card--leaflet .invite-card__join {
+    gap: 4cqw;
+}
+
+.invite-card--leaflet .invite-card__qr {
+    width: 24cqw;
+}
+
+.invite-card--leaflet .invite-card__how {
+    font-size: 2.6cqw;
+}

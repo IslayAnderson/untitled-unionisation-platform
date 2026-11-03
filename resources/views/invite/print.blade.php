@@ -15,8 +15,8 @@
             <div class="space-y-5 rounded-lg border border-stone-200 bg-white p-5">
                 <fieldset>
                     <legend class="text-sm font-medium">Design</legend>
-                    <div class="mt-2 grid gap-2 sm:grid-cols-3">
-                        @foreach (['poster' => ['Poster', 'One A4 sheet, for noticeboards and lifts'], 'flyers' => ['Flyers', 'Two A5 flyers per A4 sheet'], 'slips' => ['Door slips', 'Four small slips per A4 sheet']] as $value => [$label, $hint])
+                    <div class="mt-2 grid gap-2 sm:grid-cols-2">
+                        @foreach (['poster' => ['Poster', 'One A4 sheet, for noticeboards and lifts'], 'flyers' => ['Flyers', 'Two A5 flyers per A4 sheet'], 'slips' => ['Door slips', 'Four small slips per A4 sheet'], 'leaflet' => ['Information leaflet', 'One A4 sheet explaining how the union works']] as $value => [$label, $hint])
                             <label class="flex cursor-pointer gap-2 rounded-md border border-stone-200 p-3 has-[:checked]:border-stone-900 has-[:checked]:bg-stone-50">
                                 <input type="radio" name="design" value="{{ $value }}" x-model="design" class="mt-1 border-stone-300">
                                 <span>
@@ -48,6 +48,7 @@
                     <p class="mt-1 text-xs text-stone-500">
                         Keep it short. Don't add names, flat numbers or phone numbers: anyone can read a poster.
                         <span x-show="design === 'slips'">Door slips leave the message out to fit.</span>
+                        <span x-show="design === 'leaflet'">The leaflet uses the message as its introduction.</span>
                     </p>
                 </div>
 
@@ -74,6 +75,9 @@
                 @foreach (range(1, 4) as $i)
                     <x-invite-card size="slip" :building="$building" :join-url="$joinUrl" :join-qr="$joinQr" class="invite-cut" />
                 @endforeach
+            </div>
+            <div x-show="design === 'leaflet'" x-cloak class="h-full">
+                <x-invite-leaflet :building="$building" :rules="$rules" :join-url="$joinUrl" :join-qr="$joinQr" />
             </div>
         </div>
     </div>
