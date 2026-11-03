@@ -28,16 +28,17 @@ flats are named section, floor, flat: **C503** is section C, floor 5, flat 3.
 `App\Services\DemoUnion` plays a story through the app's real services (vouching, referendums,
 polls, mail approvals) so the data is the same shape as a real union's. It:
 1. Removes the old demo (`Cleanup::purge`, with no export or emails).
-2. Fakes mail and notifications, and seeds the random numbers so each build is the same.
+2. Fakes mail, notifications and queued jobs (so nobody is sent a leaver's export), and seeds the random numbers so each build is the same.
 3. Queues events "N days ago at HH:MM" and plays them in order, setting the clock
    (`Carbon::setTestNow`) to each one. Referendums, polls and mail that are due close as the clock
    passes them, just as the scheduler would close them.
 4. Puts the clock back.
 
 The story covers about five months: three founders vouching each other in, around 65 neighbours
-joining, five still waiting to be vouched for, landlords and agents with contacts and mailing lists,
-bulletins with polls and replies, discussions, 20 referendums (constitution amendments, policies
-adopted, revised and repealed, roles created and filled, and every outcome), and mail that was sent
+joining, five still waiting to be vouched for, one member leaving and one who moved out removed by
+referendum, landlords and agents with contacts and mailing lists, bulletins with polls and replies,
+discussions, 21 referendums (constitution amendments, policies adopted, revised and repealed, roles
+created and filled, a member removed, and every outcome), and mail that was sent
 (with email replies from the agent), rejected, expired, withdrawn or is waiting for C503's approval.
 
 Every email address ends in `.invalid` or `.example`, so nothing in the demo can reach a real

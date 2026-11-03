@@ -42,6 +42,9 @@ class DashboardController extends Controller
                     ->latest()
                     ->get()
                 : collect(),
+            'removalOfYou' => $contact->isEnrolled()
+                ? $building->referendums()->open()->where('referendable_type', 'building')->where('candidate_id', $contact->id)->with('proposer')->first()
+                : null,
             'referendumsToVoteIn' => $contact->isEnrolled()
                 ? $building->referendums()->open()
                     ->whereDoesntHave('voters', fn ($query) => $query->where('contact_id', $contact->id))

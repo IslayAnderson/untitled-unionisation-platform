@@ -16,6 +16,8 @@ use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\InviteMaterialsController;
 use App\Http\Controllers\LandlordController;
 use App\Http\Controllers\MailingListController;
+use App\Http\Controllers\MemberRemovalController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\PollController;
@@ -70,6 +72,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::get('/invite/print', [InviteMaterialsController::class, 'show'])->name('invite.print');
 
+    Route::get('/membership', [MembershipController::class, 'show'])->name('membership.show');
+    Route::post('/membership/leave', [MembershipController::class, 'leave'])->middleware('member')->name('membership.leave');
+    Route::delete('/account', [MembershipController::class, 'destroyAccount'])->middleware('throttle:6,1')->name('account.destroy');
+
     Route::get('/vouch/{contact:vouch_token}', [VouchController::class, 'show'])->name('vouch.show');
     Route::post('/vouch/{contact:vouch_token}', [VouchController::class, 'store'])->name('vouch.store');
 
@@ -122,6 +128,9 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
         ->middleware('throttle:10,1')
         ->name('roles.propose.store');
     Route::post('/roles/{role}/step-down', [RoleController::class, 'stepDown'])->name('roles.step-down');
+
+    Route::get('/members/remove', [MemberRemovalController::class, 'create'])->name('member-removals.create');
+    Route::post('/members/remove', [MemberRemovalController::class, 'store'])->middleware('throttle:10,1')->name('member-removals.store');
 
     Route::get('/referendums', [ReferendumController::class, 'index'])->name('referendums.index');
     Route::get('/referendums/{referendum}', [ReferendumController::class, 'show'])->name('referendums.show');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\ReferendumAnswer;
 use App\Enums\ReferendumKind;
 use App\Exceptions\ReferendumRefused;
+use App\Models\Building;
 use App\Models\Constitution;
 use App\Models\Policy;
 use App\Models\Referendum;
@@ -51,6 +52,7 @@ class ReferendumController extends Controller
         return view('referendums.show', [
             'referendum' => $referendum->load(['proposer', 'candidate', 'thread' => fn ($query) => $query->withCount('replies')]),
             'subject' => $subject,
+            'member' => $member,
             'hasVoted' => $referendum->voters()->where('contact_id', $member->id)->exists(),
             'isProposer' => $referendum->proposer_id === $member->id,
             'canWithdraw' => $referendum->isOpen() && ($referendum->proposer_id === $member->id
@@ -93,7 +95,7 @@ class ReferendumController extends Controller
      *
      * @return array{previous: Constitution|Policy|null, diff: list<array{type: string, text: string}>}
      */
-    private function changes(Constitution|Policy|Role $subject): array
+    private function changes(Building|Constitution|Policy|Role $subject): array
     {
         $previous = match (true) {
             $subject instanceof Constitution => $subject->previousVersion(),

@@ -79,8 +79,17 @@ class Referendum extends Model
         return match ($this->referendable_type) {
             'constitution' => 'a change to the constitution',
             'role' => 'a change to the union\'s roles',
+            'building' => 'a member\'s place in the union',
             default => 'a policy',
         };
+    }
+
+    /**
+     * A vote on removing a member from the union.
+     */
+    public function isMemberRemoval(): bool
+    {
+        return $this->referendable_type === 'building';
     }
 
     public function isAboutConstitution(): bool
@@ -113,7 +122,7 @@ class Referendum extends Model
     }
 
     /**
-     * The member to elect to, or remove from, a role.
+     * The member to elect to, or remove from, a role, or to remove from the union.
      *
      * @return BelongsTo<Contact, $this>
      */

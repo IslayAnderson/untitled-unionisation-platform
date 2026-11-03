@@ -26,6 +26,7 @@ use App\Support\VouchingBulletin;
 use Closure;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
@@ -63,6 +64,7 @@ class DemoUnion
         private Referendums $referendums,
         private PollVoting $polls,
         private MailApprovals $mail,
+        private Membership $membership,
     ) {}
 
     /**
@@ -83,6 +85,7 @@ class DemoUnion
         // Nothing the demo's history does should reach anyone.
         Notification::fake();
         Mail::fake();
+        Bus::fake();
         mt_srand(503);
 
         $this->now = Carbon::now();
@@ -572,6 +575,15 @@ class DemoUnion
             $rota = Policy::where('building_id', $this->building->id)->where('title', 'Bin store volunteer rota')->sole();
             $referendum = $this->referendums->proposeRepeal($this->tenant('A401'), $rota, 'Brightwell now pay for a weekend clean of the bin store, after our email. We don\'t need the rota any more.');
             $this->on(43, '19:30', fn () => $this->votes($referendum, 0.6, 0.94, 0.04));
+        });
+
+        // A member leaves, and one who moved out is removed.
+        $this->on(40, '22:05', fn () => $this->membership->leave($this->tenant('B306')));
+
+        $this->on(30, '19:20', function () {
+            $referendum = $this->referendums->proposeMemberRemoval($this->tenant('D307'), $this->tenant('D406'), 'Victor moved out of D406 at the end of August, and the flat has been empty since. He hasn\'t replied to messages, so he can\'t leave himself. Removing him keeps our member count, and so our quorum, honest.');
+            $this->on(29, '08:40', fn () => $this->reply($referendum->thread, 'D502', 'I helped him carry boxes down. He\'s moved to Leeds.'));
+            $this->on(21, '20:00', fn () => $this->votes($referendum, 0.58, 0.9, 0.08));
         });
     }
 

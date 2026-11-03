@@ -14,7 +14,7 @@
 <h2>3. Membership</h2>
 <p>Any tenant living in the Building may join. A tenant becomes a member once {vouches_required} existing members have confirmed in person that they live in the Building.</p>
 <p>Vouching begins once {min_signups} tenants have signed up. Until the Union has more than {vouches_required} members, any signed-up tenant may vouch for another.</p>
-<p>Membership ends when a member leaves the Building or resigns.</p>
+<p>A member may leave the Union at any time. Members may also remove a member by referendum, for example because they no longer live in the Building or have broken this constitution. The member is told, and may respond in the referendum's discussion. A removal passes if more than {removal_pass_percent}% of the votes cast for or against are in favour, with the same quorum as other referendums. A tenant who has been removed cannot be vouched for again.</p>
 
 <h2>4. Decisions</h2>
 <p>Everyday decisions are made by polls of members. Policies, roles and changes to this constitution are made by referendum.</p>

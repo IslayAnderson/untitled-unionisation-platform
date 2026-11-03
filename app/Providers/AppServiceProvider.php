@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Building;
 use App\Models\Bulletin;
 use App\Models\Constitution;
 use App\Models\Contact;
@@ -48,6 +49,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Relation::enforceMorphMap([
+            'building' => Building::class,
             'bulletin' => Bulletin::class,
             'constitution' => Constitution::class,
             'policy' => Policy::class,
@@ -75,7 +77,7 @@ class AppServiceProvider extends ServiceProvider
 
             $allowed = $contact
                 && $bulletin->building_id === $contact->building_id
-                && ($contact->isEnrolled() || ($bulletin->isVouching() && $contact->isConfirmedTenant()));
+                && ($contact->isEnrolled() || ($bulletin->isVouching() && $contact->isConfirmedTenant() && ! $contact->isRemoved()));
 
             return $allowed ? Response::allow() : Response::denyAsNotFound();
         });

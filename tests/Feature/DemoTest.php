@@ -25,7 +25,7 @@ it('builds a lived-in union with no real email addresses', function () {
     expect($demo->units()->count())->toBe(252)
         ->and($demo->units()->pluck('name'))->toContain('A101', 'C503', 'D709')->not->toContain('A110', 'B801')
         ->and($demo->enrolledCount())->toBeGreaterThan(60)
-        ->and($demo->confirmedTenantCount() - $demo->enrolledCount())->toBe(5)
+        ->and($demo->confirmedTenantCount() - $demo->enrolledCount())->toBe(7)
         ->and($demo->referendums()->whereNull('closed_at')->count())->toBe(3)
         ->and($demo->referendums()->pluck('outcome')->filter()->map->value->unique()->sort()->values()->all())->toBe(['no_quorum', 'passed', 'rejected', 'withdrawn'])
         ->and($demo->unionMails()->pluck('status')->map->value->unique()->sort()->values()->all())->toBe(['expired', 'pending', 'rejected', 'sent', 'withdrawn'])

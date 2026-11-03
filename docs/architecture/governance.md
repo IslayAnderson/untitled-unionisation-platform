@@ -29,9 +29,39 @@ polls on bulletins instead (see `polls.md`). The code is in `App\Services\Refere
   undecided at a time. Roles carry only the responsibilities members give them, not platform
   permissions.
 
+* **Removing a member from the union** (kind `remove`, with the union's building as the referendable
+  and the member as `candidate_id`), proposed at `/members/remove`. A reason is required, since the
+  member reads it too. Nobody can propose removing themselves (they can leave instead), and only one
+  removal per member can be undecided. It passes with the constitution's `removal_pass_percent`
+  (default 50) instead of the usual threshold, with the usual quorum. The member is emailed like
+  everyone else, sees it on their dashboard, can reply in the discussion and can vote. See
+  "Leaving and removal" below for what happens if it passes.
+
 A policy can only be revised or repealed while it's in force, and only one change to it can be voted
 on at a time. Any member can propose; tenants waiting to be vouched for can read the constitution but
 can't see policies or referendums.
+
+## Leaving and removal
+`App\Services\Membership`. Membership ends in three ways:
+* **Leaving.** A member leaves from `/membership` (linked from the dashboard), without a vote. They
+  stay a tenant with an account, so neighbours can vouch for them again if they want to rejoin.
+* **Removal** by referendum (above). `contacts.removed_at` is set, and from then on they can't be
+  vouched for again and can't read the vouching bulletin. It's set even if they left while the vote
+  was open.
+* **Deleting their account** (`DELETE /account`, needs their password). Anyone can, member or not.
+  Their user and contact are deleted; what they wrote stays, shown as by a former member.
+
+Whichever way, a member's membership ends the same way: `enrolled_at` is cleared, the vouches they
+received are deleted (so rejoining means being vouched for again; vouches they gave stand), they
+stop holding roles, any open nomination of them to a role is withdrawn, and their undecided approvals
+on pending mail are dropped (mail that can no longer get enough approvals is rejected). Their votes
+and posts stay. They're then emailed a copy of the union's records, as they are that moment
+(`App\Jobs\SendUnionExport`; see `admin.md`). A member who left before being removed isn't sent a
+second copy. Tenants who weren't members aren't sent one.
+
+The constitution's section 3 describes leaving and removal, with the `{removal_pass_percent}`
+placeholder. Removed and departed tenants count as signed-up tenants but not members, so admin
+clean-up treats them like any tenant who isn't a member.
 
 ## How a referendum runs
 * Opening it starts a members' discussion (a thread titled "Referendum: …" with the proposer's reason)
@@ -69,6 +99,7 @@ numbers side by side, and the text paragraph by paragraph (`App\Support\TextDiff
 | `referendum_quorum_percent` | 50 | 1–100 |
 | `referendum_pass_percent` | 50 | 50–99 |
 | `referendum_days` | 14 | 1–60 |
+| `removal_pass_percent` | 50 | 50–99 |
 | `instant_mail_approval_percent` | 10 | 1–100 |
 | `instant_mail_approver_percent` | 20 | 1–100 |
 | `instant_mail_expiry_hours` | 48 | 1–336 |

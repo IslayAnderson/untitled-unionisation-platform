@@ -48,6 +48,7 @@
                     the for and against votes had to be for.
                     @if ($referendum->outcome === App\Enums\ReferendumOutcome::Passed)
                         {{ match (true) {
+                            $referendum->isMemberRemoval() => ($referendum->candidate?->name ?? 'The member').' is no longer a member, and can\'t be vouched for again.',
                             $isConstitution => 'This version of the constitution is now in force.',
                             $subject instanceof App\Models\Role => match ($referendum->kind) {
                                 ReferendumKind::Adopt => 'The role has been created.',
@@ -108,7 +109,22 @@
 
     {{-- What's being decided --}}
     <section class="mt-8">
-        @if ($subject instanceof App\Models\Role)
+        @if ($referendum->isMemberRemoval())
+            <h2 class="mb-2 text-lg font-semibold">The member</h2>
+            <div class="rounded-lg border border-stone-200 bg-white p-5">
+                <p class="font-medium">{{ $referendum->candidate?->name ?? 'A former member, who has since deleted their account' }}</p>
+                @if ($referendum->candidate_id === $member->id && $referendum->isOpen())
+                    <p class="mt-2 text-sm text-stone-700">This is about you. You can reply in the discussion, and you can vote.</p>
+                @endif
+                @unless ($referendum->outcome)
+                    <p class="mt-2 text-sm text-stone-600">
+                        If it passes, they stop being a member, neighbours can't vouch for them again, and they're emailed a copy of the
+                        union's records. Removing a member needs more than {{ $referendum->pass_percent }}% of the for and against votes,
+                        as the constitution sets.
+                    </p>
+                @endunless
+            </div>
+        @elseif ($subject instanceof App\Models\Role)
             <h2 class="mb-2 text-lg font-semibold">The role</h2>
             <div class="rounded-lg border border-stone-200 bg-white p-5">
                 <p class="font-medium"><a href="{{ route('roles.show', $subject) }}" class="underline">{{ $subject->title }}</a></p>

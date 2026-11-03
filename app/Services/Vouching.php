@@ -41,6 +41,10 @@ class Vouching
             return "Vouching opens once {$rules->minSignups} tenants have signed up.";
         }
 
+        if ($vouchee->isRemoved()) {
+            return "Members removed {$vouchee->name} from the union by referendum, so they can't be vouched for again.";
+        }
+
         if ($vouchee->isEnrolled()) {
             return "{$vouchee->name} is already a member.";
         }

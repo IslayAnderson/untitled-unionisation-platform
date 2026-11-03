@@ -1,9 +1,11 @@
 <x-layouts.app title="Referendums">
     <h1 class="mb-2 text-2xl font-semibold">Referendums</h1>
-    <p class="mb-6 text-stone-600">
-        Votes of all members on <a href="{{ route('policies.index') }}" class="underline">policies</a> and the
+    <p class="mb-2 text-stone-600">
+        Votes of all members on <a href="{{ route('policies.index') }}" class="underline">policies</a>,
+        <a href="{{ route('roles.index') }}" class="underline">roles</a>, membership and the
         <a href="{{ route('constitution.show') }}" class="underline">constitution</a>. Votes are secret, and results are shown when voting closes.
     </p>
+    <p class="mb-6 text-sm"><a href="{{ route('member-removals.create') }}" class="underline">Propose removing a member</a></p>
 
     <section>
         <h2 class="mb-2 text-lg font-semibold">Open</h2>

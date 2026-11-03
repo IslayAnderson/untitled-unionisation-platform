@@ -94,4 +94,8 @@ download link (`GET /union-exports/{export}`) that works for **30 days** (`KEEP_
 10 MB are attached too. They're stored on the private `local` disk under `union-exports/{random}/`, and
 `php artisan union-exports:prune` (scheduled daily) deletes them after 30 days.
 
+The same export is emailed to a member who **leaves**, is **removed** by referendum, or **deletes their
+account** (`App\Jobs\SendUnionExport`, on the long-running queue), as the records are at that moment.
+The email's subject and first line say why (`App\Enums\ExportReason`). See `governance.md`.
+
 Unused uploaded images are not cleaned up: see `uploads.md` on preserving images Cloudflare flags.

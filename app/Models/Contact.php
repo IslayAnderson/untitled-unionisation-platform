@@ -19,7 +19,7 @@ use Illuminate\Support\Str;
  */
 #[Fillable([
     'name', 'address', 'type_id', 'email', 'telephone', 'landlord_id',
-    'building_id', 'unit_id', 'pending_signup', 'enrolled_at',
+    'building_id', 'unit_id', 'pending_signup', 'enrolled_at', 'removed_at',
 ])]
 class Contact extends Model
 {
@@ -38,6 +38,7 @@ class Contact extends Model
         return [
             'pending_signup' => 'array',
             'enrolled_at' => 'datetime',
+            'removed_at' => 'datetime',
         ];
     }
 
@@ -81,6 +82,14 @@ class Contact extends Model
     public function isEnrolled(): bool
     {
         return $this->enrolled_at !== null;
+    }
+
+    /**
+     * Removed from the union by referendum, so they can't be vouched for again.
+     */
+    public function isRemoved(): bool
+    {
+        return $this->removed_at !== null;
     }
 
     /**

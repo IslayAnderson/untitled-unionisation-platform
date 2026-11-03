@@ -9,6 +9,17 @@
             </p>
         </section>
 
+        @if ($removalOfYou)
+            <section class="rounded-lg border-2 border-amber-300 bg-white p-6">
+                <h2 class="text-lg font-semibold">Members are voting on removing you from the union</h2>
+                <p class="mt-1 text-stone-600">
+                    {{ $removalOfYou->proposer?->name ?? 'A former member' }} proposed it. Voting closes
+                    {{ $removalOfYou->closes_at->format('j M, H:i') }}. You can read the reason, reply in the discussion and vote.
+                </p>
+                <a href="{{ route('referendums.show', $removalOfYou) }}" class="mt-3 inline-block font-medium underline">See the referendum</a>
+            </section>
+        @endif
+
         @if ($awaitingApproval->isNotEmpty())
             <section class="rounded-lg border-2 border-sky-300 bg-white p-6">
                 <h2 class="text-lg font-semibold">Mail waiting for your approval</h2>
@@ -52,7 +63,12 @@
         @endif
 
         <section class="rounded-lg border border-stone-200 bg-white p-6">
-            @if ($contact->isEnrolled())
+            @if ($contact->isRemoved())
+                <h2 class="text-lg font-semibold">You're no longer a member</h2>
+                <p class="mt-1 text-stone-600">
+                    Members voted to remove you from the union on {{ $contact->removed_at->format('j F Y') }}, so neighbours can't vouch for you again.
+                </p>
+            @elseif ($contact->isEnrolled())
                 <h2 class="text-lg font-semibold">You're a member</h2>
                 <p class="mt-1 text-stone-600">
                     When a neighbour shows you their QR code, scan it with your phone's camera to vouch for them.
@@ -77,8 +93,9 @@
             @endif
         </section>
 
-        <p class="text-sm">
+        <p class="flex flex-wrap gap-x-5 gap-y-1 text-sm">
             <a href="{{ route('constitution.show') }}" class="underline">Read your union's constitution</a>
+            <a href="{{ route('membership.show') }}" class="underline">{{ $contact->isEnrolled() ? 'Leave the union or delete your account' : 'Delete your account' }}</a>
         </p>
 
         <section class="rounded-lg border border-stone-200 bg-white p-6">

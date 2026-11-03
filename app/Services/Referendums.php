@@ -29,6 +29,8 @@ use Illuminate\Support\Facades\Notification;
  */
 class Referendums
 {
+    public function __construct(private Membership $membership) {}
+
     /**
      * Propose a new version of the constitution.
      *
@@ -155,6 +157,36 @@ class Referendums
         $this->ensureNoPendingCandidacy($role, $holder);
 
         return DB::transaction(fn () => $this->open($proposer, $role, ReferendumKind::Remove, "Remove {$holder->name} as {$role->title}", $reason, $holder));
+    }
+
+    /**
+     * Propose removing a member from the union. It needs a reason, and passes
+     * with the constitution's removal threshold rather than the usual one.
+     *
+     * @throws ReferendumRefused
+     */
+    public function proposeMemberRemoval(Contact $proposer, Contact $member, string $reason): Referendum
+    {
+        $this->ensureMember($proposer);
+
+        if ($member->is($proposer)) {
+            throw new ReferendumRefused('You can\'t propose removing yourself. You can leave the union from your membership page instead.');
+        }
+
+        if ($member->building_id !== $proposer->building_id || ! $member->isEnrolled()) {
+            throw new ReferendumRefused('Only members of the union can be removed.');
+        }
+
+        $building = $proposer->building;
+
+        if ($building->referendums()->undecided()->where('referendable_type', 'building')->where('candidate_id', $member->id)->exists()) {
+            throw new ReferendumRefused("There's already a referendum on removing {$member->name}.");
+        }
+
+        return DB::transaction(fn () => $this->open(
+            $proposer, $building, ReferendumKind::Remove, "Remove {$member->name} from the union", $reason, $member,
+            passPercent: $building->rules()->removalPassPercent,
+        ));
     }
 
     /**
@@ -296,7 +328,12 @@ class Referendums
     {
         $subject = $referendum->referendable;
 
-        if ($subject instanceof Constitution) {
+        if ($subject instanceof Building) {
+            // The member may have deleted their account while the vote was open.
+            if ($referendum->candidate) {
+                $this->membership->remove($referendum->candidate);
+            }
+        } elseif ($subject instanceof Constitution) {
             $subject->update(['published_at' => now()]);
             $referendum->building->update(['current_constitution_id' => $subject->id]);
         } elseif ($subject instanceof Role) {
@@ -330,8 +367,9 @@ class Referendums
 
     /**
      * Open the vote, with a members' discussion, using the thresholds in force now.
+     * Everyone but the proposer is emailed, including a member it proposes removing.
      */
-    private function open(Contact $proposer, Constitution|Policy|Role $subject, ReferendumKind $kind, string $title, ?string $reason, ?Contact $candidate = null): Referendum
+    private function open(Contact $proposer, Building|Constitution|Policy|Role $subject, ReferendumKind $kind, string $title, ?string $reason, ?Contact $candidate = null, ?int $passPercent = null): Referendum
     {
         $building = $proposer->building;
         $rules = $building->rules();
@@ -353,7 +391,7 @@ class Referendums
             'title' => $title,
             'description' => $reason,
             'quorum_percent' => $rules->referendumQuorumPercent,
-            'pass_percent' => $rules->referendumPassPercent,
+            'pass_percent' => $passPercent ?? $rules->referendumPassPercent,
             'closes_at' => now()->addDays($rules->referendumDays),
         ]);
 

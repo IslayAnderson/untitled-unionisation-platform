@@ -96,7 +96,7 @@ class UnionController extends Controller
         return $query
             ->withCount([
                 'contacts as members_count' => fn (Builder $contact) => $contact->whereNotNull('enrolled_at'),
-                'contacts as waiting_count' => fn (Builder $contact) => $contact->confirmedTenants()->whereNull('enrolled_at'),
+                'contacts as waiting_count' => fn (Builder $contact) => $contact->confirmedTenants()->whereNull('enrolled_at')->whereNull('removed_at'),
                 'contacts as unconfirmed_count' => fn (Builder $contact) => $contact->whereHas('user', fn (Builder $user) => $user->whereNull('email_verified_at')),
                 'bulletins' => fn (Builder $bulletin) => $bulletin->whereNull('system_key'),
                 'threads',

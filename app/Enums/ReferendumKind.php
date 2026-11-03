@@ -13,6 +13,6 @@ enum ReferendumKind: string
     /** Elect the candidate to the referendable role. */
     case Elect = 'elect';
 
-    /** Remove the candidate from the referendable role. */
+    /** Remove the candidate from the referendable role, or from the union (the referendable building). */
     case Remove = 'remove';
 }
