@@ -1,5 +1,6 @@
 <x-layouts.app title="Print flyers and posters">
     <div x-data="{
+        kind: 'invite',
         design: 'poster',
         headline: @js($headlines[0]),
         custom: false,
@@ -14,9 +15,24 @@
 
             <div class="space-y-5 rounded-lg border border-stone-200 bg-white p-5">
                 <fieldset>
-                    <legend class="text-sm font-medium">Design</legend>
+                    <legend class="text-sm font-medium">Version</legend>
                     <div class="mt-2 grid gap-2 sm:grid-cols-2">
-                        @foreach (['poster' => ['Poster', 'One A4 sheet, for noticeboards and lifts'], 'flyers' => ['Flyers', 'Two A5 flyers per A4 sheet'], 'slips' => ['Door slips', 'Four small slips per A4 sheet'], 'leaflet' => ['Information leaflet', 'One A4 sheet explaining how the union works']] as $value => [$label, $hint])
+                        @foreach (['invite' => ['Invitation', 'A headline, your message and the sign-up code'], 'info' => ['Information', 'Also explains how the union works and what members can do']] as $value => [$label, $hint])
+                            <label class="flex cursor-pointer gap-2 rounded-md border border-stone-200 p-3 has-[:checked]:border-stone-900 has-[:checked]:bg-stone-50">
+                                <input type="radio" name="kind" value="{{ $value }}" x-model="kind" class="mt-1 border-stone-300">
+                                <span>
+                                    <span class="block text-sm font-medium">{{ $label }}</span>
+                                    <span class="block text-xs text-stone-500">{{ $hint }}</span>
+                                </span>
+                            </label>
+                        @endforeach
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend class="text-sm font-medium">Size</legend>
+                    <div class="mt-2 grid gap-2 sm:grid-cols-3">
+                        @foreach (['poster' => ['Poster', 'One A4 sheet, for noticeboards and lifts'], 'flyers' => ['Flyers', 'Two A5 flyers per A4 sheet'], 'slips' => ['Door slips', 'Four small slips per A4 sheet']] as $value => [$label, $hint])
                             <label class="flex cursor-pointer gap-2 rounded-md border border-stone-200 p-3 has-[:checked]:border-stone-900 has-[:checked]:bg-stone-50">
                                 <input type="radio" name="design" value="{{ $value }}" x-model="design" class="mt-1 border-stone-300">
                                 <span>
@@ -47,8 +63,8 @@
                         class="mt-1 block w-full rounded-md border border-stone-300 bg-white px-3 py-2 shadow-sm"></textarea>
                     <p class="mt-1 text-xs text-stone-500">
                         Keep it short. Don't add names, flat numbers or phone numbers: anyone can read a poster.
-                        <span x-show="design === 'slips'">Door slips leave the message out to fit.</span>
-                        <span x-show="design === 'leaflet'">The leaflet uses the message as its introduction.</span>
+                        <span x-show="design === 'slips' || (kind === 'info' && design === 'flyers')">This size leaves the message out to fit.</span>
+                        <span x-show="kind === 'info' && design === 'slips'">Information door slips list what the union does, without the details.</span>
                     </p>
                 </div>
 
@@ -64,20 +80,17 @@
         {{-- The printed sheet. --}}
         <div class="invite-sheet mx-auto shadow-md print:shadow-none">
             <div x-show="design === 'poster'" class="h-full">
-                <x-invite-card size="poster" :building="$building" :join-url="$joinUrl" :join-qr="$joinQr" />
+                <x-invite-card size="poster" :building="$building" :join-url="$joinUrl" :join-qr="$joinQr" :features="$features" />
             </div>
             <div x-show="design === 'flyers'" x-cloak class="grid h-full grid-rows-2">
                 @foreach (range(1, 2) as $i)
-                    <x-invite-card size="flyer" :building="$building" :join-url="$joinUrl" :join-qr="$joinQr" class="invite-cut" />
+                    <x-invite-card size="flyer" :building="$building" :join-url="$joinUrl" :join-qr="$joinQr" :features="$features" class="invite-cut" />
                 @endforeach
             </div>
             <div x-show="design === 'slips'" x-cloak class="grid h-full grid-cols-2 grid-rows-2">
                 @foreach (range(1, 4) as $i)
-                    <x-invite-card size="slip" :building="$building" :join-url="$joinUrl" :join-qr="$joinQr" class="invite-cut" />
+                    <x-invite-card size="slip" :building="$building" :join-url="$joinUrl" :join-qr="$joinQr" :features="$features" class="invite-cut" />
                 @endforeach
-            </div>
-            <div x-show="design === 'leaflet'" x-cloak class="h-full">
-                <x-invite-leaflet :building="$building" :rules="$rules" :join-url="$joinUrl" :join-qr="$joinQr" />
             </div>
         </div>
     </div>

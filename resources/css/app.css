@@ -181,49 +181,139 @@
     margin-top: 0.4em;
 }
 
-.invite-card--leaflet {
+/* The information version: the same sizes, with "How the union works". */
+.invite-card__subhead {
+    border-top: 0.4cqw solid var(--color-stone-900);
+}
+
+.invite-card--poster.invite-card--info {
     padding: 8cqw;
     gap: 3cqw;
 }
 
-.invite-card--leaflet .invite-card__union {
+.invite-card--poster.invite-card--info .invite-card__union {
     font-size: 2.8cqw;
 }
 
-.invite-card--leaflet .invite-card__headline {
+.invite-card--poster.invite-card--info .invite-card__headline {
     font-size: 8cqw;
 }
 
-.invite-card--leaflet .invite-card__message {
+.invite-card--poster.invite-card--info .invite-card__message {
     font-size: 3.2cqw;
 }
 
-.invite-leaflet__subhead {
-    margin-top: 1cqw;
-    border-top: 0.4cqw solid var(--color-stone-900);
+.invite-card--poster .invite-card__subhead {
+    margin: 1cqw 0 3cqw;
     padding-top: 2.5cqw;
     font-size: 3.4cqw;
 }
 
-.invite-leaflet__features {
+.invite-card--poster .invite-card__feature-list {
+    grid-template-columns: 1fr 1fr;
     column-gap: 5cqw;
     row-gap: 3.5cqw;
     font-size: 2.6cqw;
 }
 
-.invite-leaflet__features dt {
+.invite-card--poster .invite-card__feature-list dt {
     font-size: 2.9cqw;
     margin-bottom: 0.5cqw;
 }
 
-.invite-card--leaflet .invite-card__join {
+.invite-card--poster.invite-card--info .invite-card__join {
     gap: 4cqw;
 }
 
-.invite-card--leaflet .invite-card__qr {
+.invite-card--poster.invite-card--info .invite-card__qr {
     width: 24cqw;
 }
 
-.invite-card--leaflet .invite-card__how {
+.invite-card--poster.invite-card--info .invite-card__how {
     font-size: 2.6cqw;
+}
+
+.invite-card--flyer.invite-card--info {
+    padding: 4.5cqw 7cqw;
+    gap: 1.4cqw;
+}
+
+.invite-card--flyer.invite-card--info .invite-card__headline {
+    font-size: 5cqw;
+}
+
+/* No room for the message alongside the features. */
+.invite-card--flyer.invite-card--info .invite-card__message {
+    display: none;
+}
+
+.invite-card--flyer .invite-card__subhead {
+    margin-bottom: 1.5cqw;
+    padding-top: 1.5cqw;
+    font-size: 2.3cqw;
+}
+
+.invite-card--flyer .invite-card__feature-list {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 3cqw;
+    row-gap: 1.5cqw;
+    font-size: 1.75cqw;
+}
+
+.invite-card--flyer .invite-card__feature-list dt {
+    font-size: 1.9cqw;
+}
+
+.invite-card--flyer.invite-card--info .invite-card__qr {
+    width: 15cqw;
+}
+
+.invite-card--flyer.invite-card--info .invite-card__how {
+    font-size: 1.9cqw;
+}
+
+/* Door slips only have room for the feature titles, as a list. */
+.invite-card--slip.invite-card--info {
+    gap: 2.5cqw;
+}
+
+.invite-card--slip.invite-card--info .invite-card__headline {
+    font-size: 8cqw;
+}
+
+.invite-card--slip .invite-card__subhead {
+    margin-bottom: 1.5cqw;
+    padding-top: 2cqw;
+    font-size: 4.2cqw;
+}
+
+.invite-card--slip .invite-card__feature-list {
+    row-gap: 1.2cqw;
+    font-size: 4.6cqw;
+}
+
+.invite-card--slip .invite-card__feature-list dt {
+    font-weight: 400;
+}
+
+.invite-card--slip .invite-card__feature-list dt::before {
+    content: '✓ ';
+    font-weight: 700;
+}
+
+.invite-card--slip .invite-card__feature-list dd {
+    display: none;
+}
+
+.invite-card--slip.invite-card--info .invite-card__join {
+    flex-direction: row;
+    align-items: center;
+}
+
+.invite-card--slip.invite-card--info .invite-card__qr {
+    width: 40cqw;
+}
+
+.invite-card--slip.invite-card--info .invite-card__how {
+    font-size: 3.4cqw;
 }
