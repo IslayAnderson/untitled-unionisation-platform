@@ -18,6 +18,7 @@
                     <a href="{{ route('dashboard') }}" class="hover:underline">Your union</a>
                     @if (auth()->user()->contact?->isEnrolled())
                         <a href="{{ route('bulletins.index') }}" class="hover:underline">Bulletins</a>
+                        <a href="{{ route('threads.index') }}" class="hover:underline">Discussions</a>
                         <a href="{{ route('mail.index') }}" class="hover:underline">Mail</a>
                         <a href="{{ route('contacts.index') }}" class="hover:underline">Contacts</a>
                         <a href="{{ route('mailing-lists.index') }}" class="hover:underline">Mailing lists</a>

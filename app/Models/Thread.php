@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\ThreadFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -10,6 +12,9 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 #[Fillable(['building_id', 'author_id', 'title', 'rich_text', 'published_at'])]
 class Thread extends Model
 {
+    /** @use HasFactory<ThreadFactory> */
+    use HasFactory;
+
     protected function casts(): array
     {
         return [

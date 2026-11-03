@@ -73,6 +73,12 @@ Each bulletin has a reply thread holding:
   **never emailed**. To answer an email, members write new instant mail or send a bulletin as mail,
   which goes through approval as usual.
 
+## Discussions
+Threads (shown as "Discussions") are for members to talk things through. Any member can start one,
+with a title and rich text, and members reply in rich text. Only members of the union can read them,
+and they're never emailed, so they have no mail or polls. The list shows the most recently active
+first. Replies use the same `replies` table as bulletins (`replyable_type` = `thread`).
+
 ## Rich text
 Bulletins, instant mail and members' replies are written in TinyMCE (self-hosted under its GPL
 licence, bundled by Vite, loaded only on pages with an editor). The editor offers paragraphs, two
