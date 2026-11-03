@@ -7,6 +7,8 @@
 * Pest for tests
 * "node": "22.23.4"
 * "php": "^8.3"
+  * `config.platform.php` in composer.json is 8.3.0, so the lock file installs on PHP 8.3 servers even when
+    it is updated on a newer PHP. Raise it only when every server runs the newer version.
 * "laravel/framework": "^13.17"
 * "laravel/sanctum": "^4.0"
 * "laravel/tinker": "^3.0"
