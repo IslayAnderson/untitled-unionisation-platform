@@ -19,7 +19,7 @@ class DashboardController extends Controller
         }
 
         $building = $contact->building;
-        $joinUrl = route('join', $building->signup_token);
+        $joinUrl = $building->joinUrl();
         $vouchUrl = route('vouch.show', $contact->vouch_token);
 
         return view('dashboard', [

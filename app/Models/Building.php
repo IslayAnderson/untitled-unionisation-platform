@@ -74,6 +74,14 @@ class Building extends Model
         return $this->enrolledCount() < $this->rules()->vouchesRequired + 1;
     }
 
+    /**
+     * Where invitations send neighbours. Nobody can join the demo, so its invitations lead to the demo instead.
+     */
+    public function joinUrl(): string
+    {
+        return $this->is_demo ? route('demo.show') : route('join', $this->signup_token);
+    }
+
     public function formattedAddress(): string
     {
         return collect([$this->address_line_1, $this->address_line_2, $this->city, $this->postcode])

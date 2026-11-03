@@ -14,6 +14,10 @@
             It's read-only: you can open everything, but nothing you do is saved and no emails are sent. The people,
             companies and addresses are all invented. The demo is rebuilt every day.
         </p>
+        <p class="text-stone-700">
+            You can also <a href="{{ route('demo.printables') }}" class="underline">see its printable flyers and posters</a>
+            without entering, the ones members put up to invite their neighbours.
+        </p>
 
         @auth
             @if (auth()->user()->isDemo())

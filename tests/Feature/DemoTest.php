@@ -63,6 +63,21 @@ it('lets anyone look around as the tenant of C503', function () {
         ->assertSeeText('Major works: our observations');
     $this->get(route('referendums.index'))->assertOk()->assertSeeText('Lower the referendum quorum to 40%');
     $this->get(route('bulletins.index'))->assertOk()->assertSeeText('Welcome to the Larkspur House Tenants\' Union');
+    $this->get(route('invite.print'))->assertOk()->assertSee(route('demo.show'))->assertDontSee('/join/');
+});
+
+it('shows anyone the demo union\'s printables, with codes that lead to the demo', function () {
+    app(DemoUnion::class)->build();
+    $demo = Building::where('is_demo', true)->sole();
+
+    $this->get(route('demo.show'))->assertSee(route('demo.printables'));
+    $this->get(route('demo.printables'))
+        ->assertOk()
+        ->assertSeeText('These are the demo union\'s flyers and posters')
+        ->assertSee($demo->name)
+        ->assertSee(route('demo.show'))
+        ->assertDontSee(route('join', $demo->signup_token));
+    $this->assertGuest();
 });
 
 it('saves nothing a demo visitor does', function () {
@@ -93,6 +108,7 @@ it('hides the demo when it is turned off, and nobody can join it', function () {
 
     config(['demo.enabled' => false]);
     $this->get(route('demo.show'))->assertNotFound();
+    $this->get(route('demo.printables'))->assertNotFound();
     $this->post(route('demo.enter'))->assertNotFound();
 });
 

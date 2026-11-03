@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome')->name('home');
 
 Route::get('/demo', [DemoController::class, 'show'])->name('demo.show');
+Route::get('/demo/printables', [InviteMaterialsController::class, 'demo'])->name('demo.printables');
 Route::post('/demo', [DemoController::class, 'enter'])->middleware(['guest', 'throttle:20,1'])->name('demo.enter');
 
 Route::get('/address/search', AddressSearchController::class)
@@ -67,7 +68,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/onboarding/building', [OnboardingController::class, 'storeBuilding'])->name('onboarding.building');
 
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
-    Route::get('/invite/print', InviteMaterialsController::class)->name('invite.print');
+    Route::get('/invite/print', [InviteMaterialsController::class, 'show'])->name('invite.print');
 
     Route::get('/vouch/{contact:vouch_token}', [VouchController::class, 'show'])->name('vouch.show');
     Route::post('/vouch/{contact:vouch_token}', [VouchController::class, 'store'])->name('vouch.store');

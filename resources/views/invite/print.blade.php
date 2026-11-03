@@ -8,10 +8,19 @@
     }">
         <div class="print:hidden">
             <h1 class="mb-2 text-2xl font-semibold">Print flyers and posters</h1>
-            <p class="mb-6 text-stone-600">
-                Put them up in shared spaces or through doors. The code takes neighbours to your building's sign-up page.
-                They never name you or any other member.
-            </p>
+            @if ($building->is_demo)
+                <p class="mb-6 text-stone-600">
+                    These are the demo union's flyers and posters, as its members would print them. A real union's code
+                    takes neighbours to its building's sign-up page; the demo's takes them to
+                    <a href="{{ route('demo.show') }}" class="underline">the demo</a>. Try every version and size, and
+                    print one if you like.
+                </p>
+            @else
+                <p class="mb-6 text-stone-600">
+                    Put them up in shared spaces or through doors. The code takes neighbours to your building's sign-up page.
+                    They never name you or any other member.
+                </p>
+            @endif
 
             <div class="space-y-5 rounded-lg border border-stone-200 bg-white p-5">
                 <fieldset>

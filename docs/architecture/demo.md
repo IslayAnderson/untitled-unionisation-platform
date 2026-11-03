@@ -14,6 +14,9 @@ flats are named section, floor, flat: **C503** is section C, floor 5, flat 3.
 ## Visiting
 * `/demo` explains the demo. **Enter the demo** (`POST /demo`, throttled) logs the visitor in as the
   tenant of C503, Sam Taylor (`you@demo.invalid`). Everyone shares that one account.
+* `/demo/printables` shows the demo union's flyers and posters to anyone, without entering. Every
+  join code in the demo (printables and dashboard, via `Building::joinUrl()`) leads to `/demo`
+  rather than the demo's sign-up page, which is closed.
 * A banner on every page says it's a demo, with a link to leave (log out).
 * `App\Http\Middleware\DemoIsReadOnly` (on the `web` group) blocks every request that isn't a GET,
   HEAD or OPTIONS from a demo user, apart from logging out and the `/demo` routes. The visitor is

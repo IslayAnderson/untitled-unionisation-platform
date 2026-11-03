@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Building;
 use App\Support\ConstitutionRules;
 use App\Support\QrCode;
 use Illuminate\Http\Request;
@@ -20,13 +21,27 @@ class InviteMaterialsController extends Controller
         'Your neighbours are organising',
     ];
 
-    public function __invoke(Request $request): View
+    public function show(Request $request): View
     {
         $contact = $request->user()->contact;
         abort_unless($contact?->building_id && $contact->isConfirmedTenant(), 404);
 
-        $building = $contact->building;
-        $joinUrl = route('join', $building->signup_token);
+        return $this->materials($contact->building);
+    }
+
+    /**
+     * The demo union's posters and flyers, for anyone to look at without entering the demo.
+     */
+    public function demo(): View
+    {
+        abort_unless(config('demo.enabled'), 404);
+
+        return $this->materials(Building::where('is_demo', true)->firstOrFail());
+    }
+
+    private function materials(Building $building): View
+    {
+        $joinUrl = $building->joinUrl();
 
         return view('invite.print', [
             'building' => $building,
