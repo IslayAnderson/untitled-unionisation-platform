@@ -149,6 +149,14 @@ class Building extends Model
     }
 
     /**
+     * @return HasMany<Referendum, $this>
+     */
+    public function referendums(): HasMany
+    {
+        return $this->hasMany(Referendum::class);
+    }
+
+    /**
      * @return HasMany<Bulletin, $this>
      */
     public function bulletins(): HasMany

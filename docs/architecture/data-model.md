@@ -30,7 +30,10 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
 * **Referendums are polymorphic.** The `policy` FK is replaced by `referendable_type` /
   `referendable_id`, which point to either a Policy or a Constitution. A referendum proposes that
   version; if it passes, that version is published and becomes the building's current one.
-* **Referendum submission answers** are an enum: `for`, `against`, `abstain`.
+* **Referendum answers** are an enum: `for`, `against`, `abstain`. Referendums are secret ballots, so
+  `referendum_submissions` is replaced by `referendum_voters` (who voted, no timestamps) and totals on
+  `referendums`, as for polls. See `governance.md` for the other columns added to `referendums` and
+  `policies`.
 * **Replies are polymorphic.** The `thread` FK is replaced by `replyable_type` / `replyable_id`, which
   point to a Bulletin or a Thread. A reply is either a member's post (`author_id`) or an email reply
   to union mail (`union_mail_id`, `contact_id` if the sender matched a contact on the list,
@@ -61,6 +64,7 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
     * `vouches_required`: 2, the vouches needed to enrol
     * `referendum_quorum_percent`: 50
     * `referendum_pass_percent`: 50 (strictly more than this share of for+against votes)
+    * `referendum_days`: 14, how long a referendum is open
     * `instant_mail_approval_percent`: 10, `instant_mail_approver_percent`: 20,
       `instant_mail_expiry_hours`: 48
     * `bulletin_mail_approval_percent`: 50, `bulletin_mail_expiry_hours`: 168

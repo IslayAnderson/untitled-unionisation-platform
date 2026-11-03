@@ -3,6 +3,13 @@
     <h1 class="text-2xl font-semibold">{{ $thread->title }}</h1>
     <p class="mb-6 text-sm text-stone-600">{{ $thread->author?->name ?? 'A former member' }} · {{ $thread->published_at->format('j M Y, H:i') }}</p>
 
+    @if ($thread->referendum)
+        <p class="mb-4 rounded-md border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-950">
+            This discussion is about a referendum.
+            <a href="{{ route('referendums.show', $thread->referendum) }}" class="font-medium underline">Read the proposal and vote</a>.
+        </p>
+    @endif
+
     {{-- Cleaned by App\Support\RichText before it was stored. --}}
     <article class="rich-text rounded-lg border border-stone-200 bg-white p-5 text-stone-800">{!! $thread->rich_text !!}</article>
 

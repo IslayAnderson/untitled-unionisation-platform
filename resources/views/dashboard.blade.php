@@ -23,6 +23,20 @@
             </section>
         @endif
 
+        @if ($referendumsToVoteIn->isNotEmpty())
+            <section class="rounded-lg border-2 border-sky-300 bg-white p-6">
+                <h2 class="text-lg font-semibold">Referendums waiting for your vote</h2>
+                <ul class="mt-2 space-y-1">
+                    @foreach ($referendumsToVoteIn as $referendum)
+                        <li>
+                            <a href="{{ route('referendums.show', $referendum) }}" class="underline">{{ $referendum->title }}</a>
+                            <span class="text-sm text-stone-500">· closes {{ $referendum->closes_at->format('j M, H:i') }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+            </section>
+        @endif
+
         @if ($pollsToVoteIn->isNotEmpty())
             <section class="rounded-lg border-2 border-emerald-300 bg-white p-6">
                 <h2 class="text-lg font-semibold">Polls waiting for your vote</h2>
@@ -62,6 +76,10 @@
                 <p class="mt-2 break-all text-xs text-stone-500">{{ $vouchUrl }}</p>
             @endif
         </section>
+
+        <p class="text-sm">
+            <a href="{{ route('constitution.show') }}" class="underline">Read your union's constitution</a>
+        </p>
 
         <section class="rounded-lg border border-stone-200 bg-white p-6">
             <h2 class="text-lg font-semibold">Invite your neighbours</h2>

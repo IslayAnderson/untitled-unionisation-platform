@@ -42,6 +42,12 @@ class DashboardController extends Controller
                     ->latest()
                     ->get()
                 : collect(),
+            'referendumsToVoteIn' => $contact->isEnrolled()
+                ? $building->referendums()->open()
+                    ->whereDoesntHave('voters', fn ($query) => $query->where('contact_id', $contact->id))
+                    ->orderBy('closes_at')
+                    ->get()
+                : collect(),
             'pollsToVoteIn' => $contact->isEnrolled()
                 ? Poll::open()
                     ->whereHas('bulletin', fn ($query) => $query->where('building_id', $building->id))

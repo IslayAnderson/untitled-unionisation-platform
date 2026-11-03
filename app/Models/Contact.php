@@ -168,4 +168,14 @@ class Contact extends Model
     {
         return $this->hasMany(PollVoter::class);
     }
+
+    /**
+     * The referendums this contact has voted in (not how they voted).
+     *
+     * @return HasMany<ReferendumVoter, $this>
+     */
+    public function referendumVotes(): HasMany
+    {
+        return $this->hasMany(ReferendumVoter::class);
+    }
 }

@@ -59,6 +59,7 @@ class ThreadController extends Controller
         return view('threads.show', [
             'thread' => $thread->load([
                 'author',
+                'referendum',
                 'replies' => fn ($query) => $query->with(['author', 'contact'])->oldest('published_at')->oldest('id'),
             ]),
         ]);

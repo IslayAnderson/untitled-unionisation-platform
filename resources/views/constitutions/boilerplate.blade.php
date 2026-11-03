@@ -17,6 +17,7 @@
 
 <h2>4. Decisions</h2>
 <p>Everyday decisions are made by polls of members. Policies and changes to this constitution are made by referendum.</p>
+<p>Any member may propose a policy, a change to a policy, or a change to this constitution. A referendum is open for {{ $rules->referendumDays }} days, and members' votes are secret.</p>
 <p>A referendum is valid if at least {{ $rules->referendumQuorumPercent }}% of members vote, and passes if more than {{ $rules->referendumPassPercent }}% of the votes cast for or against are in favour. Abstentions count towards the quorum but not towards the result.</p>
 
 <h2>5. Mail</h2>

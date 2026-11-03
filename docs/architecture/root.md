@@ -29,6 +29,8 @@
   * Landlords, external contacts and mailing lists (milestone 4)
 * /docs/architecture/mail.md
   * Instant mail and bulletin mail: how union email is approved and sent
+* /docs/architecture/governance.md
+  * Constitution amendments, policies and referendums (milestone 3)
 * /docs/architecture/polls.md
   * Secret-ballot polls on bulletins
 * /docs/architecture/uploads.md

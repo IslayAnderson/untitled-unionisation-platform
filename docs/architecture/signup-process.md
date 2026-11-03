@@ -56,4 +56,4 @@ Unions that existed before it was added got one in the migration.
 ## Thresholds
 The thresholds live in the building's current constitution (`constitutions.rules`), not in app
 config. Each building starts with the boilerplate values and can change them by referendum
-(milestone 3).
+(see `governance.md`).

@@ -19,6 +19,9 @@
                     @if (auth()->user()->contact?->isEnrolled())
                         <a href="{{ route('bulletins.index') }}" class="hover:underline">Bulletins</a>
                         <a href="{{ route('threads.index') }}" class="hover:underline">Discussions</a>
+                        <a href="{{ route('referendums.index') }}" class="hover:underline">Referendums</a>
+                        <a href="{{ route('policies.index') }}" class="hover:underline">Policies</a>
+                        <a href="{{ route('constitution.show') }}" class="hover:underline">Constitution</a>
                         <a href="{{ route('mail.index') }}" class="hover:underline">Mail</a>
                         <a href="{{ route('contacts.index') }}" class="hover:underline">Contacts</a>
                         <a href="{{ route('mailing-lists.index') }}" class="hover:underline">Mailing lists</a>

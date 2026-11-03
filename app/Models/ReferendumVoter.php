@@ -2,20 +2,18 @@
 
 namespace App\Models;
 
-use App\Enums\ReferendumAnswer;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['referendum_id', 'contact_id', 'answer'])]
-class ReferendumSubmission extends Model
+/**
+ * A record that a member voted in a referendum, and nothing about how. No
+ * timestamps, so it can't be matched to a change in the totals.
+ */
+#[Fillable(['referendum_id', 'contact_id'])]
+class ReferendumVoter extends Model
 {
-    protected function casts(): array
-    {
-        return [
-            'answer' => ReferendumAnswer::class,
-        ];
-    }
+    public $timestamps = false;
 
     /**
      * @return BelongsTo<Referendum, $this>

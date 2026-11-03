@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 #[Fillable(['building_id', 'author_id', 'title', 'rich_text', 'published_at'])]
@@ -44,5 +45,15 @@ class Thread extends Model
     public function replies(): MorphMany
     {
         return $this->morphMany(Reply::class, 'replyable');
+    }
+
+    /**
+     * The referendum this discussion is about, if any.
+     *
+     * @return HasOne<Referendum, $this>
+     */
+    public function referendum(): HasOne
+    {
+        return $this->hasOne(Referendum::class);
     }
 }
