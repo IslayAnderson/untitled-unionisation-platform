@@ -60,4 +60,25 @@ landlords, uploaded image records), replies on its bulletins and threads (a morp
 its tenants' users and sessions, and all its contacts, including landlords' staff. The stored image and
 attachment files are deleted after the transaction commits.
 
+### Members get the union's records
+Before a union is deleted, its **members** (enrolled, with a confirmed login) are emailed a copy of its
+records (`App\Services\UnionExport`, `App\Notifications\UnionDataExported`). Tenants waiting to be
+vouched for don't get it, since they couldn't see members-only content; a union with no members (e.g.
+an abandoned one) sends nothing. If the export can't be made, the union isn't deleted.
+
+The export is a zip:
+* `index.html`, readable offline: the constitution and its numbers, policies, roles and who holds them,
+  referendums (totals only: votes were secret; open ones weren't counted), bulletins with replies and
+  poll results (closed polls only), discussions, union mail and mailing lists;
+* `landlords.csv` and `contacts.csv` (landlord and agent contacts), with cells that start like a
+  formula escaped;
+* `files/images` (images in rich text, relinked in `index.html`) and `files/mail/{mail}` (attachments).
+
+It has no members' emails, flats or phone numbers, or who voted how.
+
+Each member is emailed separately, on demand (their accounts are deleted with the union), with a signed
+download link (`GET /union-exports/{export}`) that works for **30 days** (`KEEP_DAYS`). Exports up to
+10 MB are attached too. They're stored on the private `local` disk under `union-exports/{random}/`, and
+`php artisan union-exports:prune` (scheduled daily) deletes them after 30 days.
+
 Unused uploaded images are not cleaned up: see `uploads.md` on preserving images Cloudflare flags.

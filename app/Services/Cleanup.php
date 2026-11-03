@@ -9,6 +9,7 @@ use App\Models\UnionMailAttachment;
 use App\Models\UploadedImage;
 use App\Models\User;
 use App\Notifications\CleanupWarning;
+use App\Notifications\UnionDataExported;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +25,8 @@ use Illuminate\Support\Facades\Storage;
 class Cleanup
 {
     public const GRACE_DAYS = 7;
+
+    public function __construct(private UnionExport $exports) {}
 
     public const UNVERIFIED_DAYS = 7;
 
@@ -237,9 +240,15 @@ class Cleanup
      * Delete a union and everything in it: its tenants' accounts, contacts,
      * landlords, posts, mail, votes and stored files. Only pass unions from
      * unionsDueForDeletion().
+     *
+     * Its members are emailed an export of its records first. If the export
+     * can't be made, nothing is deleted.
      */
     public function deleteUnion(Building $building, User $admin): void
     {
+        $recipients = $this->exports->recipients($building);
+        $export = $recipients ? $this->exports->create($building) : null;
+
         $files = UploadedImage::where('building_id', $building->id)->get(['disk', 'path'])
             ->concat(UnionMailAttachment::whereIn('union_mail_id', $building->unionMails()->select('id'))->get(['disk', 'path']));
 
@@ -264,6 +273,21 @@ class Cleanup
 
         $files->each(fn ($file) => Storage::disk($file->disk)->delete($file->path));
 
-        Log::info('Admin deleted a union', ['admin_id' => $admin->id, 'building_id' => $building->id, 'name' => $building->name]);
+        if ($export) {
+            $disk = Storage::disk(UnionExport::DISK);
+            $notification = new UnionDataExported(
+                $building->name,
+                $this->exports->downloadUrl($export),
+                now()->addDays(UnionExport::KEEP_DAYS),
+                $disk->size($export) <= UnionExport::ATTACH_MAX_BYTES ? $disk->path($export) : null,
+            );
+
+            // Separately, so members don't see each other's addresses.
+            foreach ($recipients as $email) {
+                Notification::route('mail', $email)->notify($notification);
+            }
+        }
+
+        Log::info('Admin deleted a union', ['admin_id' => $admin->id, 'building_id' => $building->id, 'name' => $building->name, 'export_sent_to' => count($recipients)]);
     }
 }

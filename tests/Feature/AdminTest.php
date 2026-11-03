@@ -13,9 +13,12 @@ use App\Models\Thread;
 use App\Models\UploadedImage;
 use App\Models\User;
 use App\Notifications\CleanupWarning;
+use App\Notifications\UnionDataExported;
 use App\Services\Cleanup;
 use App\Services\MailApprovals;
+use App\Services\UnionExport;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -174,6 +177,23 @@ it('emails abandoned unions and deletes those nobody came back to', function () 
         ->and(User::find($signup->user->id))->toBeNull()
         ->and($revived->fresh()->cleanup_warned_at)->toBeNull()
         ->and(Building::count())->toBe(3);
+
+    // It had no members, so there was nobody to send its records to.
+    Notification::assertNothingSentTo(new AnonymousNotifiable);
+    Notification::assertSentOnDemandTimes(UnionDataExported::class, 0);
+});
+
+it('deletes exports once their links have expired', function () {
+    Storage::fake('local');
+    $exports = app(UnionExport::class);
+    $old = $exports->create(Building::factory()->create());
+    $new = $exports->create(Building::factory()->create());
+    touch(Storage::disk('local')->path($old), now()->subDays(UnionExport::KEEP_DAYS + 1)->getTimestamp());
+
+    $this->artisan('union-exports:prune')->expectsOutput('Deleted 1 export.')->assertSuccessful();
+
+    expect(Storage::disk('local')->exists($old))->toBeFalse()
+        ->and(Storage::disk('local')->exists($new))->toBeTrue();
 });
 
 it('lets a member logging in stop a union being deleted', function () {
@@ -246,6 +266,36 @@ it('deletes a union and everything in it, after emailing its members and waiting
     $this->actingAs($this->admin)->get(route('admin.unions.show', $building))->assertSeeText('You can delete it now.');
     $this->actingAs($this->admin)->delete(route('admin.unions.destroy', $building), ['confirm_name' => 'Doomed Court'])
         ->assertRedirect(route('admin.unions.index'));
+
+    // Members, not the landlord's staff or other unions, get the union's records.
+    $sent = [];
+    Notification::assertSentOnDemand(UnionDataExported::class, function (UnionDataExported $notification, array $channels, AnonymousNotifiable $notifiable) use (&$sent) {
+        $sent[] = $notifiable->routes['mail'];
+
+        return $notification->union === 'Doomed Court' && $notification->attachPath !== null;
+    });
+    expect($sent)->toEqualCanonicalizing([$author->user->email, $approver->user->email]);
+
+    $notification = null;
+    Notification::assertSentOnDemand(UnionDataExported::class, function (UnionDataExported $sentNotification) use (&$notification) {
+        return (bool) ($notification = $sentNotification);
+    });
+    $zip = new ZipArchive;
+    $zip->open($notification->attachPath);
+    $index = $zip->getFromName('index.html');
+    expect($index)->toContain($bulletin->title)
+        ->toContain($thread->title)
+        ->toContain('Hello')
+        ->toContain('files/mail/'.$mail->id.'/'.$attachment->id.'-notes.txt')
+        ->not->toContain($author->user->email)
+        ->and($zip->getFromName('files/images/'.basename($image->path)))->toBe('jpeg')
+        ->and($zip->getFromName('files/mail/'.$mail->id.'/'.$attachment->id.'-notes.txt'))->toBe('notes')
+        ->and($zip->getFromName('contacts.csv'))->toContain($agent->name)
+        ->and($zip->getFromName('landlords.csv'))->toContain($landlord->name);
+    $zip->close();
+
+    $this->get($notification->downloadUrl)->assertOk()->assertDownload('doomed-court-export.zip');
+    $this->get(route('union-exports.download', basename(dirname(str_replace(Storage::disk('local')->path(''), '', $notification->attachPath)))))->assertForbidden();
 
     expect(Building::find($building->id))->toBeNull()
         ->and(User::whereIn('contact_id', [$author->id, $approver->id])->exists())->toBeFalse()

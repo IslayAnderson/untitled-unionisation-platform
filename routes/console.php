@@ -11,3 +11,4 @@ Artisan::command('inspire', function () {
 Schedule::command('union-mail:expire')->everyFiveMinutes()->withoutOverlapping();
 Schedule::command('union-mail:fetch-replies')->everyMinute()->withoutOverlapping();
 Schedule::command('referendums:close')->everyMinute()->withoutOverlapping();
+Schedule::command('union-exports:prune')->daily();

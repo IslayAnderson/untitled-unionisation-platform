@@ -23,6 +23,7 @@ use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\ThreadReplyController;
+use App\Http\Controllers\UnionExportController;
 use App\Http\Controllers\UnionMailController;
 use App\Http\Controllers\VouchController;
 use Illuminate\Support\Facades\Route;
@@ -140,6 +141,11 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
     Route::post('/mail/{unionMail}/decision', [UnionMailController::class, 'decide'])->name('mail.decide');
     Route::post('/mail/{unionMail}/withdraw', [UnionMailController::class, 'withdraw'])->name('mail.withdraw');
 });
+
+// A deleted union's records, from the signed link emailed to its members.
+Route::get('/union-exports/{export}', UnionExportController::class)
+    ->middleware(['signed', 'throttle:20,1'])
+    ->name('union-exports.download');
 
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminUnionController::class, 'index'])->name('unions.index');
