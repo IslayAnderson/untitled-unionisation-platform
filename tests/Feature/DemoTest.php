@@ -7,6 +7,7 @@ use App\Models\Referendum;
 use App\Models\User;
 use App\Services\Cleanup;
 use App\Services\DemoUnion;
+use Illuminate\Support\Facades\DB;
 
 beforeEach(function () {
     config(['demo.enabled' => true]);
@@ -35,6 +36,16 @@ it('builds a lived-in union with no real email addresses', function () {
     $emails = Contact::where('building_id', $demo->id)->whereNotNull('email')->pluck('email')
         ->concat(User::whereIn('contact_id', $demo->contacts()->select('id'))->pluck('email'));
     expect($emails->reject(fn (string $email) => str_ends_with($email, '.invalid') || str_ends_with($email, '.example')))->toBeEmpty();
+});
+
+it('builds when the database returns ids as text, as some MySQL drivers do', function () {
+    $pdo = DB::connection()->getPdo();
+    $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, true);
+    $this->beforeApplicationDestroyed(fn () => $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false));
+
+    $this->artisan('demo:reset')->assertSuccessful();
+
+    expect(Building::where('is_demo', true)->sole()->referendums()->whereNull('closed_at')->count())->toBe(3);
 });
 
 it('replaces the previous demo when rebuilt, and can remove it', function () {

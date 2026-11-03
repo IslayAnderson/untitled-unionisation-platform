@@ -19,6 +19,8 @@ class Thread extends Model
     protected function casts(): array
     {
         return [
+            'building_id' => 'integer',
+            'author_id' => 'integer',
             'published_at' => 'datetime',
         ];
     }

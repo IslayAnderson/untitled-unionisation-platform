@@ -19,6 +19,7 @@ class Constitution extends Model
     protected function casts(): array
     {
         return [
+            'building_id' => 'integer',
             'rules' => 'array',
             'opened_at' => 'datetime',
             'published_at' => 'datetime',

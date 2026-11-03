@@ -24,6 +24,7 @@ class Poll extends Model
     protected function casts(): array
     {
         return [
+            'bulletin_id' => 'integer',
             'allows_multiple' => 'boolean',
             'closes_at' => 'datetime',
             'closed_at' => 'datetime',

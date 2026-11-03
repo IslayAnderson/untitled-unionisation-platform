@@ -14,6 +14,13 @@ use Illuminate\Support\Str;
 #[Fillable(['building_id', 'name'])]
 class Unit extends Model
 {
+    protected function casts(): array
+    {
+        return [
+            'building_id' => 'integer',
+        ];
+    }
+
     protected static function booted(): void
     {
         static::saving(function (Unit $unit) {

@@ -13,6 +13,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable(['referendum_id', 'contact_id'])]
 class ReferendumVoter extends Model
 {
+    protected function casts(): array
+    {
+        return [
+            'referendum_id' => 'integer',
+            'contact_id' => 'integer',
+        ];
+    }
+
     public $timestamps = false;
 
     /**

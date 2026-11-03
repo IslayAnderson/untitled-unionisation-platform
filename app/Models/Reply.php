@@ -26,6 +26,10 @@ class Reply extends Model
     protected function casts(): array
     {
         return [
+            'replyable_id' => 'integer',
+            'author_id' => 'integer',
+            'union_mail_id' => 'integer',
+            'contact_id' => 'integer',
             'published_at' => 'datetime',
         ];
     }

@@ -16,6 +16,8 @@ class UnionMailApprover extends Model
     protected function casts(): array
     {
         return [
+            'union_mail_id' => 'integer',
+            'contact_id' => 'integer',
             'decision' => ApprovalDecision::class,
             'decided_at' => 'datetime',
         ];

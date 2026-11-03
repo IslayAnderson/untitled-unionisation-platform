@@ -26,6 +26,8 @@ class Policy extends Model
     protected function casts(): array
     {
         return [
+            'building_id' => 'integer',
+            'replaces_policy_id' => 'integer',
             'opened_at' => 'datetime',
             'published_at' => 'datetime',
             'superseded_at' => 'datetime',

@@ -12,6 +12,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable(['voucher_contact_id', 'vouchee_contact_id'])]
 class Vouch extends Model
 {
+    protected function casts(): array
+    {
+        return [
+            'voucher_contact_id' => 'integer',
+            'vouchee_contact_id' => 'integer',
+        ];
+    }
+
     /**
      * @return BelongsTo<Contact, $this>
      */

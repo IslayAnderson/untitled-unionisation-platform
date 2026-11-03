@@ -36,6 +36,10 @@ class Contact extends Model
     protected function casts(): array
     {
         return [
+            'type_id' => 'integer',
+            'landlord_id' => 'integer',
+            'building_id' => 'integer',
+            'unit_id' => 'integer',
             'pending_signup' => 'array',
             'enrolled_at' => 'datetime',
             'removed_at' => 'datetime',

@@ -18,6 +18,15 @@ class Landlord extends Model
     /** @use HasFactory<LandlordFactory> */
     use HasFactory;
 
+    protected function casts(): array
+    {
+        return [
+            'type_id' => 'integer',
+            'primary_contact_id' => 'integer',
+            'building_id' => 'integer',
+        ];
+    }
+
     /**
      * The union that keeps this record.
      *

@@ -17,6 +17,8 @@ class UnionMailAttachment extends Model implements Attachable
     protected function casts(): array
     {
         return [
+            'union_mail_id' => 'integer',
+            'uploaded_image_id' => 'integer',
             'size' => 'integer',
         ];
     }

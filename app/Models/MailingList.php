@@ -16,6 +16,15 @@ class MailingList extends Model
     /** @use HasFactory<MailingListFactory> */
     use HasFactory;
 
+    protected function casts(): array
+    {
+        return [
+            'type_id' => 'integer',
+            'building_id' => 'integer',
+            'landlord_id' => 'integer',
+        ];
+    }
+
     /**
      * @return BelongsTo<ContactType, $this>
      */

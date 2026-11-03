@@ -15,6 +15,8 @@ class PollAnswer extends Model
     protected function casts(): array
     {
         return [
+            'poll_id' => 'integer',
+            'position' => 'integer',
             'vote_count' => 'integer',
         ];
     }

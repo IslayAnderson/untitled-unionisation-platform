@@ -29,6 +29,11 @@ class Referendum extends Model
     protected function casts(): array
     {
         return [
+            'referendable_id' => 'integer',
+            'building_id' => 'integer',
+            'proposer_id' => 'integer',
+            'thread_id' => 'integer',
+            'candidate_id' => 'integer',
             'kind' => ReferendumKind::class,
             'outcome' => ReferendumOutcome::class,
             'closes_at' => 'datetime',

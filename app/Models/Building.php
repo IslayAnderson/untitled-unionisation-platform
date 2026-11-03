@@ -37,6 +37,8 @@ class Building extends Model
     protected function casts(): array
     {
         return [
+            'building_owner_id' => 'integer',
+            'current_constitution_id' => 'integer',
             'cleanup_warned_at' => 'datetime',
             'is_demo' => 'boolean',
         ];

@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable(['role_id', 'title', 'description'])]
 class RoleAction extends Model
 {
+    protected function casts(): array
+    {
+        return [
+            'role_id' => 'integer',
+        ];
+    }
+
     /**
      * @return BelongsTo<Role, $this>
      */

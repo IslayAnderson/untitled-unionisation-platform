@@ -25,6 +25,12 @@ class UploadedImage extends Model
     protected function casts(): array
     {
         return [
+            'building_id' => 'integer',
+            'uploader_contact_id' => 'integer',
+            'width' => 'integer',
+            'height' => 'integer',
+            'size' => 'integer',
+            'original_size' => 'integer',
             'cache_warmed_at' => 'datetime',
         ];
     }

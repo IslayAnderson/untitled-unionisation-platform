@@ -26,6 +26,7 @@ class Role extends Model
     protected function casts(): array
     {
         return [
+            'building_id' => 'integer',
             'opened_at' => 'datetime',
             'published_at' => 'datetime',
             'abolished_at' => 'datetime',

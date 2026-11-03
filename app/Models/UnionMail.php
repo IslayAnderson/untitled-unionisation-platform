@@ -24,6 +24,12 @@ class UnionMail extends Model
     protected function casts(): array
     {
         return [
+            'building_id' => 'integer',
+            'mailing_list_id' => 'integer',
+            'author_contact_id' => 'integer',
+            'bulletin_id' => 'integer',
+            'approvals_required' => 'integer',
+            'recipient_count' => 'integer',
             'kind' => UnionMailKind::class,
             'status' => UnionMailStatus::class,
             'expires_at' => 'datetime',
