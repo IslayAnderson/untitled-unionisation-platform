@@ -69,6 +69,17 @@ it('sends union mail with a reply address for that mail', function () {
         && ! $email->hasReplyTo('union@example.test'));
 });
 
+it('gives pending mail from before reply addresses a token when it is sent', function () {
+    $approvals = app(MailApprovals::class);
+    $mail = $approvals->createInstant($this->author, $this->list, 'Old mail', '<p>Created before reply tokens.</p>');
+    $mail->forceFill(['reply_token' => null])->save();
+
+    $mail = $approvals->decide($mail->approvers->first()->contact, $mail, ApprovalDecision::Approve);
+
+    expect($mail->fresh()->reply_token)->toMatch('/^[a-f0-9]{24}$/');
+    Mail::assertQueued(UnionMessage::class, fn (UnionMessage $email) => $email->hasReplyTo("replies+{$mail->fresh()->reply_token}@union.test"));
+});
+
 it('sends replies to the union inbox when inbound mail is not set up', function () {
     config(['inbound.address' => null]);
 

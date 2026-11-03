@@ -194,6 +194,9 @@ class MailApprovals
     {
         $recipients = $this->recipients($mail->mailingList);
 
+        // Mail created before reply tokens existed doesn't have one yet.
+        $mail->reply_token ??= ReplyAddress::newToken();
+
         $recipients->each(fn (Contact $recipient) => Mail::to($recipient->email, $recipient->name)
             ->queue(new UnionMessage($mail->building, $mail->subject, $mail->body, ReplyAddress::for($mail->reply_token))));
 
