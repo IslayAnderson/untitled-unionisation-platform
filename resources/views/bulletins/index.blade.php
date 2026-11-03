@@ -20,6 +20,9 @@
                         @if ($bulletin->pinned_at)
                             <span class="ml-1 rounded bg-violet-100 px-1.5 py-0.5 text-xs font-medium text-violet-800">Pinned</span>
                         @endif
+                        @if ($bulletin->open_polls_count)
+                            <span class="ml-1 rounded bg-emerald-100 px-1.5 py-0.5 text-xs font-medium text-emerald-800">Open poll</span>
+                        @endif
                         <span class="block text-sm text-stone-500">
                             {{ $bulletin->isVouching() ? 'For everyone who has signed up' : ($bulletin->author?->name ?? 'A former member') }} · {{ $bulletin->published_at->format('j M Y') }}
                             @if ($bulletin->replies_count)

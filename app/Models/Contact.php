@@ -158,4 +158,14 @@ class Contact extends Model
     {
         return $this->hasMany(Vouch::class, 'voucher_contact_id');
     }
+
+    /**
+     * The polls this contact has voted in (not how they voted).
+     *
+     * @return HasMany<PollVoter, $this>
+     */
+    public function pollVotes(): HasMany
+    {
+        return $this->hasMany(PollVoter::class);
+    }
 }

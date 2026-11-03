@@ -13,11 +13,12 @@ Table names follow Laravel conventions (snake_case plurals). Spelling in the dia
 | Contact/Mailinglist Type | `contact_types` (used by both contacts and mailing lists) |
 | Landlord Type | `landlord_types` |
 | Poll Answers | `poll_answers` |
-| Poll Submissions | `poll_submissions` |
+| Poll Submissions | `poll_voters` (secret ballot, see `polls.md`) |
 | Referendum Submissions | `referendum_submissions` |
 | Role Actions | `role_actions` |
 
-Every table gets an auto-increment `id` primary key and `created_at` / `updated_at`.
+Every table gets an auto-increment `id` primary key and `created_at` / `updated_at`, except
+`poll_voters`, which has no timestamps so a vote's timing can't reveal it.
 
 ## Relationship changes
 * **Contacts ↔ Mailing lists is many-to-many.** The `mailing_list` FK on Contacts is replaced by a
@@ -34,6 +35,8 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
   point to a Bulletin or a Thread. A reply is either a member's post (`author_id`) or an email reply
   to union mail (`union_mail_id`, `contact_id` if the sender matched a contact on the list,
   `from_name`, `from_email`, `message_id`, unique so the same email is never added twice).
+* **Poll submissions don't record the answer.** `poll_voters` (`poll_id`, `contact_id`, unique) records
+  that a member voted; `poll_answers.vote_count` and `polls.ballot_count` hold anonymous totals. See `polls.md`.
 * **Rich text columns hold HTML** cleaned by `App\Support\RichText` (an allowlist of paragraphs,
   headings, emphasis, lists, quotes and links). It is cleaned before it's stored, so views output it
   unescaped.

@@ -14,6 +14,18 @@
     {{-- Cleaned by App\Support\RichText before it was stored. --}}
     <article class="rich-text rounded-lg border border-stone-200 bg-white p-5 text-stone-800">{!! $bulletin->rich_text !!}</article>
 
+    @if ($bulletin->polls->isNotEmpty() || ($isAuthor && ! $bulletin->isVouching()))
+        <div class="mt-6 space-y-4">
+            @foreach ($bulletin->polls as $poll)
+                <x-poll :poll="$poll" :has-voted="in_array($poll->id, $votedPollIds, true)" :is-author="$isAuthor" :member-count="$memberCount" />
+            @endforeach
+
+            @if ($isAuthor && ! $bulletin->isVouching())
+                <a href="{{ route('bulletins.polls.create', $bulletin) }}" class="inline-block text-sm font-medium underline">Add a poll</a>
+            @endif
+        </div>
+    @endif
+
     @if ($bulletin->mails->isNotEmpty())
         <section class="mt-6">
             <h2 class="mb-2 text-lg font-semibold">Mail</h2>

@@ -6,23 +6,21 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['poll_id', 'poll_answer_id', 'contact_id'])]
-class PollSubmission extends Model
+/**
+ * A record that a member voted in a poll, and nothing about how. No
+ * timestamps, so it can't be matched to a change in the totals.
+ */
+#[Fillable(['poll_id', 'contact_id'])]
+class PollVoter extends Model
 {
+    public $timestamps = false;
+
     /**
      * @return BelongsTo<Poll, $this>
      */
     public function poll(): BelongsTo
     {
         return $this->belongsTo(Poll::class);
-    }
-
-    /**
-     * @return BelongsTo<PollAnswer, $this>
-     */
-    public function answer(): BelongsTo
-    {
-        return $this->belongsTo(PollAnswer::class, 'poll_answer_id');
     }
 
     /**

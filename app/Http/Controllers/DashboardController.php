@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Poll;
 use App\Support\QrCode;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -39,6 +40,14 @@ class DashboardController extends Controller
                     ->where('expires_at', '>', now())
                     ->whereHas('approvers', fn ($query) => $query->where('contact_id', $contact->id)->whereNull('decision'))
                     ->latest()
+                    ->get()
+                : collect(),
+            'pollsToVoteIn' => $contact->isEnrolled()
+                ? Poll::open()
+                    ->whereHas('bulletin', fn ($query) => $query->where('building_id', $building->id))
+                    ->whereDoesntHave('voters', fn ($query) => $query->where('contact_id', $contact->id))
+                    ->with('bulletin')
+                    ->orderBy('closes_at')
                     ->get()
                 : collect(),
         ]);

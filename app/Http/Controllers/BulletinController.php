@@ -24,7 +24,7 @@ class BulletinController extends Controller
         return view('bulletins.index', [
             'bulletins' => $request->user()->contact->building->bulletins()
                 ->with('author')
-                ->withCount('replies')
+                ->withCount(['replies', 'polls as open_polls_count' => fn ($query) => $query->open()])
                 ->orderByDesc('pinned_at')
                 ->latest('published_at')
                 ->get(),
@@ -67,8 +67,12 @@ class BulletinController extends Controller
                 'author',
                 'mails' => fn ($query) => $query->latest(),
                 'replies' => fn ($query) => $query->with(['author', 'contact'])->oldest('published_at')->oldest('id'),
+                'polls' => fn ($query) => $query->with('answers')->oldest(),
             ]),
             'isMember' => $isMember,
+            'isAuthor' => $isMember && $bulletin->author_id === $viewer->id,
+            'votedPollIds' => $viewer->pollVotes()->whereIn('poll_id', $bulletin->polls->modelKeys())->pluck('poll_id')->all(),
+            'memberCount' => $viewer->building->enrolledCount(),
             'canMail' => $isMember && $bulletin->author_id === $viewer->id && ! $bulletin->hasActiveMail(),
             'lists' => $isMember ? $viewer->building->mailingLists()->orderBy('name')->get() : collect(),
             'rules' => $viewer->building->rules(),

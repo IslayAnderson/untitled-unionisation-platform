@@ -29,6 +29,8 @@
   * Landlords, external contacts and mailing lists (milestone 4)
 * /docs/architecture/mail.md
   * Instant mail and bulletin mail: how union email is approved and sent
+* /docs/architecture/polls.md
+  * Secret-ballot polls on bulletins
 * /docs/architecture/uploads.md
   * Image uploads: compression, metadata stripping and Cloudflare CSAM scanning
 

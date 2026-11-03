@@ -62,7 +62,7 @@ mail can't be created.
 
 ## Bulletins
 A simple noticeboard: members post bulletins (title + rich text), and every member of the union
-can read them, pinned bulletins first, then newest first. Polls on bulletins come with milestone 2.
+can read them, pinned bulletins first, then newest first. A bulletin's author can add secret-ballot polls to it (see `polls.md`).
 Each union also has a pinned vouching bulletin that tenants waiting to be vouched for can read and
 reply to (see `signup-process.md`).
 

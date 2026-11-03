@@ -12,6 +12,7 @@ use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\LandlordController;
 use App\Http\Controllers\MailingListController;
 use App\Http\Controllers\OnboardingController;
+use App\Http\Controllers\PollController;
 use App\Http\Controllers\UnionMailController;
 use App\Http\Controllers\VouchController;
 use Illuminate\Support\Facades\Route;
@@ -75,6 +76,10 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
     Route::post('/bulletins/{bulletin}/mail', [BulletinController::class, 'mail'])
         ->middleware('throttle:10,1')
         ->name('bulletins.mail');
+    Route::get('/bulletins/{bulletin}/polls/create', [PollController::class, 'create'])->name('bulletins.polls.create');
+    Route::post('/bulletins/{bulletin}/polls', [PollController::class, 'store'])->middleware('throttle:10,1')->name('bulletins.polls.store');
+    Route::post('/polls/{poll}/votes', [PollController::class, 'vote'])->middleware('throttle:30,1')->name('polls.votes.store');
+    Route::post('/polls/{poll}/close', [PollController::class, 'close'])->name('polls.close');
     Route::post('/uploads/images', [ImageUploadController::class, 'store'])
         ->middleware('throttle:30,1')
         ->name('uploads.images.store');

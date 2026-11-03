@@ -23,6 +23,20 @@
             </section>
         @endif
 
+        @if ($pollsToVoteIn->isNotEmpty())
+            <section class="rounded-lg border-2 border-emerald-300 bg-white p-6">
+                <h2 class="text-lg font-semibold">Polls waiting for your vote</h2>
+                <ul class="mt-2 space-y-1">
+                    @foreach ($pollsToVoteIn as $poll)
+                        <li>
+                            <a href="{{ route('bulletins.show', $poll->bulletin_id) }}#poll-{{ $poll->id }}" class="underline">{{ $poll->title }}</a>
+                            <span class="text-sm text-stone-500">· closes {{ $poll->closes_at->format('j M, H:i') }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+            </section>
+        @endif
+
         <section class="rounded-lg border border-stone-200 bg-white p-6">
             @if ($contact->isEnrolled())
                 <h2 class="text-lg font-semibold">You're a member</h2>
