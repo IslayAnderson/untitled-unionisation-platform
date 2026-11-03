@@ -39,13 +39,13 @@
 
 .app-invite-sheet__layout--flyers {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
 }
 
 .app-invite-sheet__layout--slips {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
 }
 
 @media screen {
@@ -164,6 +164,14 @@
   }
 }
 
+// A card can't size its own padding and gaps against itself, so its slot is a
+// container too. Without one they fall back to the viewport, which is as wide
+// as the page in Chrome's print but far wider in Safari's.
+.app-invite-slot {
+  height: 100%;
+  container-type: inline-size;
+}
+
 .app-invite-card {
   container-type: inline-size;
   overflow: hidden;
@@ -232,8 +240,8 @@
 }
 
 .app-invite-card--slip {
-  padding: 7cqw;
-  gap: 3cqw;
+  padding: 14cqw;
+  gap: 6cqw;
 }
 
 .app-invite-card--slip .app-invite-card__union {
@@ -359,7 +367,7 @@
 
 // Door slips only have room for the feature titles, as a list.
 .app-invite-card--slip.app-invite-card--info {
-  gap: 2.5cqw;
+  gap: 5cqw;
 }
 
 .app-invite-card--slip.app-invite-card--info .app-invite-card__headline {
