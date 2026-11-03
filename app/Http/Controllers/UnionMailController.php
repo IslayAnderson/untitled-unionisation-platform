@@ -6,7 +6,9 @@ use App\Enums\ApprovalDecision;
 use App\Exceptions\UnionMailRefused;
 use App\Models\MailingList;
 use App\Models\UnionMail;
+use App\Rules\FilledRichText;
 use App\Services\MailApprovals;
+use App\Support\RichText;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -50,11 +52,11 @@ class UnionMailController extends Controller
         $data = $request->validate([
             'mailing_list_id' => ['required', 'integer', Rule::exists('mailing_lists', 'id')->where('building_id', $member->building_id)],
             'subject' => ['required', 'string', 'max:200'],
-            'body' => ['required', 'string', 'max:20000'],
+            'body' => ['required', 'string', 'max:100000', new FilledRichText],
         ]);
 
         try {
-            $mail = $approvals->createInstant($member, MailingList::findOrFail($data['mailing_list_id']), $data['subject'], $data['body']);
+            $mail = $approvals->createInstant($member, MailingList::findOrFail($data['mailing_list_id']), $data['subject'], RichText::clean($data['body']));
         } catch (UnionMailRefused $e) {
             return back()->withInput()->withErrors(['mailing_list_id' => $e->getMessage()]);
         }

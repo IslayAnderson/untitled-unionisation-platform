@@ -58,8 +58,51 @@ If the union doesn't have enough members other than the author to supply the app
 mail can't be created.
 
 ## Bulletins
-A simple noticeboard: members post bulletins (title + plain text), and every member of the union
+A simple noticeboard: members post bulletins (title + rich text), and every member of the union
 can read them, newest first. Polls on bulletins come with milestone 2.
+
+Each bulletin has a reply thread holding:
+* **email replies** to its mail (see Replies below), marked "Email reply", with the sender's name and
+  address and a warning if the sender isn't on the mailing list the mail went to;
+* **members' posts**, for discussing the bulletin. These are only ever seen by members and are
+  **never emailed**. To answer an email, members write new instant mail or send a bulletin as mail,
+  which goes through approval as usual.
+
+## Rich text
+Bulletins, instant mail and members' replies are written in TinyMCE (self-hosted under its GPL
+licence, bundled by Vite, loaded only on pages with an editor). The editor offers paragraphs, two
+heading levels, bold/italic/underline/strikethrough, lists, quotes and links.
+
+The server never trusts the editor: `App\Support\RichText::clean()` keeps only those elements (and
+`href` on links, limited to http, https and mailto) before anything is stored, and emails clean the
+body again when rendering. The text part of each email is made with `RichText::toPlainText()`.
+
+## Replies
+Every mail gets a random `reply_token`. When `INBOUND_MAIL_ADDRESS` is set (e.g.
+`replies@example.org`), each email is sent with `Reply-To: replies+<token>@example.org`; the mailbox
+must accept plus addresses.
+
+`php artisan union-mail:fetch-replies` (scheduled every minute) reads unseen messages from that
+mailbox and, for each one addressed to the token of a **sent** mail:
+1. strips the quoted original ("On … wrote:", "-----Original Message-----", `>` lines, etc.) and adds
+   the rest to the mail's bulletin as an email reply, as escaped plain text, never the sender's HTML;
+2. matches the sender to a contact on the mail's list, if there is one;
+3. forwards a full copy, with attachments, to the union's inbox (`buildings.contact_email`), if set.
+   Attachments aren't stored in the app; the reply notes how many there were.
+
+Every message is marked as seen once processed, including ones that don't match a sent mail (they're
+logged and left in the mailbox). A message ID is only ever added once.
+
+Without `INBOUND_MAIL_ADDRESS`, mail is sent with `Reply-To` the union's inbox, as before.
+
+### Inbound mailbox drivers
+Like address lookup, the mailbox sits behind an interface (`App\Services\InboundMail\InboundMailbox`)
+chosen by `INBOUND_MAIL_DRIVER`:
+* `imap`: polls an IMAP folder with ImapEngine (pure PHP, no `ext-imap`). Settings:
+  `INBOUND_IMAP_HOST`, `_PORT` (993), `_ENCRYPTION` (ssl), `_USERNAME`, `_PASSWORD`, `_FOLDER` (INBOX).
+* `fake`: in memory, for tests.
+
+A webhook provider (Postmark, Mailgun, Cloudflare Email Routing) can be added later as another driver.
 
 ## Thresholds
 All of the settings above live in the union's constitution (`constitutions.rules`) and can be changed
@@ -67,5 +110,6 @@ by referendum.
 
 ## Expiry
 `php artisan union-mail:expire` marks overdue mail as expired. The scheduler runs it every
-five minutes (`php artisan schedule:work` locally, or a cron entry for `schedule:run` in production).
+five minutes (`php artisan schedule:work` locally, or a cron entry for `schedule:run` in production),
+alongside `union-mail:fetch-replies`.
 Decisions on an overdue mail are refused even before the command runs.

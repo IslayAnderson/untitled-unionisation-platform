@@ -34,6 +34,8 @@ Mail to a list goes through approval: see `mail.md`. Every email:
   each other);
 * comes from the platform's address with the union's name as the sender name, and is signed by the
   union. **The author is never named**, to protect tenants from retaliation;
-* has replies going to the union's reply-to address (`buildings.contact_email`, set by members on the
+* has replies going back to the app, where they appear on the mail's bulletin with a copy sent to
+  the union's inbox (see "Replies" in `mail.md`). Without inbound mail set up, replies go straight to
+  the union's inbox (`buildings.contact_email`, set by members on the
   mailing lists page), or to the platform address if none is set;
 * is queued, so a queue worker (`php artisan queue:work`) must be running to deliver it.

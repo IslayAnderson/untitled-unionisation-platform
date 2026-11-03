@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * before it is sent. See docs/architecture/mail.md.
  */
 #[Fillable([
-    'building_id', 'mailing_list_id', 'author_contact_id', 'bulletin_id', 'kind', 'status',
+    'building_id', 'mailing_list_id', 'author_contact_id', 'bulletin_id', 'reply_token', 'kind', 'status',
     'subject', 'body', 'approvals_required', 'expires_at', 'decided_at', 'recipient_count',
 ])]
 class UnionMail extends Model
@@ -102,6 +102,16 @@ class UnionMail extends Model
     public function bulletin(): BelongsTo
     {
         return $this->belongsTo(Bulletin::class);
+    }
+
+    /**
+     * Email replies from recipients.
+     *
+     * @return HasMany<Reply, $this>
+     */
+    public function replies(): HasMany
+    {
+        return $this->hasMany(Reply::class);
     }
 
     /**

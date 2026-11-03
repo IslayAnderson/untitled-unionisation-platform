@@ -45,3 +45,7 @@ Alpine.data('addressSearch', (searchUrl, initial = { id: '', label: '' }) => ({
 
 window.Alpine = Alpine;
 Alpine.start();
+
+if (document.querySelector('textarea[data-rich-text]')) {
+    import('./rich-editor.js').then(({ initRichEditors }) => initRichEditors());
+}

@@ -16,8 +16,11 @@
                         <span class="font-medium">{{ $bulletin->title }}</span>
                         <span class="block text-sm text-stone-500">
                             {{ $bulletin->author?->name ?? 'A former member' }} · {{ $bulletin->published_at->format('j M Y') }}
+                            @if ($bulletin->replies_count)
+                                · {{ $bulletin->replies_count }} {{ Str::plural('reply', $bulletin->replies_count) }}
+                            @endif
                         </span>
-                        <span class="mt-1 block text-sm text-stone-700">{{ Str::limit($bulletin->rich_text, 160) }}</span>
+                        <span class="mt-1 block text-sm text-stone-700">{{ Str::limit(App\Support\RichText::toPlainText($bulletin->rich_text), 160) }}</span>
                     </a>
                 </li>
             @endforeach

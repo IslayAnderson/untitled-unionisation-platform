@@ -49,10 +49,13 @@ it('never names the sending member in the email', function () {
         ->assertDontSeeInText('Morgan Member');
 });
 
-it('escapes HTML in the message body', function () {
-    (new UnionMessage($this->building, 'Hi', '<script>alert(1)</script>'))
-        ->assertDontSeeInHtml('<script>alert(1)</script>', false)
-        ->assertSeeInHtml('&lt;script&gt;', false);
+it('strips unsafe HTML from the message body but keeps formatting', function () {
+    (new UnionMessage($this->building, 'Hi', '<p onclick="steal()"><strong>Fix the lift</strong></p><script>alert(1)</script>'))
+        ->assertSeeInHtml('<p><strong>Fix the lift</strong></p>', false)
+        ->assertDontSeeInHtml('<script', false)
+        ->assertDontSeeInHtml('onclick', false)
+        ->assertSeeInText('Fix the lift')
+        ->assertDontSeeInText('<strong>', false);
 });
 
 it('hides other unions\' mailing lists', function () {

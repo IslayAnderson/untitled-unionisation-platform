@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 #[Fillable(['building_id', 'author_id', 'title', 'rich_text', 'published_at'])]
 class Thread extends Model
@@ -34,10 +34,10 @@ class Thread extends Model
     }
 
     /**
-     * @return HasMany<Reply, $this>
+     * @return MorphMany<Reply, $this>
      */
-    public function replies(): HasMany
+    public function replies(): MorphMany
     {
-        return $this->hasMany(Reply::class);
+        return $this->morphMany(Reply::class, 'replyable');
     }
 }

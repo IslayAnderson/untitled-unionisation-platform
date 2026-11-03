@@ -10,7 +10,7 @@
     <form method="POST" action="{{ route('bulletins.store') }}" class="space-y-4">
         @csrf
         <x-field name="title" label="Title" required />
-        <x-textarea name="body" label="Text" rows="10" required hint="Plain text." />
+        <x-rich-editor name="body" label="Text" />
         <x-button>Post bulletin</x-button>
     </form>
 </x-layouts.app>

@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BulletinController;
+use App\Http\Controllers\BulletinReplyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandlordController;
@@ -65,6 +66,9 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
     Route::post('/bulletins/{bulletin}/mail', [BulletinController::class, 'mail'])
         ->middleware('throttle:10,1')
         ->name('bulletins.mail');
+    Route::post('/bulletins/{bulletin}/replies', [BulletinReplyController::class, 'store'])
+        ->middleware('throttle:30,1')
+        ->name('bulletins.replies.store');
 
     Route::get('/mail', [UnionMailController::class, 'index'])->name('mail.index');
     Route::get('/mail/create', [UnionMailController::class, 'create'])->name('mail.create');

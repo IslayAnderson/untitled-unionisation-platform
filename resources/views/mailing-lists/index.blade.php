@@ -32,10 +32,14 @@
     @endif
 
     <section class="mt-10 rounded-lg border border-stone-200 bg-white p-5">
-        <h2 class="text-lg font-semibold">Reply-to address</h2>
+        <h2 class="text-lg font-semibold">Union inbox</h2>
         <p class="mt-1 text-sm text-stone-600">
-            Replies to your union's emails go here. Use a shared inbox the union controls, not a member's personal address.
-            If it's blank, replies go to the platform's address and won't reach you.
+            @if (App\Support\ReplyAddress::enabled())
+                Replies to your union's emails appear on the mail's bulletin, and a copy (with any attachments) is sent here.
+            @else
+                Replies to your union's emails go here. If it's blank, replies go to the platform's address and won't reach you.
+            @endif
+            Use a shared inbox the union controls, not a member's personal address.
         </p>
         <form method="POST" action="{{ route('mailing-lists.reply-to') }}" class="mt-4 flex max-w-xl items-end gap-3">
             @csrf

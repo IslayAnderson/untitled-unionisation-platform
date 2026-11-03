@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * A post on the union's noticeboard, visible to all its members. rich_text
- * currently holds plain text.
+ * is HTML cleaned by App\Support\RichText.
  */
 #[Fillable(['building_id', 'author_id', 'title', 'rich_text', 'published_at'])]
 class Bulletin extends Model
@@ -59,6 +60,16 @@ class Bulletin extends Model
     public function hasActiveMail(): bool
     {
         return $this->mails()->whereIn('status', [UnionMailStatus::Pending, UnionMailStatus::Sent])->exists();
+    }
+
+    /**
+     * Members' posts and email replies to the bulletin's mail.
+     *
+     * @return MorphMany<Reply, $this>
+     */
+    public function replies(): MorphMany
+    {
+        return $this->morphMany(Reply::class, 'replyable');
     }
 
     /**

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Exceptions\UnionMailRefused;
 use App\Models\Bulletin;
 use App\Models\MailingList;
+use App\Rules\FilledRichText;
 use App\Services\MailApprovals;
+use App\Support\RichText;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -22,6 +24,7 @@ class BulletinController extends Controller
         return view('bulletins.index', [
             'bulletins' => $request->user()->contact->building->bulletins()
                 ->with('author')
+                ->withCount('replies')
                 ->latest('published_at')
                 ->get(),
         ]);
@@ -38,13 +41,13 @@ class BulletinController extends Controller
 
         $data = $request->validate([
             'title' => ['required', 'string', 'max:200'],
-            'body' => ['required', 'string', 'max:20000'],
+            'body' => ['required', 'string', 'max:100000', new FilledRichText],
         ]);
 
         $bulletin = $member->building->bulletins()->create([
             'author_id' => $member->id,
             'title' => $data['title'],
-            'rich_text' => $data['body'],
+            'rich_text' => RichText::clean($data['body']),
             'published_at' => now(),
         ]);
 
@@ -58,7 +61,11 @@ class BulletinController extends Controller
         $member = $request->user()->contact;
 
         return view('bulletins.show', [
-            'bulletin' => $bulletin->load(['author', 'mails' => fn ($query) => $query->latest()]),
+            'bulletin' => $bulletin->load([
+                'author',
+                'mails' => fn ($query) => $query->latest(),
+                'replies' => fn ($query) => $query->with(['author', 'contact'])->oldest('published_at')->oldest('id'),
+            ]),
             'canMail' => $bulletin->author_id === $member->id && ! $bulletin->hasActiveMail(),
             'lists' => $member->building->mailingLists()->orderBy('name')->get(),
             'rules' => $member->building->rules(),

@@ -30,6 +30,13 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
   `referendable_id`, which point to either a Policy or a Constitution. A referendum proposes that
   version; if it passes, that version is published and becomes the building's current one.
 * **Referendum submission answers** are an enum: `for`, `against`, `abstain`.
+* **Replies are polymorphic.** The `thread` FK is replaced by `replyable_type` / `replyable_id`, which
+  point to a Bulletin or a Thread. A reply is either a member's post (`author_id`) or an email reply
+  to union mail (`union_mail_id`, `contact_id` if the sender matched a contact on the list,
+  `from_name`, `from_email`, `message_id`, unique so the same email is never added twice).
+* **Rich text columns hold HTML** cleaned by `App\Support\RichText` (an allowlist of paragraphs,
+  headings, emphasis, lists, quotes and links). It is cleaned before it's stored, so views output it
+  unescaped.
 
 ## Added columns
 * `buildings`
@@ -39,7 +46,8 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
   * `latitude`, `longitude`
   * `signup_token`: random token behind the building's join URL / QR code
   * `building_owner_id` (Landlord) is nullable. Landlords are added after setup, not during signup.
-  * `contact_email`: the union's reply-to address for emails sent to mailing lists
+  * `contact_email`: the union's own inbox. Gets copies of email replies to union mail (or the
+    replies themselves when inbound mail isn't set up)
 * `landlords`
   * `building_id`: the union that keeps this record. Landlord records are private to each union
     (see `contacts.md`).
@@ -71,8 +79,8 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
 * `union_mails`: an email from the union to a mailing list, and its approval state (see `mail.md`).
   `kind` (instant | bulletin), `status` (pending | sent | rejected | expired | withdrawn),
   `building_id`, `mailing_list_id`, `author_contact_id`, `bulletin_id` (the source bulletin, or the
-  bulletin created when an instant mail is sent), `subject`, `body`, `approvals_required`,
-  `expires_at`, `decided_at`, `recipient_count`.
+  bulletin created when an instant mail is sent), `reply_token` (in the mail's Reply-To address),
+  `subject`, `body` (HTML), `approvals_required`, `expires_at`, `decided_at`, `recipient_count`.
 * `union_mail_approvers`: who may approve a mail and their `decision` (approve | reject).
 
 ## Lookup data

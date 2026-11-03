@@ -81,7 +81,8 @@
     <section class="mt-6 rounded-lg border border-stone-200 bg-white p-5">
         <h2 class="text-lg font-semibold">Message</h2>
         <p class="mt-1 text-sm text-stone-500">From {{ $mail->building->name }}. Subject: {{ $mail->subject }}</p>
-        <div class="mt-3 whitespace-pre-line text-stone-800">{{ $mail->body }}</div>
+        {{-- Cleaned by App\Support\RichText before it was stored. --}}
+        <div class="rich-text mt-3 text-stone-800">{!! $mail->body !!}</div>
         <p class="mt-4 text-stone-800">{{ $mail->building->name }}</p>
     </section>
 </x-layouts.app>

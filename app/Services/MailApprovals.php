@@ -12,6 +12,7 @@ use App\Models\Contact;
 use App\Models\MailingList;
 use App\Models\UnionMail;
 use App\Notifications\MailApprovalRequested;
+use App\Support\ReplyAddress;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -170,6 +171,7 @@ class MailApprovals
                 'building_id' => $author->building_id,
                 'mailing_list_id' => $list->id,
                 'author_contact_id' => $author->id,
+                'reply_token' => ReplyAddress::newToken(),
                 'status' => UnionMailStatus::Pending,
             ]);
 
@@ -186,13 +188,14 @@ class MailApprovals
 
     /**
      * Send to every recipient separately, and post instant mail as a bulletin.
+     * Replies go to the mail's reply address, so they can be added to the bulletin.
      */
     private function send(UnionMail $mail): void
     {
         $recipients = $this->recipients($mail->mailingList);
 
         $recipients->each(fn (Contact $recipient) => Mail::to($recipient->email, $recipient->name)
-            ->queue(new UnionMessage($mail->building, $mail->subject, $mail->body)));
+            ->queue(new UnionMessage($mail->building, $mail->subject, $mail->body, ReplyAddress::for($mail->reply_token))));
 
         if ($mail->kind === UnionMailKind::Instant) {
             $bulletin = $mail->building->bulletins()->create([

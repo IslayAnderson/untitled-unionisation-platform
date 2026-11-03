@@ -17,7 +17,7 @@
             @csrf
             <x-select name="mailing_list_id" label="To" :options="$lists->pluck('name', 'id')" :value="$selectedList" placeholder="Choose a mailing list" required />
             <x-field name="subject" label="Subject" required />
-            <x-textarea name="body" label="Message" rows="10" required hint="Plain text. It will be signed by the union, not by you." />
+            <x-rich-editor name="body" label="Message" hint="It will be signed by the union, not by you." />
             <x-button>Ask for approval</x-button>
         </form>
     @endif

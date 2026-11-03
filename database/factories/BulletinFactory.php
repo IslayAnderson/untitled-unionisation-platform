@@ -21,7 +21,7 @@ class BulletinFactory extends Factory
         return [
             'building_id' => Building::factory(),
             'title' => fake()->sentence(4),
-            'rich_text' => fake()->paragraph(),
+            'rich_text' => '<p>'.fake()->paragraph().'</p>',
             'published_at' => now(),
         ];
     }
