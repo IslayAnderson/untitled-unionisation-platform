@@ -31,7 +31,7 @@ class MembershipController extends Controller
 
     public function leave(Request $request, Membership $membership): RedirectResponse
     {
-        $request->validate(['confirm' => ['accepted']], ['confirm.accepted' => 'Tick the box to confirm you want to leave.']);
+        $request->validate(['confirm' => ['accepted']], ['confirm.accepted' => 'Select the box to confirm you want to leave']);
 
         try {
             $membership->leave($request->user()->contact);
@@ -44,7 +44,7 @@ class MembershipController extends Controller
 
     public function destroyAccount(Request $request, Membership $membership): RedirectResponse
     {
-        $request->validate(['password' => ['required', 'current_password']], ['password.current_password' => 'That\'s not your password.']);
+        $request->validate(['password' => ['required', 'current_password']]);
 
         $user = $request->user();
 

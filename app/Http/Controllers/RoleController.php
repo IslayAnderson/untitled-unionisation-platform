@@ -49,7 +49,13 @@ class RoleController extends Controller
             'responsibilities' => ['array', 'max:15'],
             'responsibilities.*' => ['string', 'max:200'],
             'reason' => ['nullable', 'string', 'max:5000'],
-        ], ['responsibilities.max' => 'List up to 15 responsibilities.']);
+        ], [
+            'title.required' => 'Enter the role',
+            'title.max' => 'Role must be :max characters or fewer',
+            'description.max' => 'What it\'s for must be :max characters or fewer',
+            'responsibilities.max' => 'Enter no more than :max responsibilities',
+            'responsibilities.*.max' => 'Each responsibility must be :max characters or fewer',
+        ]);
 
         try {
             $referendum = $referendums->proposeRole($request->user()->contact, $data['title'], $data['description'] ?? null, $data['responsibilities'], $data['reason'] ?? null);
@@ -98,7 +104,7 @@ class RoleController extends Controller
         $data = $request->validate([
             'contact_id' => [Rule::requiredIf($change !== 'abolish'), 'nullable', 'integer', Rule::exists('contacts', 'id')->where('building_id', $member->building_id)],
             'reason' => ['nullable', 'string', 'max:5000'],
-        ], ['contact_id.required' => 'Choose a member.']);
+        ]);
 
         try {
             $referendum = match ($change) {

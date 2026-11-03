@@ -63,6 +63,24 @@ into `_`; the error summary links to it, and an error on one item of an array fi
 the field as a whole. Forms use `novalidate`, so the server's errors, in the Design System's style, are the
 ones people see.
 
+### Error messages
+
+Validation messages follow the Design System's
+[error message](https://design-system.service.gov.uk/components/error-message/) style: they say what to do
+("Enter a title", "Select a mailing list", "Title must be 200 characters or fewer"), without "field",
+"invalid" or a full stop.
+
+* `lang/en/validation.php` is merged over Laravel's messages. Its `custom` section covers the fields forms
+  share (title, body, reply, email, mailing list and so on); its general messages are the fallback.
+* A controller passes its own messages where a shared field means something else on its form, such as a
+  policy's title or a poll's question.
+* `App\Rules\FilledRichText` fails with the field's "required" message, so an editor holding only empty
+  paragraphs reads as empty.
+* `lang/en/auth.php` does the same for login errors.
+
+Refusals from the domain services (such as "You've already voted in this referendum.") are sentences
+explaining why, and are shown as they are.
+
 Radios and checkboxes written straight into a page (votes, poll answers, mailing list contacts, the
 printables options) follow the same markup inside a fieldset with a legend.
 

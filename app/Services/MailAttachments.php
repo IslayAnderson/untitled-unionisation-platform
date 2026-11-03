@@ -35,7 +35,7 @@ class MailAttachments
                 $total = collect($files)->sum(fn ($file) => $file instanceof UploadedFile ? $file->getSize() : 0);
 
                 if ($total > $config['max_total_kb'] * 1024) {
-                    $fail('Attachments can add up to '.($config['max_total_kb'] / 1024).' MB at most.');
+                    $fail('The selected files must be smaller than '.($config['max_total_kb'] / 1024).' MB in total');
                 }
             }],
             'attachments.*' => ['file', 'max:'.$config['max_file_kb'], 'mimes:'.implode(',', [...$config['document_types'], ...self::IMAGE_TYPES])],
@@ -50,10 +50,10 @@ class MailAttachments
         $config = config('uploads.attachments');
 
         return [
-            'attachments.max' => 'You can attach up to '.$config['max_files'].' files.',
-            'attachments.*.max' => 'Each attachment can be '.($config['max_file_kb'] / 1024).' MB at most.',
-            'attachments.*.mimes' => 'Attachments can be PDFs, documents, spreadsheets, text files or images.',
-            'attachments.*.file' => 'That attachment didn\'t upload. Please try again.',
+            'attachments.max' => 'Select no more than '.$config['max_files'].' files',
+            'attachments.*.max' => 'Each file must be smaller than '.($config['max_file_kb'] / 1024).' MB',
+            'attachments.*.mimes' => 'Each file must be a PDF, document, spreadsheet, text file or image',
+            'attachments.*.file' => 'The selected file could not be uploaded – try again',
         ];
     }
 

@@ -291,7 +291,7 @@ it('hides other unions\' mail and rejects their lists', function () {
     $this->actingAs($author->user)->get("/mail/{$otherMail->id}")->assertNotFound();
     $this->actingAs($author->user)->post("/mail/{$otherMail->id}/decision", ['decision' => 'approve'])->assertNotFound();
     $this->actingAs($author->user)->post('/mail', ['mailing_list_id' => $otherList->id, 'subject' => 'Hi', 'body' => 'Hello'])
-        ->assertSessionHasErrors(['mailing_list_id' => 'The selected mailing list id is invalid.']);
+        ->assertSessionHasErrors(['mailing_list_id' => 'Select a mailing list from the list']);
 });
 
 it('turns a bulletin into mail through the bulletin page', function () {

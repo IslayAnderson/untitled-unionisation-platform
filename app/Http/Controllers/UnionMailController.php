@@ -59,7 +59,11 @@ class UnionMailController extends Controller
             'subject' => ['required', 'string', 'max:200'],
             'body' => ['required', 'string', 'max:100000', new FilledRichText],
             ...MailAttachments::rules(),
-        ], MailAttachments::messages());
+        ], [
+            'body.required' => 'Enter a message',
+            'body.max' => 'The message must be :max characters or fewer',
+            ...MailAttachments::messages(),
+        ]);
 
         try {
             $mail = $approvals->createInstant(

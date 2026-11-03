@@ -31,7 +31,7 @@ it('creates a mailing list of the union\'s contacts', function () {
 
 it('rejects tenants and other unions\' contacts on a list', function (Closure $contact) {
     $this->actingAs($this->member)->post('/mailing-lists', ['name' => 'Repairs', 'contacts' => [$contact($this)->id]])
-        ->assertSessionHasErrors(['contacts.0' => 'The selected contacts.0 is invalid.']);
+        ->assertSessionHasErrors(['contacts.0' => 'Select contacts from the list']);
 
     expect(MailingList::count())->toBe(0);
 })->with([

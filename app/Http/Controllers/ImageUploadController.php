@@ -16,6 +16,10 @@ class ImageUploadController extends Controller
     {
         $request->validate([
             'file' => ['required', 'file', 'mimes:jpg,jpeg,png,gif,webp', 'max:'.config('uploads.images.max_upload_kb')],
+        ], [
+            'file.required' => 'Select an image',
+            'file.mimes' => 'The image must be a JPG, PNG, GIF or WebP',
+            'file.max' => 'The image must be smaller than '.(config('uploads.images.max_upload_kb') / 1024).' MB',
         ]);
 
         try {

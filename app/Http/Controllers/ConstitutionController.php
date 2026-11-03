@@ -73,7 +73,12 @@ class ConstitutionController extends Controller
             'reason' => ['nullable', 'string', 'max:5000'],
             'body' => ['required', 'string', 'max:200000', new FilledRichText],
             ...ConstitutionRules::validationRules(),
-        ], [], collect(ConstitutionRules::FIELDS)->mapWithKeys(fn (array $field, string $name) => ["rules.{$name}" => strtolower($field['label'])])->all());
+        ], [
+            'title.required' => 'Enter what the amendment changes',
+            'title.max' => 'What it changes must be :max characters or fewer',
+            'body.required' => 'Enter the constitution',
+            'body.max' => 'The constitution must be :max characters or fewer',
+        ], collect(ConstitutionRules::FIELDS)->mapWithKeys(fn (array $field, string $name) => ["rules.{$name}" => strtolower($field['label'])])->all());
 
         try {
             $referendum = $referendums->proposeConstitution(

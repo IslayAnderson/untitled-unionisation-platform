@@ -43,9 +43,18 @@ class PollController extends Controller
             'allows_multiple' => ['boolean'],
             'closes_at' => ['required', 'date', 'after:now', 'before_or_equal:'.now()->addDays(90)->toDateTimeString()],
         ], [
-            'answers.min' => 'Give at least two answers.',
-            'answers.*.distinct' => 'Each answer must be different.',
-            'closes_at.before_or_equal' => 'A poll can stay open for 90 days at most.',
+            'title.required' => 'Enter a question',
+            'title.max' => 'Question must be :max characters or fewer',
+            'description.max' => 'More detail must be :max characters or fewer',
+            'answers.required' => 'Enter at least 2 answers',
+            'answers.min' => 'Enter at least :min answers',
+            'answers.max' => 'Enter no more than :max answers',
+            'answers.*.distinct' => 'Each answer must be different',
+            'answers.*.max' => 'Each answer must be :max characters or fewer',
+            'closes_at.required' => 'Enter when the poll closes',
+            'closes_at.date' => 'Closing date must be a real date and time',
+            'closes_at.after' => 'Closing date must be in the future',
+            'closes_at.before_or_equal' => 'Closing date must be within 90 days',
         ]);
 
         try {
@@ -72,7 +81,7 @@ class PollController extends Controller
         $data = $request->validate([
             'answers' => ['required', 'array'],
             'answers.*' => ['integer'],
-        ], ['answers.required' => 'Choose an answer.']);
+        ], ['answers.required' => 'Select an answer']);
 
         try {
             $voting->vote($request->user()->contact, $poll, $data['answers']);

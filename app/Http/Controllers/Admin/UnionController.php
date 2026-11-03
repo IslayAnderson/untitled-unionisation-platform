@@ -82,9 +82,7 @@ class UnionController extends Controller
 
     private function confirmName(Request $request, Building $building): void
     {
-        $request->validate(['confirm_name' => ['required', 'in:'.$building->name]], [
-            'confirm_name.in' => "Type the union's name exactly.",
-        ]);
+        $request->validate(['confirm_name' => ['required', 'in:'.$building->name]]);
     }
 
     /**

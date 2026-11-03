@@ -57,6 +57,9 @@ class OnboardingController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'unit_name' => ['required', 'string', 'max:100'],
+        ], [
+            'name.required' => 'Enter a name for the union',
+            'name.max' => 'The union\'s name must be :max characters or fewer',
         ]);
 
         $place->intoNewBuilding($contact, $data['name'], $data['unit_name']);

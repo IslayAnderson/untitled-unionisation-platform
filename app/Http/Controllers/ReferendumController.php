@@ -66,7 +66,7 @@ class ReferendumController extends Controller
     {
         Gate::authorize('manage-union-record', $referendum);
 
-        $data = $request->validate(['answer' => ['required', Rule::enum(ReferendumAnswer::class)]], ['answer.required' => 'Choose for, against or abstain.']);
+        $data = $request->validate(['answer' => ['required', Rule::enum(ReferendumAnswer::class)]]);
 
         try {
             $referendums->vote($request->user()->contact, $referendum, ReferendumAnswer::from($data['answer']));

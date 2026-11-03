@@ -33,8 +33,7 @@ class MemberRemovalController extends Controller
             'contact_id' => ['required', 'integer', Rule::exists('contacts', 'id')->where('building_id', $member->building_id)],
             'reason' => ['required', 'string', 'max:5000'],
         ], [
-            'contact_id.required' => 'Choose a member.',
-            'reason.required' => 'Say why. The member and everyone voting will read it.',
+            'reason.required' => 'Enter why you\'re proposing to remove them',
         ]);
 
         try {

@@ -101,14 +101,14 @@ it('clears the primary contact when they move to another landlord', function () 
 
 it('requires a contact name', function () {
     $this->actingAs($this->member)->post('/contacts', [])
-        ->assertSessionHasErrors(['name' => 'The name field is required.']);
+        ->assertSessionHasErrors(['name' => 'Enter a name']);
 });
 
 it('rejects linking a contact to another union\'s landlord', function () {
     $otherLandlord = Landlord::factory()->create();
 
     $this->actingAs($this->member)->post('/contacts', ['name' => 'Pat', 'landlord_id' => $otherLandlord->id])
-        ->assertSessionHasErrors(['landlord_id' => 'The selected landlord id is invalid.']);
+        ->assertSessionHasErrors(['landlord_id' => 'Select a landlord or agent from the list']);
 });
 
 it('keeps a deleted landlord\'s contacts', function () {

@@ -94,11 +94,11 @@ it('refuses attachments it shouldn\'t send', function (Closure $attachments, str
     expect(UnionMail::count())->toBe(0)
         ->and(UnionMailAttachment::count())->toBe(0);
 })->with([
-    'a program' => [fn () => [UploadedFile::fake()->create('invoice.exe', 10, 'application/x-msdownload')], 'attachments.0', 'Attachments can be PDFs, documents, spreadsheets, text files or images.'],
-    'a web page' => [fn () => [UploadedFile::fake()->createWithContent('form.html', '<html><script>x()</script></html>')], 'attachments.0', 'Attachments can be PDFs, documents, spreadsheets, text files or images.'],
-    'too many' => [fn () => array_map(fn ($i) => UploadedFile::fake()->create("{$i}.pdf", 1, 'application/pdf'), range(1, 6)), 'attachments', 'You can attach up to 5 files.'],
-    'one too big' => [fn () => [UploadedFile::fake()->create('big.pdf', 10_241, 'application/pdf')], 'attachments.0', 'Each attachment can be 10 MB at most.'],
-    'too big together' => [fn () => array_map(fn ($i) => UploadedFile::fake()->create("{$i}.pdf", 7_000, 'application/pdf'), range(1, 3)), 'attachments', 'Attachments can add up to 20 MB at most.'],
+    'a program' => [fn () => [UploadedFile::fake()->create('invoice.exe', 10, 'application/x-msdownload')], 'attachments.0', 'Each file must be a PDF, document, spreadsheet, text file or image'],
+    'a web page' => [fn () => [UploadedFile::fake()->createWithContent('form.html', '<html><script>x()</script></html>')], 'attachments.0', 'Each file must be a PDF, document, spreadsheet, text file or image'],
+    'too many' => [fn () => array_map(fn ($i) => UploadedFile::fake()->create("{$i}.pdf", 1, 'application/pdf'), range(1, 6)), 'attachments', 'Select no more than 5 files'],
+    'one too big' => [fn () => [UploadedFile::fake()->create('big.pdf', 10_241, 'application/pdf')], 'attachments.0', 'Each file must be smaller than 10 MB'],
+    'too big together' => [fn () => array_map(fn ($i) => UploadedFile::fake()->create("{$i}.pdf", 7_000, 'application/pdf'), range(1, 3)), 'attachments', 'The selected files must be smaller than 20 MB in total'],
 ]);
 
 it('keeps no files when the mail can\'t be created', function () {

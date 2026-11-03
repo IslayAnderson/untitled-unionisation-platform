@@ -55,6 +55,11 @@ class PolicyController extends Controller
             'reason' => ['nullable', 'string', 'max:5000'],
             'body' => ['required', 'string', 'max:100000', new FilledRichText],
             'replaces_policy_id' => ['nullable', 'integer', Rule::exists('policies', 'id')->where('building_id', $member->building_id)],
+        ], [
+            'title.required' => 'Enter a policy title',
+            'title.max' => 'Policy title must be :max characters or fewer',
+            'body.required' => 'Enter the policy',
+            'body.max' => 'The policy must be :max characters or fewer',
         ]);
 
         try {
