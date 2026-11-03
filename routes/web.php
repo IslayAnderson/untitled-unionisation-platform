@@ -144,11 +144,17 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminUnionController::class, 'index'])->name('unions.index');
     Route::get('/unions/{building}', [AdminUnionController::class, 'show'])->whereNumber('building')->name('unions.show');
+    Route::post('/unions/{building}/warn', [AdminUnionController::class, 'warn'])->name('unions.warn');
+    Route::delete('/unions/{building}/warn', [AdminUnionController::class, 'cancelWarning'])->name('unions.warn.cancel');
     Route::delete('/unions/{building}', [AdminUnionController::class, 'destroy'])->name('unions.destroy');
 
     Route::get('/cleanup', [CleanupController::class, 'index'])->name('cleanup.index');
+    Route::post('/cleanup/accounts/{tool}/warn', [CleanupController::class, 'warnAccounts'])
+        ->whereIn('tool', CleanupController::ACCOUNT_TOOLS)
+        ->name('cleanup.accounts.warn');
     Route::delete('/cleanup/accounts/{tool}', [CleanupController::class, 'destroyAccounts'])
         ->whereIn('tool', CleanupController::ACCOUNT_TOOLS)
         ->name('cleanup.accounts.destroy');
+    Route::post('/cleanup/abandoned-unions/warn', [CleanupController::class, 'warnAbandoned'])->name('cleanup.abandoned.warn');
     Route::delete('/cleanup/abandoned-unions', [CleanupController::class, 'destroyAbandoned'])->name('cleanup.abandoned.destroy');
 });

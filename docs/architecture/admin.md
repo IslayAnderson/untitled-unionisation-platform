@@ -22,24 +22,42 @@ Admins see **counts only**: never members' names or emails, or anything a union 
 union's name and address are shown because they identify the union, not a person.
 
 ## Clean-up tools
-At `/admin/cleanup` (`App\Services\Cleanup`). Each tool shows how many it would delete and asks for
-confirmation. Admin accounts are never deleted. Every action is logged with the admin's ID.
+At `/admin/cleanup` (`App\Services\Cleanup`). Admin accounts are never cleaned up. Every action is
+logged with the admin's ID.
 
-| Tool | Deletes |
+| Tool | Covers |
 |---|---|
 | Unconfirmed accounts | Accounts that didn't confirm their email within **7 days** |
 | Unfinished sign-ups | Confirmed accounts that never chose a building and flat after **30 days** |
 | Never vouched for | Tenants of unions **with members** still not vouched for after **90 days** |
 | Abandoned unions | Unions with no members where nobody has signed up for **90 days** |
 
-Deleting an account deletes its user, sessions and contact (and vouches, votes cast records and roles
+### Warn first, delete a week later
+Nothing is deleted without telling the account holder first. Each clean-up has two steps:
+1. **Email.** The admin emails everyone the tool covers who hasn't been warned yet
+   (`App\Notifications\CleanupWarning`). The email says why, and that logging in before the deadline,
+   `GRACE_DAYS` (**7**) later, keeps their account. `users.cleanup_warned_at` records when. For a union,
+   everyone with an account in it is emailed, `buildings.cleanup_warned_at` is set too, and logging in
+   by **any** of them keeps the union.
+2. **Delete.** From the deadline, the admin can delete those who haven't been back. An account is
+   deleted only if it was warned at least 7 days ago and `last_seen_at` isn't after the warning; a
+   union only if none of its account holders has been seen since its warning.
+
+`App\Listeners\RecordAccountActivity` listens for `Login` and `Authenticated` (so a remembered or
+still-open session counts as coming back). It updates `users.last_seen_at` at most hourly and clears
+the account's warning, and its union's. Warning a union also warns each of its account holders, so the
+listener knows to clear the union's warning.
+
+Deleting an account deletes its user, sessions and contact (and its vouches, voting records and roles
 via cascades). Anything they wrote stays, shown as by a former member.
 
-A union can also be deleted from its page by typing its name. Deleting a union (`deleteUnion`) removes,
-in one transaction: the building and everything that cascades from it (units, constitutions, policies,
-roles, referendums, bulletins, polls, threads, mail, mailing lists, landlords, uploaded image records),
-replies on its bulletins and threads (a morph, so not cascaded), its tenants' users and sessions, and
-all its contacts, including landlords' staff. The stored image and attachment files are deleted after
-the transaction commits.
+### Deleting a single union
+From a union's page, the admin types its name to email its members, then after the week, if nobody
+has logged in, types it again to delete it. "Don't delete" calls it off (members aren't told). Deleting a
+union (`deleteUnion`) removes, in one transaction: the building and everything that cascades from it
+(units, constitutions, policies, roles, referendums, bulletins, polls, threads, mail, mailing lists,
+landlords, uploaded image records), replies on its bulletins and threads (a morph, so not cascaded),
+its tenants' users and sessions, and all its contacts, including landlords' staff. The stored image and
+attachment files are deleted after the transaction commits.
 
 Unused uploaded images are not cleaned up: see `uploads.md` on preserving images Cloudflare flags.

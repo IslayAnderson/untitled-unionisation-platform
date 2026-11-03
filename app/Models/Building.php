@@ -34,6 +34,13 @@ class Building extends Model
         });
     }
 
+    protected function casts(): array
+    {
+        return [
+            'cleanup_warned_at' => 'datetime',
+        ];
+    }
+
     public function rules(): ConstitutionRules
     {
         return ConstitutionRules::fromArray($this->currentConstitution?->rules ?? []);

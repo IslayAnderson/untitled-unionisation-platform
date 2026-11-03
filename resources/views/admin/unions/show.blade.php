@@ -46,16 +46,46 @@
     <section class="mt-10 rounded-lg border border-red-200 bg-white p-5">
         <h2 class="text-lg font-semibold text-red-800">Delete this union</h2>
         <p class="mt-1 text-sm text-stone-600">
-            Permanently deletes the union and everything in it: its tenants' accounts, landlords and contacts,
-            bulletins, discussions, mail, votes, uploaded images and attachments. This can't be undone.
+            Deleting removes the union and everything in it: its tenants' accounts, landlords and contacts, bulletins,
+            discussions, mail, votes, uploaded images and attachments. Everyone with an account is emailed first, and the
+            union can only be deleted if none of them logs in within {{ App\Services\Cleanup::GRACE_DAYS }} days.
         </p>
-        <form method="POST" action="{{ route('admin.unions.destroy', $union) }}" class="mt-4 flex max-w-xl items-end gap-3">
-            @csrf
-            @method('DELETE')
-            <div class="flex-1">
-                <x-field name="confirm_name" label="Type the union's name to confirm" :placeholder="$union->name" autocomplete="off" />
+
+        @if (! $deadline)
+            <form method="POST" action="{{ route('admin.unions.warn', $union) }}" class="mt-4 flex max-w-xl items-end gap-3">
+                @csrf
+                <div class="flex-1">
+                    <x-field name="confirm_name" label="Type the union's name to confirm" :placeholder="$union->name" autocomplete="off" />
+                </div>
+                <button type="submit" class="rounded-md border border-red-300 px-4 py-2 text-sm font-medium text-red-800 hover:bg-red-50">Email members</button>
+            </form>
+        @else
+            <p class="mt-3 rounded-md bg-stone-50 px-3 py-2 text-sm text-stone-700">
+                @if ($due)
+                    Members were emailed on {{ $union->cleanup_warned_at->format('j M Y') }} and nobody has logged in since.
+                    You can delete it now.
+                @else
+                    Members were emailed on {{ $union->cleanup_warned_at->format('j M Y') }}. If nobody logs in, you can
+                    delete it from {{ $deadline->format('j M Y, H:i') }}. Anyone logging in cancels this.
+                @endif
+            </p>
+            <div class="mt-4 flex flex-wrap items-end gap-3">
+                @if ($due)
+                    <form method="POST" action="{{ route('admin.unions.destroy', $union) }}" class="flex max-w-xl flex-1 items-end gap-3">
+                        @csrf
+                        @method('DELETE')
+                        <div class="flex-1">
+                            <x-field name="confirm_name" label="Type the union's name to confirm" :placeholder="$union->name" autocomplete="off" />
+                        </div>
+                        <button type="submit" class="rounded-md bg-red-700 px-4 py-2 text-sm font-medium text-white hover:bg-red-800">Delete union</button>
+                    </form>
+                @endif
+                <form method="POST" action="{{ route('admin.unions.warn.cancel', $union) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="rounded-md border border-stone-300 px-4 py-2 text-sm font-medium hover:bg-stone-50">Don't delete</button>
+                </form>
             </div>
-            <button type="submit" class="rounded-md bg-red-700 px-4 py-2 text-sm font-medium text-white hover:bg-red-800">Delete union</button>
-        </form>
+        @endif
     </section>
 </x-layouts.app>

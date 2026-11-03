@@ -35,22 +35,53 @@ class UnionController extends Controller
         ]);
     }
 
-    public function show(int $building): View
+    public function show(int $building, Cleanup $cleanup): View
     {
         $union = $this->withStats(Building::whereKey($building))->firstOrFail();
 
-        return view('admin.unions.show', ['union' => $union]);
+        return view('admin.unions.show', [
+            'union' => $union,
+            'deadline' => $union->cleanup_warned_at ? $cleanup->deadline($union->cleanup_warned_at) : null,
+            'due' => $cleanup->unionsDueForDeletion(Building::whereKey($union->id))->exists(),
+        ]);
+    }
+
+    /**
+     * Email everyone in the union that it will be deleted unless one of them
+     * logs in within GRACE_DAYS.
+     */
+    public function warn(Request $request, Building $building, Cleanup $cleanup): RedirectResponse
+    {
+        $this->confirmName($request, $building);
+
+        $cleanup->warnUnion($building, "The platform's administrators are closing {$building->name}.", $request->user());
+
+        return back()->with('status', "Emailed everyone in {$building->name}. If nobody logs in within ".Cleanup::GRACE_DAYS.' days, you can delete it.');
+    }
+
+    public function cancelWarning(Building $building, Cleanup $cleanup): RedirectResponse
+    {
+        $cleanup->cancelUnionWarning($building);
+
+        return back()->with('status', "{$building->name} won't be deleted. Its members haven't been told.");
     }
 
     public function destroy(Request $request, Building $building, Cleanup $cleanup): RedirectResponse
     {
-        $request->validate(['confirm_name' => ['required', 'in:'.$building->name]], [
-            'confirm_name.in' => "Type the union's name exactly to delete it.",
-        ]);
+        $this->confirmName($request, $building);
+
+        abort_unless($cleanup->unionsDueForDeletion(Building::whereKey($building->id))->exists(), 409, 'This union can only be deleted '.Cleanup::GRACE_DAYS.' days after its members were warned, if none of them has logged in since.');
 
         $cleanup->deleteUnion($building, $request->user());
 
         return redirect()->route('admin.unions.index')->with('status', "Deleted {$building->name} and everything in it.");
+    }
+
+    private function confirmName(Request $request, Building $building): void
+    {
+        $request->validate(['confirm_name' => ['required', 'in:'.$building->name]], [
+            'confirm_name.in' => "Type the union's name exactly.",
+        ]);
     }
 
     /**
