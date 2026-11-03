@@ -153,9 +153,13 @@
   print-color-adjust: exact;
 }
 
-// Bulk printing puts each sheet on its own page.
+// Bulk printing puts each sheet on its own page. Safari's printable area is a
+// little shorter than A4's proportions, so a full-height sheet spills a few
+// pixels over and leaves a blank page after every sheet. Printed sheets are
+// 1% shorter to leave room.
 @media print {
   .app-invite-sheet {
+    aspect-ratio: 210 / 294;
     break-after: page;
   }
 }
