@@ -40,6 +40,8 @@ can't see policies or referendums.
 * **Pass:** strictly more than `pass_percent` of the for and against votes are for. A tie fails, and so
   does a vote where everyone abstained.
 * `outcome` is `passed`, `rejected`, `no_quorum` or `withdrawn`.
+* Once counted, every member is emailed a link to the result. The email doesn't say what was decided.
+  Withdrawn referendums aren't emailed.
 
 ## Showing changes
 The referendum page compares the proposal with the version in force when it was proposed: changed

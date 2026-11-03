@@ -12,10 +12,13 @@ use App\Models\Contact;
 use App\Models\Policy;
 use App\Models\Referendum;
 use App\Models\ReferendumVoter;
+use App\Models\User;
+use App\Notifications\ReferendumDecided;
 use App\Notifications\ReferendumOpened;
 use App\Support\ConstitutionRules;
 use App\Support\RichText;
 use Illuminate\Database\UniqueConstraintViolationException;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 
@@ -186,6 +189,8 @@ class Referendums
                 $this->putIntoEffect($referendum);
             }
 
+            Notification::send($this->memberUsers($referendum->building), new ReferendumDecided($referendum));
+
             return true;
         });
     }
@@ -236,10 +241,7 @@ class Referendums
             'closes_at' => now()->addDays($rules->referendumDays),
         ]);
 
-        Notification::send(
-            $building->contacts()->confirmedTenants()->enrolled()->whereKeyNot($proposer->id)->with('user')->get()->pluck('user')->filter(),
-            new ReferendumOpened($referendum),
-        );
+        Notification::send($this->memberUsers($building, except: $proposer), new ReferendumOpened($referendum));
 
         return $referendum;
     }
@@ -266,6 +268,16 @@ class Referendums
         if ($pending) {
             throw new ReferendumRefused('There\'s already a referendum to change this policy. Wait until it has been decided.');
         }
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    private function memberUsers(Building $building, ?Contact $except = null): Collection
+    {
+        return $building->contacts()->confirmedTenants()->enrolled()
+            ->when($except, fn ($query) => $query->whereKeyNot($except->id))
+            ->with('user')->get()->pluck('user')->filter();
     }
 
     /**

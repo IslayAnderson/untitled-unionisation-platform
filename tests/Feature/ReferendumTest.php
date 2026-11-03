@@ -7,6 +7,7 @@ use App\Models\Constitution;
 use App\Models\Contact;
 use App\Models\Policy;
 use App\Models\Referendum;
+use App\Notifications\ReferendumDecided;
 use App\Notifications\ReferendumOpened;
 use App\Services\Referendums;
 use App\Support\ConstitutionRules;
@@ -91,6 +92,8 @@ it('adopts the amendment when enough members vote for it, and the platform follo
         ->and($this->building->fresh()->current_constitution_id)->toBe($referendum->referendable_id)
         ->and($referendum->referendable->published_at)->not->toBeNull()
         ->and($this->building->fresh()->rules()->vouchesRequired)->toBe(3);
+
+    Notification::assertSentTo($this->members->pluck('user'), ReferendumDecided::class);
 });
 
 it('decides by quorum and the pass threshold, with abstentions counting only towards quorum', function (array $answers, ReferendumOutcome $outcome) {
@@ -152,6 +155,7 @@ it('lets only the proposer withdraw, and nothing changes', function () {
 
     expect($referendum->fresh()->outcome)->toBe(ReferendumOutcome::Withdrawn)
         ->and(Policy::sole()->published_at)->toBeNull();
+    Notification::assertNotSentTo($this->member->user, ReferendumDecided::class);
 });
 
 it('replaces a policy with its revision when the revision passes', function () {
