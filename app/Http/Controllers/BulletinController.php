@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ImageRejected;
 use App\Exceptions\UnionMailRefused;
 use App\Models\Bulletin;
 use App\Models\MailingList;
 use App\Rules\FilledRichText;
 use App\Services\MailApprovals;
+use App\Services\MailAttachments;
 use App\Support\RichText;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -110,7 +112,8 @@ class BulletinController extends Controller
             'mailing_list_id' => ['required', 'integer', Rule::exists('mailing_lists', 'id')->where('building_id', $member->building_id)],
             'subject' => ['required', 'string', 'max:200'],
             'body' => ['required', 'string', 'max:100000', new FilledRichText],
-        ]);
+            ...MailAttachments::rules(),
+        ], MailAttachments::messages());
 
         try {
             $mail = $approvals->createFromBulletin(
@@ -119,9 +122,12 @@ class BulletinController extends Controller
                 MailingList::findOrFail($data['mailing_list_id']),
                 $data['subject'],
                 RichText::clean($data['body']),
+                $request->file('attachments', []),
             );
         } catch (UnionMailRefused $e) {
             return back()->withInput()->withErrors(['mailing_list_id' => $e->getMessage()]);
+        } catch (ImageRejected $e) {
+            return back()->withInput()->withErrors(['attachments' => $e->getMessage()]);
         }
 
         return redirect()->route('mail.show', $mail)->with('status', 'Your bulletin mail is waiting for approval from the union.');

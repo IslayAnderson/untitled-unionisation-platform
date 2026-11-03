@@ -88,6 +88,9 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
     Route::get('/mail/create', [UnionMailController::class, 'create'])->name('mail.create');
     Route::post('/mail', [UnionMailController::class, 'store'])->middleware('throttle:10,1')->name('mail.store');
     Route::get('/mail/{unionMail}', [UnionMailController::class, 'show'])->name('mail.show');
+    Route::get('/mail/{unionMail}/attachments/{attachment}', [UnionMailController::class, 'attachment'])
+        ->scopeBindings()
+        ->name('mail.attachments.show');
     Route::post('/mail/{unionMail}/decision', [UnionMailController::class, 'decide'])->name('mail.decide');
     Route::post('/mail/{unionMail}/withdraw', [UnionMailController::class, 'withdraw'])->name('mail.withdraw');
 });

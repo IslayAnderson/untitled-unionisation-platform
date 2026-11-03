@@ -115,6 +115,14 @@ class UnionMail extends Model
     }
 
     /**
+     * @return HasMany<UnionMailAttachment, $this>
+     */
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(UnionMailAttachment::class);
+    }
+
+    /**
      * @return HasMany<UnionMailApprover, $this>
      */
     public function approvers(): HasMany

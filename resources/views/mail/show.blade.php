@@ -84,5 +84,20 @@
         {{-- Cleaned by App\Support\RichText before it was stored. --}}
         <div class="rich-text mt-3 text-stone-800">{!! $mail->body !!}</div>
         <p class="mt-4 text-stone-800">{{ $mail->building->name }}</p>
+
+        @if ($mail->attachments->isNotEmpty())
+            <h3 class="mt-5 text-sm font-semibold">{{ $mail->attachments->count() }} {{ Str::plural('attachment', $mail->attachments->count()) }}</h3>
+            <ul class="mt-2 space-y-1 text-sm">
+                @foreach ($mail->attachments as $attachment)
+                    <li>
+                        <a href="{{ route('mail.attachments.show', [$mail, $attachment]) }}" class="underline">{{ $attachment->name }}</a>
+                        <span class="text-stone-500">· {{ Number::fileSize($attachment->size, maxPrecision: 1) }}</span>
+                    </li>
+                @endforeach
+            </ul>
+            @if ($canDecide)
+                <p class="mt-2 text-xs text-stone-500">Open each attachment before approving: it goes out with the mail.</p>
+            @endif
+        @endif
     </section>
 </x-layouts.app>

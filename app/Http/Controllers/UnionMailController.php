@@ -3,17 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ApprovalDecision;
+use App\Exceptions\ImageRejected;
 use App\Exceptions\UnionMailRefused;
 use App\Models\MailingList;
 use App\Models\UnionMail;
+use App\Models\UnionMailAttachment;
 use App\Rules\FilledRichText;
 use App\Services\MailApprovals;
+use App\Services\MailAttachments;
 use App\Support\RichText;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Instant mail, and the approval page shared by both kinds of union mail.
@@ -53,12 +58,21 @@ class UnionMailController extends Controller
             'mailing_list_id' => ['required', 'integer', Rule::exists('mailing_lists', 'id')->where('building_id', $member->building_id)],
             'subject' => ['required', 'string', 'max:200'],
             'body' => ['required', 'string', 'max:100000', new FilledRichText],
-        ]);
+            ...MailAttachments::rules(),
+        ], MailAttachments::messages());
 
         try {
-            $mail = $approvals->createInstant($member, MailingList::findOrFail($data['mailing_list_id']), $data['subject'], RichText::clean($data['body']));
+            $mail = $approvals->createInstant(
+                $member,
+                MailingList::findOrFail($data['mailing_list_id']),
+                $data['subject'],
+                RichText::clean($data['body']),
+                $request->file('attachments', []),
+            );
         } catch (UnionMailRefused $e) {
             return back()->withInput()->withErrors(['mailing_list_id' => $e->getMessage()]);
+        } catch (ImageRejected $e) {
+            return back()->withInput()->withErrors(['attachments' => $e->getMessage()]);
         }
 
         return redirect()->route('mail.show', $mail)->with('status', 'Your mail is waiting for approval.');
@@ -68,7 +82,7 @@ class UnionMailController extends Controller
     {
         Gate::authorize('manage-union-record', $unionMail);
 
-        $unionMail->load(['mailingList.contacts' => fn ($query) => $query->orderBy('name'), 'approvers', 'author', 'bulletin']);
+        $unionMail->load(['mailingList.contacts' => fn ($query) => $query->orderBy('name'), 'approvers', 'author', 'bulletin', 'attachments']);
         $member = $request->user()->contact;
         $seat = $unionMail->approverFor($member);
 
@@ -78,6 +92,16 @@ class UnionMailController extends Controller
             'canDecide' => $unionMail->isPending() && ! $unionMail->isOverdue() && $seat && ! $seat->decision,
             'isAuthor' => $unionMail->author_contact_id === $member->id,
         ]);
+    }
+
+    /**
+     * Download an attachment, so approvers can check it before deciding.
+     */
+    public function attachment(UnionMail $unionMail, UnionMailAttachment $attachment): StreamedResponse
+    {
+        Gate::authorize('manage-union-record', $unionMail);
+
+        return Storage::disk($attachment->disk)->download($attachment->path, $attachment->name);
     }
 
     public function decide(Request $request, UnionMail $unionMail, MailApprovals $approvals): RedirectResponse

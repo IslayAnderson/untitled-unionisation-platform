@@ -13,11 +13,12 @@
             You need a mailing list first. <a href="{{ route('mailing-lists.create') }}" class="underline">Create one</a>.
         </p>
     @else
-        <form method="POST" action="{{ route('mail.store') }}" class="space-y-4">
+        <form method="POST" action="{{ route('mail.store') }}" enctype="multipart/form-data" class="space-y-4">
             @csrf
             <x-select name="mailing_list_id" label="To" :options="$lists->pluck('name', 'id')" :value="$selectedList" placeholder="Choose a mailing list" required />
             <x-field name="subject" label="Subject" required />
             <x-rich-editor name="body" label="Message" hint="It will be signed by the union, not by you." />
+            <x-attachments-field />
             <x-button>Ask for approval</x-button>
         </form>
     @endif

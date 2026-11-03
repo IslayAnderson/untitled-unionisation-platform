@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\ApprovalDecision;
 use App\Enums\UnionMailKind;
 use App\Enums\UnionMailStatus;
+use App\Exceptions\ImageRejected;
 use App\Exceptions\UnionMailRefused;
 use App\Mail\UnionMessage;
 use App\Models\Bulletin;
@@ -13,10 +14,12 @@ use App\Models\MailingList;
 use App\Models\UnionMail;
 use App\Notifications\MailApprovalRequested;
 use App\Support\ReplyAddress;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
+use Throwable;
 
 /**
  * Instant mail and bulletin mail: creating, approving, sending and expiring.
@@ -24,10 +27,15 @@ use Illuminate\Support\Facades\Notification;
  */
 class MailApprovals
 {
+    public function __construct(private MailAttachments $attachments) {}
+
     /**
+     * @param  list<UploadedFile>  $attachments
+     *
      * @throws UnionMailRefused
+     * @throws ImageRejected
      */
-    public function createInstant(Contact $author, MailingList $list, string $subject, string $body): UnionMail
+    public function createInstant(Contact $author, MailingList $list, string $subject, string $body, array $attachments = []): UnionMail
     {
         $rules = $author->building->rules();
         $members = $this->membersOtherThan($author);
@@ -42,7 +50,7 @@ class MailApprovals
             'body' => $body,
             'approvals_required' => $required,
             'expires_at' => now()->addHours($rules->instantMailExpiryHours),
-        ], $members->shuffle()->take($poolSize));
+        ], $members->shuffle()->take($poolSize), $attachments);
     }
 
     /**
@@ -50,9 +58,12 @@ class MailApprovals
      * bulletin (for example after discussion in its replies); otherwise the
      * bulletin's title and text are used.
      *
+     * @param  list<UploadedFile>  $attachments
+     *
      * @throws UnionMailRefused
+     * @throws ImageRejected
      */
-    public function createFromBulletin(Contact $author, Bulletin $bulletin, MailingList $list, ?string $subject = null, ?string $body = null): UnionMail
+    public function createFromBulletin(Contact $author, Bulletin $bulletin, MailingList $list, ?string $subject = null, ?string $body = null, array $attachments = []): UnionMail
     {
         if ($bulletin->author_id !== $author->id) {
             throw new UnionMailRefused('Only the author of a bulletin can turn it into mail.');
@@ -72,7 +83,7 @@ class MailApprovals
             'body' => $body ?? $bulletin->rich_text,
             'approvals_required' => $this->percentOf($members->count() + 1, $rules->bulletinMailApprovalPercent),
             'expires_at' => now()->addHours($rules->bulletinMailExpiryHours),
-        ], $members);
+        ], $members, $attachments);
     }
 
     /**
@@ -146,10 +157,12 @@ class MailApprovals
     /**
      * @param  array<string, mixed>  $attributes
      * @param  Collection<int, Contact>  $approvers
+     * @param  list<UploadedFile>  $attachments
      *
      * @throws UnionMailRefused
+     * @throws ImageRejected
      */
-    private function create(Contact $author, MailingList $list, array $attributes, Collection $approvers): UnionMail
+    private function create(Contact $author, MailingList $list, array $attributes, Collection $approvers, array $attachments): UnionMail
     {
         if ($list->building_id !== $author->building_id) {
             throw new UnionMailRefused('That mailing list belongs to another union.');
@@ -169,25 +182,38 @@ class MailApprovals
             ));
         }
 
-        return DB::transaction(function () use ($author, $list, $attributes, $approvers) {
-            $mail = UnionMail::create([
-                ...$attributes,
-                'building_id' => $author->building_id,
-                'mailing_list_id' => $list->id,
-                'author_contact_id' => $author->id,
-                'reply_token' => ReplyAddress::newToken(),
-                'status' => UnionMailStatus::Pending,
-            ]);
+        $stored = [];
 
-            $mail->approvers()->createMany($approvers->map(fn (Contact $contact) => ['contact_id' => $contact->id]));
+        try {
+            return DB::transaction(function () use ($author, $list, $attributes, $approvers, $attachments, &$stored) {
+                $mail = UnionMail::create([
+                    ...$attributes,
+                    'building_id' => $author->building_id,
+                    'mailing_list_id' => $list->id,
+                    'author_contact_id' => $author->id,
+                    'reply_token' => ReplyAddress::newToken(),
+                    'status' => UnionMailStatus::Pending,
+                ]);
 
-            Notification::send(
-                $approvers->load('user')->pluck('user')->filter(),
-                new MailApprovalRequested($mail),
-            );
+                foreach ($attachments as $file) {
+                    $stored[] = $this->attachments->store($author, $mail, $file);
+                }
 
-            return $mail;
-        });
+                $mail->approvers()->createMany($approvers->map(fn (Contact $contact) => ['contact_id' => $contact->id]));
+
+                Notification::send(
+                    $approvers->load('user')->pluck('user')->filter(),
+                    new MailApprovalRequested($mail),
+                );
+
+                return $mail;
+            });
+        } catch (Throwable $e) {
+            // The rows were rolled back, but the files they pointed to were already stored.
+            array_map($this->attachments->discard(...), $stored);
+
+            throw $e;
+        }
     }
 
     /**
@@ -202,7 +228,7 @@ class MailApprovals
         $mail->reply_token ??= ReplyAddress::newToken();
 
         $recipients->each(fn (Contact $recipient) => Mail::to($recipient->email, $recipient->name)
-            ->queue(new UnionMessage($mail->building, $mail->subject, $mail->body, ReplyAddress::for($mail->reply_token))));
+            ->queue(new UnionMessage($mail->building, $mail->subject, $mail->body, ReplyAddress::for($mail->reply_token), $mail->attachments)));
 
         if ($mail->kind === UnionMailKind::Instant) {
             $bulletin = $mail->building->bulletins()->create([

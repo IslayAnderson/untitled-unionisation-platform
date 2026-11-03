@@ -84,6 +84,24 @@ The server never trusts the editor: `App\Support\RichText::clean()` keeps only t
 before anything is stored, and emails clean the
 body again when rendering. The text part of each email is made with `RichText::toPlainText()`.
 
+## Attachments
+The author of instant or bulletin mail can attach files when they write it (`App\Services\MailAttachments`):
+* Up to **5 files**, **10 MB** each, **20 MB** in total (`config/uploads.php`). PHP's
+  `upload_max_filesize` and `post_max_size` must allow this in production.
+* PDF, Word, OpenDocument, RTF, Excel, CSV and text files, and JPEG, PNG, GIF and WebP images. The type
+  is checked from the file's contents, not its name.
+* **Images** go through the same pipeline as images in rich text: compressed, stripped of metadata
+  (including GPS location), stored on the public uploads disk and CSAM-scanned (see `uploads.md`). The
+  attachment keeps the original name with the new extension (`photo.png` → `photo.jpg`).
+* **Documents** are stored on the private `ATTACHMENTS_DISK` (default `local`, i.e. `storage/app/private`)
+  exactly as uploaded. They can carry metadata such as the author's name, which would undo the rule that
+  mail never names its author, so the form warns the author to check.
+
+Attachments are fixed once the mail is created, like the subject and message. Members can download them
+from the mail's page (`GET /mail/{mail}/attachments/{attachment}`), so approvers can check them before
+deciding; they're sent with every copy of the mail. If creating the mail fails part way, files already
+stored are deleted. If the form is sent back with errors, the author has to choose the files again.
+
 ## Replies
 Every mail gets a random `reply_token`. When `INBOUND_MAIL_ADDRESS` is set (e.g.
 `replies@example.org`), each email is sent with `Reply-To: replies+<token>@example.org`; the mailbox

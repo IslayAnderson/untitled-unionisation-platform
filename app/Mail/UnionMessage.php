@@ -3,8 +3,10 @@
 namespace App\Mail;
 
 use App\Models\Building;
+use App\Models\UnionMailAttachment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
@@ -24,6 +26,8 @@ class UnionMessage extends Mailable implements ShouldQueue
         public string $messageSubject,
         public string $messageBody,
         public ?string $replyAddress = null,
+        /** @var EloquentCollection<int, UnionMailAttachment>|null */
+        public ?EloquentCollection $files = null,
     ) {
         $this->afterCommit();
     }
@@ -46,5 +50,13 @@ class UnionMessage extends Mailable implements ShouldQueue
             text: 'emails.union-message-text',
             with: ['acceptsReplies' => (bool) ($this->replyAddress ?? $this->building->contact_email)],
         );
+    }
+
+    /**
+     * @return list<UnionMailAttachment>
+     */
+    public function attachments(): array
+    {
+        return $this->files?->all() ?? [];
     }
 }

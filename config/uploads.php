@@ -33,4 +33,23 @@ return [
         'jpeg_quality' => 82,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Mail Attachments
+    |--------------------------------------------------------------------------
+    |
+    | Files sent with union mail. Images go through the image pipeline above;
+    | documents are stored on this disk, which must not be public. PHP's
+    | upload_max_filesize and post_max_size must allow these sizes too.
+    |
+    */
+
+    'attachments' => [
+        'disk' => env('ATTACHMENTS_DISK', 'local'),
+        'max_files' => 5,
+        'max_file_kb' => 10240,
+        'max_total_kb' => 20480,
+        'document_types' => ['pdf', 'doc', 'docx', 'odt', 'rtf', 'xls', 'xlsx', 'ods', 'csv', 'txt'],
+    ],
+
 ];

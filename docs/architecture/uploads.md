@@ -1,7 +1,8 @@
 # Image uploads
 
 Members can add images to bulletins, instant mail and replies in the rich text editor: picked from
-the image button, pasted, or dropped in. Each image is uploaded as soon as it's added
+the image button, pasted, or dropped in. Images attached to union mail go through the same pipeline
+(see "Attachments" in `mail.md`). Each image is uploaded as soon as it's added
 (`POST /uploads/images`, members only, 30 a minute, up to 10 MB).
 
 ## Compression
