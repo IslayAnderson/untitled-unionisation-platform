@@ -8,7 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Visitors to the public demo can look at everything but change nothing.
- * Anything other than reading a page is turned away, except logging out.
+ * Anything other than reading a page is turned away, except logging out and
+ * hiding the cookie banner.
  */
 class DemoIsReadOnly
 {
@@ -19,7 +20,7 @@ class DemoIsReadOnly
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->isMethodSafe() || $request->routeIs('logout', 'demo.*') || ! $request->user()?->isDemo()) {
+        if ($request->isMethodSafe() || $request->routeIs('logout', 'demo.*', 'cookies.hide-banner') || ! $request->user()?->isDemo()) {
             return $next($request);
         }
 

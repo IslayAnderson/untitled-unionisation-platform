@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\QrScanKind;
 use App\Enums\UnionMailStatus;
 use App\Http\Controllers\Controller;
 use App\Jobs\DeleteUnion;
 use App\Models\Building;
+use App\Models\QrScan;
 use App\Models\User;
 use App\Services\Cleanup;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,6 +35,7 @@ class UnionController extends Controller
                 'Accounts' => User::count(),
                 'Active unions (last 30 days)' => $unions->filter(fn (Building $union) => $union->last_active_at?->gt(now()->subDays(30)))->count(),
             ],
+            'qrScans' => $this->qrScansByKind(),
         ]);
     }
 
@@ -80,6 +83,20 @@ class UnionController extends Controller
             ->with('status', "Deleting {$building->name} in the background. Its members will be emailed its records first.");
     }
 
+    /**
+     * How many times each kind of QR code has been scanned, on the whole platform.
+     *
+     * @return array<string, int> Label => scans
+     */
+    private function qrScansByKind(): array
+    {
+        $counts = QrScan::toBase()->selectRaw('kind, count(*) as scans')->groupBy('kind')->pluck('scans', 'kind');
+
+        return collect(QrScanKind::cases())
+            ->mapWithKeys(fn (QrScanKind $kind) => [$kind->label() => (int) ($counts[$kind->value] ?? 0)])
+            ->all();
+    }
+
     private function confirmName(Request $request, Building $building): void
     {
         $request->validate(['confirm_name' => ['required', 'in:'.$building->name]]);
@@ -107,6 +124,9 @@ class UnionController extends Controller
                 'roles',
                 'landlords',
                 'externalContacts',
+                'qrScans',
+                'qrScans as join_scans_count' => fn (Builder $scan) => $scan->where('kind', QrScanKind::Join),
+                'qrScans as vouch_scans_count' => fn (Builder $scan) => $scan->where('kind', QrScanKind::Vouch),
             ])
             ->withMax('bulletins', 'created_at')
             ->withMax('threads', 'created_at')

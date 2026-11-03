@@ -19,6 +19,8 @@
 @use "components/invite";
 @use "components/related";
 @use "components/sub-navigation";
+@use "components/diagram";
+@use "components/dialog";
 
 [x-cloak] {
   display: none !important;

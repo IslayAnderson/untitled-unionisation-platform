@@ -40,6 +40,27 @@
 <body class="govuk-template__body">
     <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
 
+    @unless (request()->cookie(\App\Http\Controllers\CookieBannerController::COOKIE))
+        {{-- Only essential cookies are set, which UK law allows without consent, so the banner informs rather than asks. --}}
+        <div class="govuk-cookie-banner govuk-!-display-none-print" data-nosnippet role="region" aria-label="Cookies on {{ config('app.name') }}">
+            <div class="govuk-cookie-banner__message govuk-width-container">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on {{ config('app.name') }}</h2>
+                        <div class="govuk-cookie-banner__content">
+                            <p class="govuk-body">We use some essential cookies to make this service work. We don't use any analytics, advertising or tracking cookies.</p>
+                        </div>
+                    </div>
+                </div>
+                <form method="POST" action="{{ route('cookies.hide-banner') }}" class="govuk-button-group">
+                    @csrf
+                    <button type="submit" class="govuk-button" data-module="govuk-button">Hide cookie message</button>
+                    <a class="govuk-link" href="{{ route('privacy') }}#cookies">View cookies</a>
+                </form>
+            </div>
+        </div>
+    @endunless
+
     <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
 
     {{-- Not on GOV.UK, so the Generic header with the service's own name, not the GOV.UK header. --}}
@@ -163,6 +184,15 @@
                 <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
                     <h2 class="govuk-visually-hidden">Support links</h2>
                     <ul class="govuk-footer__inline-list">
+                        <li class="govuk-footer__inline-list-item">
+                            <a class="govuk-footer__link" href="{{ route('vouching.guide') }}">How vouching works</a>
+                        </li>
+                        <li class="govuk-footer__inline-list-item">
+                            <a class="govuk-footer__link" href="{{ route('privacy') }}">Privacy</a>
+                        </li>
+                        <li class="govuk-footer__inline-list-item">
+                            <a class="govuk-footer__link" href="{{ route('feedback.create') }}" data-feedback>Give feedback</a>
+                        </li>
                         @if (config('demo.enabled'))
                             <li class="govuk-footer__inline-list-item">
                                 <a class="govuk-footer__link" href="{{ route('demo.show') }}">Demo union</a>
@@ -180,5 +210,9 @@
             </div>
         </div>
     </footer>
+
+    @unless (request()->routeIs('feedback.create'))
+        @include('feedback.dialog')
+    @endunless
 </body>
 </html>

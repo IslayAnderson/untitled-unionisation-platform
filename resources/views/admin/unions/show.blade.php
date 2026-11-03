@@ -31,6 +31,11 @@
                     'Policies' => $union->policies_count,
                     'Roles' => $union->roles_count,
                 ],
+                'QR code scans' => [
+                    'Join code' => $union->join_scans_count,
+                    'Members\' vouching codes' => $union->vouch_scans_count,
+                    'All' => $union->qr_scans_count,
+                ],
             ] as $heading => $stats)
                 <h2 class="govuk-heading-m">{{ $heading }}</h2>
                 <dl class="govuk-summary-list">

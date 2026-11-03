@@ -89,6 +89,7 @@
                 <p class="govuk-body">
                     Show this code to neighbours in person. You'll become a member when
                     {{ $rules->vouchesRequired }} of them have scanned it ({{ $vouchCount }} so far).
+                    <a href="{{ route('vouching.guide') }}" class="govuk-link">How vouching works</a>.
                 </p>
                 <x-vouching-bulletin-link :bulletin="$vouchingBulletin" text="Arrange to meet members" />
                 <img src="{{ $vouchQr }}" alt="Your personal vouching QR code" class="app-qr-code">

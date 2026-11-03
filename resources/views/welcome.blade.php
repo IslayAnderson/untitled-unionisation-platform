@@ -13,6 +13,7 @@
                 <li>Once {{ \App\Support\ConstitutionRules::DEFAULTS['min_signups'] }} tenants have signed up, vouch for each other in person by scanning QR codes.</li>
                 <li>Tenants vouched for by {{ \App\Support\ConstitutionRules::DEFAULTS['vouches_required'] }} neighbours become union members.</li>
             </ol>
+            <p class="govuk-body"><a href="{{ route('vouching.guide') }}" class="govuk-link">See how vouching works</a>, with diagrams.</p>
 
             <div class="govuk-button-group">
                 <a href="{{ route('register') }}" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">

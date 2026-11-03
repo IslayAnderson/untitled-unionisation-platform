@@ -1,0 +1,99 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// A diagram drawn in inline SVG. Its viewBox is narrow, so text stays readable
+// when it's scaled down to fit a phone.
+.app-diagram {
+  margin: 0;
+  @include govuk-responsive-margin(6, "bottom");
+}
+
+.app-diagram__svg {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+}
+
+.app-diagram__svg--tall {
+  max-width: 420px;
+}
+
+.app-diagram__box {
+  fill: govuk-colour("white");
+  stroke: govuk-functional-colour(text);
+  stroke-width: 2;
+}
+
+.app-diagram__box--brand {
+  fill: govuk-colour("blue", $variant: "tint-95");
+  stroke: govuk-functional-colour(brand);
+}
+
+.app-diagram__box--success {
+  fill: govuk-colour("green", $variant: "tint-95");
+  stroke: govuk-functional-colour(success);
+  stroke-width: 3;
+}
+
+.app-diagram__text {
+  font-family: $govuk-font-family;
+  font-size: 16px;
+  fill: govuk-functional-colour(text);
+}
+
+.app-diagram__text--small {
+  font-size: 14px;
+}
+
+.app-diagram__text--bold {
+  font-weight: $govuk-font-weight-bold;
+}
+
+.app-diagram__number {
+  fill: govuk-functional-colour(brand);
+}
+
+.app-diagram__number--success {
+  fill: govuk-functional-colour(success);
+}
+
+.app-diagram__number-text {
+  font-family: $govuk-font-family;
+  font-size: 16px;
+  font-weight: $govuk-font-weight-bold;
+  fill: govuk-colour("white");
+}
+
+.app-diagram__line {
+  stroke: govuk-functional-colour(text);
+  stroke-width: 2;
+}
+
+.app-diagram__arrowhead {
+  fill: govuk-functional-colour(text);
+}
+
+.app-diagram__phone {
+  fill: govuk-colour("black", $variant: "tint-95");
+  stroke: govuk-functional-colour(text);
+  stroke-width: 3;
+}
+
+.app-diagram__qr {
+  fill: govuk-functional-colour(text);
+}
+
+.app-diagram__qr-background {
+  fill: govuk-colour("white");
+}
+
+.app-diagram__button {
+  fill: govuk-colour("green");
+}
+
+.app-diagram__button-text {
+  font-family: $govuk-font-family;
+  font-size: 13px;
+  font-weight: $govuk-font-weight-bold;
+  fill: govuk-colour("white");
+}

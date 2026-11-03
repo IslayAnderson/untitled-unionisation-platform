@@ -10,8 +10,11 @@ use App\Http\Controllers\BulletinController;
 use App\Http\Controllers\BulletinReplyController;
 use App\Http\Controllers\ConstitutionController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CookieBannerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemoController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\HowVouchingWorksController;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\InviteMaterialsController;
 use App\Http\Controllers\LandlordController;
@@ -31,9 +34,17 @@ use App\Http\Controllers\UnionMailController;
 use App\Http\Controllers\VouchController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome')->name('home');
+Route::view('/', 'welcome')->middleware('qr-scan:campaign')->name('home');
 
-Route::get('/demo', [DemoController::class, 'show'])->name('demo.show');
+Route::get('/how-vouching-works', HowVouchingWorksController::class)->name('vouching.guide');
+Route::view('/privacy', 'privacy.show')->name('privacy');
+Route::post('/cookies/hide-banner', CookieBannerController::class)->name('cookies.hide-banner');
+Route::get('/feedback', [FeedbackController::class, 'create'])->name('feedback.create');
+Route::post('/feedback', [FeedbackController::class, 'store'])
+    ->middleware('throttle:5,60')
+    ->name('feedback.store');
+
+Route::get('/demo', [DemoController::class, 'show'])->middleware('qr-scan:demo')->name('demo.show');
 Route::get('/demo/printables', [InviteMaterialsController::class, 'demo'])->name('demo.printables');
 Route::post('/demo', [DemoController::class, 'enter'])->middleware(['guest', 'throttle:20,1'])->name('demo.enter');
 
@@ -45,7 +56,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'create'])->name('register');
     Route::post('/register', [RegisterController::class, 'store']);
 
-    Route::get('/join/{building:signup_token}', [RegisterController::class, 'createJoin'])->name('join');
+    Route::get('/join/{building:signup_token}', [RegisterController::class, 'createJoin'])->middleware('qr-scan:join')->name('join');
     Route::post('/join/{building:signup_token}', [RegisterController::class, 'storeJoin']);
 
     Route::get('/login', [LoginController::class, 'create'])->name('login');
@@ -76,7 +87,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/membership/leave', [MembershipController::class, 'leave'])->middleware('member')->name('membership.leave');
     Route::delete('/account', [MembershipController::class, 'destroyAccount'])->middleware('throttle:6,1')->name('account.destroy');
 
-    Route::get('/vouch/{contact:vouch_token}', [VouchController::class, 'show'])->name('vouch.show');
+    Route::get('/vouch/{contact:vouch_token}', [VouchController::class, 'show'])->middleware('qr-scan:vouch')->name('vouch.show');
     Route::post('/vouch/{contact:vouch_token}', [VouchController::class, 'store'])->name('vouch.store');
 
     // Tenants waiting to be vouched for can read the constitution they're joining under.

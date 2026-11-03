@@ -53,3 +53,15 @@ initAll();
 if (document.querySelector('textarea[data-rich-text]')) {
     import('./rich-editor.js').then(({ initRichEditors }) => initRichEditors());
 }
+
+// Links to the feedback form open it as a popup (resources/views/feedback/dialog.blade.php).
+const feedbackDialog = document.getElementById('feedback-dialog');
+
+if (feedbackDialog?.showModal) {
+    document.addEventListener('click', (event) => {
+        if (event.target.closest('a[data-feedback]')) {
+            event.preventDefault();
+            feedbackDialog.showModal();
+        }
+    });
+}

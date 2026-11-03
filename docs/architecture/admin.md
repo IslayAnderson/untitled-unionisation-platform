@@ -21,8 +21,21 @@ Admins run the platform. They aren't union officers and have no say in any union
 * **Decisions**: referendums, ones still being voted on, policies, roles.
 * **Last active**: the newest bulletin, discussion, mail, referendum or sign-up.
 
+* **QR code scans**: the join code and members' vouching codes.
+
+`/admin` also totals QR code scans across the platform by kind: join codes, vouching codes, campaign
+leaflets and demo codes (`App\Enums\QrScanKind`).
+
 Admins see **counts only**: never members' names or emails, or anything a union has written. The
 union's name and address are shown because they identify the union, not a person.
+
+### Counting QR code scans
+Every QR code the app makes (`App\Support\QrCode::dataUri`) opens its URL with `?via=qr` added, so a scan
+can be told apart from someone following a copied link. The `qr-scan:{kind}` middleware
+(`App\Http\Middleware\CountQrScan`) on the join, vouch, home and demo pages adds a `qr_scans` row
+(which kind, which building if any, and when) the first time each code is opened in a browser session.
+It never records who scanned it. Codes printed before this was added don't carry `?via=qr`, so they
+aren't counted.
 
 ## Campaign printables
 `/admin/printables` (`InviteMaterialsController::campaign`) prints posters, flyers and door slips for

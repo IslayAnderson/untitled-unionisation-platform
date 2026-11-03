@@ -1,7 +1,7 @@
 <x-layouts.app title="Admin">
     @include('admin.nav', ['title' => 'Unions'])
 
-    <p class="govuk-body">Numbers only. Admins can't see members' names or anything a union has written.</p>
+    <p class="govuk-body">Numbers only. Admins can't see members' names or anything a union has written. QR code scans count which code was opened, never who opened it.</p>
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">
@@ -12,6 +12,20 @@
                         <dd class="govuk-summary-list__value govuk-!-font-tabular-numbers">{{ number_format($value) }}</dd>
                     </div>
                 @endforeach
+            </dl>
+        </div>
+        <div class="govuk-grid-column-one-half">
+            <dl class="govuk-summary-list">
+                @foreach ($qrScans as $label => $value)
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">{{ $label }} scanned</dt>
+                        <dd class="govuk-summary-list__value govuk-!-font-tabular-numbers">{{ number_format($value) }}</dd>
+                    </div>
+                @endforeach
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">All QR code scans</dt>
+                    <dd class="govuk-summary-list__value govuk-!-font-tabular-numbers govuk-!-font-weight-bold">{{ number_format(array_sum($qrScans)) }}</dd>
+                </div>
             </dl>
         </div>
     </div>
@@ -31,6 +45,7 @@
                         <th scope="col" class="govuk-table__header govuk-table__header--numeric">Discussions</th>
                         <th scope="col" class="govuk-table__header govuk-table__header--numeric">Mail sent</th>
                         <th scope="col" class="govuk-table__header govuk-table__header--numeric">Referendums</th>
+                        <th scope="col" class="govuk-table__header govuk-table__header--numeric">QR scans</th>
                         <th scope="col" class="govuk-table__header">Last active</th>
                     </tr>
                 </thead>
@@ -50,6 +65,7 @@
                             <td class="govuk-table__cell govuk-table__cell--numeric">{{ $union->threads_count }}</td>
                             <td class="govuk-table__cell govuk-table__cell--numeric">{{ $union->mail_sent_count }}</td>
                             <td class="govuk-table__cell govuk-table__cell--numeric">{{ $union->referendums_count }}</td>
+                            <td class="govuk-table__cell govuk-table__cell--numeric">{{ $union->qr_scans_count }}</td>
                             <td class="govuk-table__cell">{{ $union->last_active_at?->diffForHumans() ?? 'Never' }}</td>
                         </tr>
                     @endforeach

@@ -144,6 +144,14 @@ class Building extends Model
     }
 
     /**
+     * @return HasMany<QrScan, $this>
+     */
+    public function qrScans(): HasMany
+    {
+        return $this->hasMany(QrScan::class);
+    }
+
+    /**
      * @return HasMany<Contact, $this>
      */
     public function contacts(): HasMany
