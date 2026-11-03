@@ -31,6 +31,9 @@
                             'Mailing lists' => ['mailing-lists.index', 'mailing-lists.*'],
                         ]" />
                     @endif
+                    @if (auth()->user()->is_admin)
+                        <a href="{{ route('admin.unions.index') }}" @class(['hover:underline', 'font-semibold' => request()->routeIs('admin.*')])>Admin</a>
+                    @endif
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="hover:underline">Log out</button>

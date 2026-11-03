@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AddressSearchController;
+use App\Http\Controllers\Admin\CleanupController;
+use App\Http\Controllers\Admin\UnionController as AdminUnionController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -137,4 +139,16 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
         ->name('mail.attachments.show');
     Route::post('/mail/{unionMail}/decision', [UnionMailController::class, 'decide'])->name('mail.decide');
     Route::post('/mail/{unionMail}/withdraw', [UnionMailController::class, 'withdraw'])->name('mail.withdraw');
+});
+
+Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminUnionController::class, 'index'])->name('unions.index');
+    Route::get('/unions/{building}', [AdminUnionController::class, 'show'])->whereNumber('building')->name('unions.show');
+    Route::delete('/unions/{building}', [AdminUnionController::class, 'destroy'])->name('unions.destroy');
+
+    Route::get('/cleanup', [CleanupController::class, 'index'])->name('cleanup.index');
+    Route::delete('/cleanup/accounts/{tool}', [CleanupController::class, 'destroyAccounts'])
+        ->whereIn('tool', CleanupController::ACCOUNT_TOOLS)
+        ->name('cleanup.accounts.destroy');
+    Route::delete('/cleanup/abandoned-unions', [CleanupController::class, 'destroyAbandoned'])->name('cleanup.abandoned.destroy');
 });

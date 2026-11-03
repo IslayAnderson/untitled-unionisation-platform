@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
@@ -194,5 +195,13 @@ class Building extends Model
     public function mailingLists(): HasMany
     {
         return $this->hasMany(MailingList::class);
+    }
+
+    /**
+     * @return HasManyThrough<Poll, Bulletin, $this>
+     */
+    public function polls(): HasManyThrough
+    {
+        return $this->hasManyThrough(Poll::class, Bulletin::class);
     }
 }

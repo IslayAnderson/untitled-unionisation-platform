@@ -35,6 +35,8 @@
   * Secret-ballot polls on bulletins
 * /docs/architecture/uploads.md
   * Image uploads: compression, metadata stripping and Cloudflare CSAM scanning
+* /docs/architecture/admin.md
+  * Platform admin: usage numbers per union and clean-up tools
 
 ## Milestones
 1. Scaffold the app, migrate every entity in the entity diagram, build the signup flow end to end
