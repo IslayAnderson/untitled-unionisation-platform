@@ -6,6 +6,7 @@ use App\Models\Bulletin;
 use App\Models\Constitution;
 use App\Models\Contact;
 use App\Models\Policy;
+use App\Models\Role;
 use App\Models\Thread;
 use App\Models\User;
 use App\Services\AddressLookup\AddressLookup;
@@ -50,6 +51,7 @@ class AppServiceProvider extends ServiceProvider
             'bulletin' => Bulletin::class,
             'constitution' => Constitution::class,
             'policy' => Policy::class,
+            'role' => Role::class,
             'thread' => Thread::class,
         ]);
 

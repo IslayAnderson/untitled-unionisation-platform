@@ -1,4 +1,4 @@
-# Governance: constitution, policies and referendums
+# Governance: constitution, policies, roles and referendums
 
 Each union decides its rules by **referendum**: a secret vote of all members. Everyday decisions use
 polls on bulletins instead (see `polls.md`). The code is in `App\Services\Referendums`.
@@ -16,6 +16,18 @@ polls on bulletins instead (see `polls.md`). The code is in `App\Services\Refere
   gets `superseded_at`.
 * **Repealing a policy.** A referendum of kind `repeal` on the policy. If it passes, the policy gets
   `repealed_at`.
+
+* **Roles** (`App\Models\Role`, such as secretary or repairs coordinator), each by referendum:
+  * *creating* one: a `roles` row with its responsibilities (`role_actions`), published if it passes;
+  * *electing* a member (kind `elect`, `candidate_id`): they're added to `contact_role` if it passes,
+    as long as the role is still in force and they're still a member;
+  * *removing* a member (kind `remove`);
+  * *abolishing* it (kind `repeal`): it gets `abolished_at` and everyone holding it stops.
+
+  A role can have several holders. A member can step down at any time without a vote, and a nominee
+  can decline by withdrawing their election. Only one election or removal per member and role can be
+  undecided at a time. Roles carry only the responsibilities members give them, not platform
+  permissions.
 
 A policy can only be revised or repealed while it's in force, and only one change to it can be voted
 on at a time. Any member can propose; tenants waiting to be vouched for can read the constitution but

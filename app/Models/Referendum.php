@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * new version of the constitution. See docs/architecture/governance.md.
  */
 #[Fillable([
-    'building_id', 'proposer_id', 'thread_id', 'referendable_type', 'referendable_id', 'kind', 'title',
+    'building_id', 'proposer_id', 'candidate_id', 'thread_id', 'referendable_type', 'referendable_id', 'kind', 'title',
     'description', 'quorum_percent', 'pass_percent', 'closes_at', 'closed_at', 'outcome', 'member_count',
 ])]
 class Referendum extends Model
@@ -71,6 +71,18 @@ class Referendum extends Model
         return $this->closed_at === null && ! $this->closes_at->isFuture();
     }
 
+    /**
+     * What's being decided, in a few words, for emails and lists.
+     */
+    public function subjectLabel(): string
+    {
+        return match ($this->referendable_type) {
+            'constitution' => 'a change to the constitution',
+            'role' => 'a change to the union\'s roles',
+            default => 'a policy',
+        };
+    }
+
     public function isAboutConstitution(): bool
     {
         return $this->referendable_type === 'constitution';
@@ -98,6 +110,16 @@ class Referendum extends Model
     public function proposer(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'proposer_id');
+    }
+
+    /**
+     * The member to elect to, or remove from, a role.
+     *
+     * @return BelongsTo<Contact, $this>
+     */
+    public function candidate(): BelongsTo
+    {
+        return $this->belongsTo(Contact::class, 'candidate_id');
     }
 
     /**

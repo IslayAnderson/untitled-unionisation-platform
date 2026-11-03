@@ -17,6 +17,7 @@ use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\PollController;
 use App\Http\Controllers\ReferendumController;
 use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\ThreadReplyController;
 use App\Http\Controllers\UnionMailController;
@@ -103,6 +104,14 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
     Route::get('/policies/{policy}/revise', [PolicyController::class, 'revise'])->name('policies.revise');
     Route::get('/policies/{policy}/repeal', [PolicyController::class, 'confirmRepeal'])->name('policies.repeal.confirm');
     Route::post('/policies/{policy}/repeal', [PolicyController::class, 'repeal'])->middleware('throttle:10,1')->name('policies.repeal');
+
+    Route::resource('roles', RoleController::class)->only(['index', 'create', 'store', 'show']);
+    Route::get('/roles/{role}/propose/{change}', [RoleController::class, 'proposeChange'])->whereIn('change', ['elect', 'remove', 'abolish'])->name('roles.propose');
+    Route::post('/roles/{role}/propose/{change}', [RoleController::class, 'storeChange'])
+        ->whereIn('change', ['elect', 'remove', 'abolish'])
+        ->middleware('throttle:10,1')
+        ->name('roles.propose.store');
+    Route::post('/roles/{role}/step-down', [RoleController::class, 'stepDown'])->name('roles.step-down');
 
     Route::get('/referendums', [ReferendumController::class, 'index'])->name('referendums.index');
     Route::get('/referendums/{referendum}', [ReferendumController::class, 'show'])->name('referendums.show');

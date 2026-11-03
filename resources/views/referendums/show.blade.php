@@ -47,7 +47,17 @@
                     ({{ $referendum->quorum_percent }}%) were needed for the result to count. To pass, more than {{ $referendum->pass_percent }}% of
                     the for and against votes had to be for.
                     @if ($referendum->outcome === App\Enums\ReferendumOutcome::Passed)
-                        {{ $isConstitution ? 'This version of the constitution is now in force.' : ($referendum->kind === ReferendumKind::Repeal ? 'The policy has been repealed.' : 'The policy is now in force.') }}
+                        {{ match (true) {
+                            $isConstitution => 'This version of the constitution is now in force.',
+                            $subject instanceof App\Models\Role => match ($referendum->kind) {
+                                ReferendumKind::Adopt => 'The role has been created.',
+                                ReferendumKind::Repeal => 'The role has been abolished.',
+                                ReferendumKind::Elect => ($referendum->candidate?->name ?? 'The member').' now holds the role.',
+                                ReferendumKind::Remove => ($referendum->candidate?->name ?? 'The member').' no longer holds the role.',
+                            },
+                            $referendum->kind === ReferendumKind::Repeal => 'The policy has been repealed.',
+                            default => 'The policy is now in force.',
+                        } }}
                     @else
                         Nothing changed.
                     @endif
@@ -79,10 +89,10 @@
                     {{ $referendum->ballot_count }} of {{ $memberCount }} {{ Str::plural('member', $memberCount) }} have voted.
                     {{ $quorum }} must vote for the result to count.
                 </span>
-                @if ($isProposer && $referendum->isOpen())
+                @if ($canWithdraw)
                     <form method="POST" action="{{ route('referendums.withdraw', $referendum) }}" onsubmit="return confirm('Withdraw this proposal? Votes already cast will not be counted.')">
                         @csrf
-                        <button type="submit" class="text-red-700 hover:underline">Withdraw</button>
+                        <button type="submit" class="text-red-700 hover:underline">{{ $isProposer ? 'Withdraw' : 'Decline the nomination' }}</button>
                     </form>
                 @endif
             </div>
@@ -98,7 +108,26 @@
 
     {{-- What's being decided --}}
     <section class="mt-8">
-        @if ($referendum->kind === ReferendumKind::Repeal)
+        @if ($subject instanceof App\Models\Role)
+            <h2 class="mb-2 text-lg font-semibold">The role</h2>
+            <div class="rounded-lg border border-stone-200 bg-white p-5">
+                <p class="font-medium"><a href="{{ route('roles.show', $subject) }}" class="underline">{{ $subject->title }}</a></p>
+                @if ($subject->description)
+                    <p class="mt-1 whitespace-pre-line text-stone-700">{{ $subject->description }}</p>
+                @endif
+                @if ($subject->actions->isNotEmpty())
+                    <h3 class="mt-3 text-sm font-semibold">Responsibilities</h3>
+                    <ul class="mt-1 list-disc pl-5 text-sm text-stone-700">
+                        @foreach ($subject->actions as $action)
+                            <li>{{ $action->title }}</li>
+                        @endforeach
+                    </ul>
+                @endif
+                @if ($referendum->candidate)
+                    <p class="mt-3 text-sm">{{ $referendum->kind === ReferendumKind::Elect ? 'Nominated' : 'To be removed' }}: <span class="font-medium">{{ $referendum->candidate->name }}</span></p>
+                @endif
+            </div>
+        @elseif ($referendum->kind === ReferendumKind::Repeal)
             <h2 class="mb-2 text-lg font-semibold">The policy to repeal</h2>
             <p class="mb-3 text-sm text-stone-600"><a href="{{ route('policies.show', $subject) }}" class="underline">{{ $subject->title }}</a></p>
             {{-- Cleaned by App\Support\RichText before it was stored. --}}

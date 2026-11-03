@@ -12,6 +12,7 @@ use App\Models\Contact;
 use App\Models\Policy;
 use App\Models\Referendum;
 use App\Models\ReferendumVoter;
+use App\Models\Role;
 use App\Models\User;
 use App\Notifications\ReferendumDecided;
 use App\Notifications\ReferendumOpened;
@@ -91,6 +92,99 @@ class Referendums
     }
 
     /**
+     * Propose a new role, with its responsibilities.
+     *
+     * @param  list<string>  $responsibilities
+     *
+     * @throws ReferendumRefused
+     */
+    public function proposeRole(Contact $proposer, string $title, ?string $description, array $responsibilities, ?string $reason): Referendum
+    {
+        $this->ensureMember($proposer);
+
+        return DB::transaction(function () use ($proposer, $title, $description, $responsibilities, $reason) {
+            $role = $proposer->building->roles()->create([
+                'title' => $title,
+                'description' => $description,
+                'opened_at' => now(),
+            ]);
+
+            $role->actions()->createMany(array_map(fn (string $responsibility) => ['title' => $responsibility], $responsibilities));
+
+            return $this->open($proposer, $role, ReferendumKind::Adopt, "Create role: {$title}", $reason);
+        });
+    }
+
+    /**
+     * Propose electing a member to a role.
+     *
+     * @throws ReferendumRefused
+     */
+    public function proposeElection(Contact $proposer, Role $role, Contact $candidate, ?string $reason): Referendum
+    {
+        $this->ensureMember($proposer);
+        $this->ensureRoleInForce($proposer, $role);
+
+        if ($candidate->building_id !== $proposer->building_id || ! $candidate->isEnrolled()) {
+            throw new ReferendumRefused('Only members of the union can be elected.');
+        }
+
+        if ($role->contacts()->whereKey($candidate->id)->exists()) {
+            throw new ReferendumRefused("{$candidate->name} already holds this role.");
+        }
+
+        $this->ensureNoPendingCandidacy($role, $candidate);
+
+        return DB::transaction(fn () => $this->open($proposer, $role, ReferendumKind::Elect, "Elect {$candidate->name} as {$role->title}", $reason, $candidate));
+    }
+
+    /**
+     * Propose removing a member from a role.
+     *
+     * @throws ReferendumRefused
+     */
+    public function proposeRemoval(Contact $proposer, Role $role, Contact $holder, ?string $reason): Referendum
+    {
+        $this->ensureMember($proposer);
+        $this->ensureRoleInForce($proposer, $role);
+
+        if (! $role->contacts()->whereKey($holder->id)->exists()) {
+            throw new ReferendumRefused("{$holder->name} doesn't hold this role.");
+        }
+
+        $this->ensureNoPendingCandidacy($role, $holder);
+
+        return DB::transaction(fn () => $this->open($proposer, $role, ReferendumKind::Remove, "Remove {$holder->name} as {$role->title}", $reason, $holder));
+    }
+
+    /**
+     * @throws ReferendumRefused
+     */
+    public function proposeAbolition(Contact $proposer, Role $role, ?string $reason): Referendum
+    {
+        $this->ensureMember($proposer);
+        $this->ensureRoleInForce($proposer, $role);
+
+        if ($role->referendums()->undecided()->where('kind', ReferendumKind::Repeal)->exists()) {
+            throw new ReferendumRefused('There\'s already a referendum to abolish this role.');
+        }
+
+        return DB::transaction(fn () => $this->open($proposer, $role, ReferendumKind::Repeal, "Abolish role: {$role->title}", $reason));
+    }
+
+    /**
+     * A member gives up a role they hold. No vote is needed.
+     *
+     * @throws ReferendumRefused
+     */
+    public function stepDown(Contact $holder, Role $role): void
+    {
+        if (! $role->contacts()->detach($holder->id)) {
+            throw new ReferendumRefused('You don\'t hold this role.');
+        }
+    }
+
+    /**
      * Record a secret ballot: who voted and the totals are written separately,
      * without timestamps. Votes can't be changed.
      *
@@ -128,9 +222,12 @@ class Referendums
     /**
      * @throws ReferendumRefused
      */
-    public function withdraw(Contact $proposer, Referendum $referendum): void
+    public function withdraw(Contact $contact, Referendum $referendum): void
     {
-        if ($referendum->proposer_id !== $proposer->id) {
+        // A member nominated for a role can decline by withdrawing it.
+        $isCandidate = $referendum->kind === ReferendumKind::Elect && $referendum->candidate_id === $contact->id;
+
+        if ($referendum->proposer_id !== $contact->id && ! $isCandidate) {
             throw new ReferendumRefused('Only the member who proposed this can withdraw it.');
         }
 
@@ -202,6 +299,8 @@ class Referendums
         if ($subject instanceof Constitution) {
             $subject->update(['published_at' => now()]);
             $referendum->building->update(['current_constitution_id' => $subject->id]);
+        } elseif ($subject instanceof Role) {
+            $this->putRoleChangeIntoEffect($referendum, $subject);
         } elseif ($subject instanceof Policy && $referendum->kind === ReferendumKind::Repeal) {
             $subject->update(['repealed_at' => now()]);
         } elseif ($subject instanceof Policy) {
@@ -213,10 +312,26 @@ class Referendums
         }
     }
 
+    private function putRoleChangeIntoEffect(Referendum $referendum, Role $role): void
+    {
+        match ($referendum->kind) {
+            ReferendumKind::Adopt => $role->update(['published_at' => now()]),
+            ReferendumKind::Repeal => DB::transaction(function () use ($role) {
+                $role->update(['abolished_at' => now()]);
+                $role->contacts()->detach();
+            }),
+            // The candidate may have left the union, or the role been abolished, while the vote was open.
+            ReferendumKind::Elect => $role->isInForce() && $referendum->candidate?->isEnrolled()
+                ? $role->contacts()->syncWithoutDetaching([$referendum->candidate_id])
+                : null,
+            ReferendumKind::Remove => $referendum->candidate_id ? $role->contacts()->detach($referendum->candidate_id) : null,
+        };
+    }
+
     /**
      * Open the vote, with a members' discussion, using the thresholds in force now.
      */
-    private function open(Contact $proposer, Constitution|Policy $subject, ReferendumKind $kind, string $title, ?string $reason): Referendum
+    private function open(Contact $proposer, Constitution|Policy|Role $subject, ReferendumKind $kind, string $title, ?string $reason, ?Contact $candidate = null): Referendum
     {
         $building = $proposer->building;
         $rules = $building->rules();
@@ -230,6 +345,7 @@ class Referendums
 
         $referendum = $building->referendums()->create([
             'proposer_id' => $proposer->id,
+            'candidate_id' => $candidate?->id,
             'thread_id' => $thread->id,
             'referendable_type' => $subject->getMorphClass(),
             'referendable_id' => $subject->getKey(),
@@ -267,6 +383,28 @@ class Referendums
 
         if ($pending) {
             throw new ReferendumRefused('There\'s already a referendum to change this policy. Wait until it has been decided.');
+        }
+    }
+
+    /**
+     * @throws ReferendumRefused
+     */
+    private function ensureRoleInForce(Contact $proposer, Role $role): void
+    {
+        if ($role->building_id !== $proposer->building_id || ! $role->isInForce()) {
+            throw new ReferendumRefused('That role isn\'t in force.');
+        }
+    }
+
+    /**
+     * Only one election or removal at a time for each member and role.
+     *
+     * @throws ReferendumRefused
+     */
+    private function ensureNoPendingCandidacy(Role $role, Contact $candidate): void
+    {
+        if ($role->referendums()->undecided()->where('candidate_id', $candidate->id)->exists()) {
+            throw new ReferendumRefused("There's already a referendum about {$candidate->name} and this role.");
         }
     }
 

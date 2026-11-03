@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ReferendumAnswer;
+use App\Enums\ReferendumKind;
 use App\Exceptions\ReferendumRefused;
 use App\Models\Constitution;
 use App\Models\Policy;
 use App\Models\Referendum;
+use App\Models\Role;
 use App\Services\Referendums;
 use App\Support\TextDiff;
 use Illuminate\Http\RedirectResponse;
@@ -47,10 +49,12 @@ class ReferendumController extends Controller
         $subject = $referendum->referendable;
 
         return view('referendums.show', [
-            'referendum' => $referendum->load(['proposer', 'thread' => fn ($query) => $query->withCount('replies')]),
+            'referendum' => $referendum->load(['proposer', 'candidate', 'thread' => fn ($query) => $query->withCount('replies')]),
             'subject' => $subject,
             'hasVoted' => $referendum->voters()->where('contact_id', $member->id)->exists(),
             'isProposer' => $referendum->proposer_id === $member->id,
+            'canWithdraw' => $referendum->isOpen() && ($referendum->proposer_id === $member->id
+                || ($referendum->kind === ReferendumKind::Elect && $referendum->candidate_id === $member->id)),
             'memberCount' => $referendum->member_count ?? $member->building->enrolledCount(),
             ...$this->changes($subject),
         ]);
@@ -89,9 +93,13 @@ class ReferendumController extends Controller
      *
      * @return array{previous: Constitution|Policy|null, diff: list<array{type: string, text: string}>}
      */
-    private function changes(Constitution|Policy $subject): array
+    private function changes(Constitution|Policy|Role $subject): array
     {
-        $previous = $subject instanceof Constitution ? $subject->previousVersion() : $subject->replaces;
+        $previous = match (true) {
+            $subject instanceof Constitution => $subject->previousVersion(),
+            $subject instanceof Policy => $subject->replaces,
+            default => null,
+        };
 
         return [
             'previous' => $previous,

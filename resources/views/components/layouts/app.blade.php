@@ -22,6 +22,7 @@
                         <x-nav-menu label="Decisions" :links="[
                             'Referendums' => ['referendums.index', 'referendums.*'],
                             'Policies' => ['policies.index', 'policies.*'],
+                            'Roles' => ['roles.index', 'roles.*'],
                             'Constitution' => ['constitution.show', 'constitution.*'],
                         ]" />
                         <x-nav-menu label="Outreach" :links="[

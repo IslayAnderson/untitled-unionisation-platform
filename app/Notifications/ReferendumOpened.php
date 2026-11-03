@@ -32,7 +32,7 @@ class ReferendumOpened extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         $union = $this->referendum->building->name;
-        $subject = $this->referendum->isAboutConstitution() ? 'a change to the constitution' : 'a policy';
+        $subject = $this->referendum->subjectLabel();
 
         return (new MailMessage)
             ->subject("{$union}: a referendum is open")
