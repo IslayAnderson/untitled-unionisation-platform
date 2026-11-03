@@ -24,6 +24,12 @@
         @endif
         <span class="text-stone-500">· {{ $reply->published_at->format('j M Y, H:i') }}</span>
     </p>
+    @if (($viewer = auth()->user()?->contact) && $reply->canBeChangedBy($viewer))
+        <div class="float-right flex items-center gap-3 text-sm">
+            <a href="{{ route('replies.edit', $reply) }}" class="text-stone-600 hover:underline">Edit</a>
+            <x-delete-button :action="route('replies.destroy', $reply)" confirm="Delete your reply?" />
+        </div>
+    @endif
     {{-- Cleaned by App\Support\RichText before it was stored. --}}
     <div class="rich-text mt-2 text-stone-800">{!! $reply->rich_text !!}</div>
 </li>

@@ -90,4 +90,17 @@ class Bulletin extends Model
     {
         return $this->hasMany(Poll::class);
     }
+
+    /**
+     * Its author can edit or delete it until anything depends on it: a reply,
+     * a poll or mail. The vouching bulletin belongs to the platform.
+     */
+    public function canBeChangedBy(Contact $contact): bool
+    {
+        return $this->author_id === $contact->id
+            && ! $this->isVouching()
+            && ! $this->replies()->exists()
+            && ! $this->polls()->exists()
+            && ! $this->mails()->exists();
+    }
 }

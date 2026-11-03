@@ -72,4 +72,18 @@ class Reply extends Model
     {
         return $this->belongsTo(Contact::class);
     }
+
+    /**
+     * A member's post can be edited or deleted by its author until someone
+     * replies after it. Email replies can't be changed.
+     */
+    public function canBeChangedBy(Contact $contact): bool
+    {
+        return ! $this->isEmailReply()
+            && $this->author_id === $contact->id
+            && ! self::where('replyable_type', $this->replyable_type)
+                ->where('replyable_id', $this->replyable_id)
+                ->where('id', '>', $this->id)
+                ->exists();
+    }
 }

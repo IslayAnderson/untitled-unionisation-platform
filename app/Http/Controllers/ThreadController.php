@@ -52,16 +52,65 @@ class ThreadController extends Controller
         return redirect()->route('threads.show', $thread)->with('status', 'Discussion started.');
     }
 
-    public function show(Thread $thread): View
+    public function show(Request $request, Thread $thread): View
     {
         Gate::authorize('manage-union-record', $thread);
 
         return view('threads.show', [
+            'canChange' => $thread->canBeChangedBy($request->user()->contact),
             'thread' => $thread->load([
                 'author',
                 'referendum',
                 'replies' => fn ($query) => $query->with(['author', 'contact'])->oldest('published_at')->oldest('id'),
             ]),
         ]);
+    }
+
+    public function edit(Request $request, Thread $thread): View|RedirectResponse
+    {
+        Gate::authorize('manage-union-record', $thread);
+
+        if (! $thread->canBeChangedBy($request->user()->contact)) {
+            return $this->cannotChange($thread);
+        }
+
+        return view('threads.edit', ['thread' => $thread]);
+    }
+
+    public function update(Request $request, Thread $thread): RedirectResponse
+    {
+        Gate::authorize('manage-union-record', $thread);
+
+        if (! $thread->canBeChangedBy($request->user()->contact)) {
+            return $this->cannotChange($thread);
+        }
+
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:200'],
+            'body' => ['required', 'string', 'max:100000', new FilledRichText],
+        ]);
+
+        $thread->update(['title' => $data['title'], 'rich_text' => RichText::clean($data['body'])]);
+
+        return redirect()->route('threads.show', $thread)->with('status', 'Discussion updated.');
+    }
+
+    public function destroy(Request $request, Thread $thread): RedirectResponse
+    {
+        Gate::authorize('manage-union-record', $thread);
+
+        if (! $thread->canBeChangedBy($request->user()->contact)) {
+            return $this->cannotChange($thread);
+        }
+
+        $thread->delete();
+
+        return redirect()->route('threads.index')->with('status', 'Discussion deleted.');
+    }
+
+    private function cannotChange(Thread $thread): RedirectResponse
+    {
+        return redirect()->route('threads.show', $thread)
+            ->with('status', 'Only the author can change a discussion, and only until someone replies.');
     }
 }

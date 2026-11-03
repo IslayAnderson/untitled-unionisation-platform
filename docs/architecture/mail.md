@@ -79,6 +79,16 @@ with a title and rich text, and members reply in rich text. Only members of the 
 and they're never emailed, so they have no mail or polls. The list shows the most recently active
 first. Replies use the same `replies` table as bulletins (`replyable_type` = `thread`).
 
+## Editing and deleting
+Authors can edit or delete their own posts until something depends on them:
+* a **bulletin** until it has a reply, a poll or any mail (the vouching bulletin can't be changed);
+* a **discussion** until it has a reply (a referendum's discussion can't be changed);
+* a member's **reply** until someone replies after it. Email replies can't be changed. Tenants
+  waiting to be vouched for edit theirs as plain text, as they wrote it.
+
+Each model's `canBeChangedBy()` holds the rule. Deleting is permanent; edits aren't marked, since
+nobody has responded to the old version.
+
 ## Rich text
 Bulletins, instant mail and members' replies are written in TinyMCE (self-hosted under its GPL
 licence, bundled by Vite, loaded only on pages with an editor). The editor offers paragraphs, two

@@ -16,6 +16,7 @@ use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\PollController;
 use App\Http\Controllers\ReferendumController;
+use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\ThreadReplyController;
 use App\Http\Controllers\UnionMailController;
@@ -70,6 +71,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->whereNumber('bulletin')
         ->middleware('throttle:30,1')
         ->name('bulletins.replies.store');
+
+    // Bulletins or discussions; ReplyController checks the reader can see the thread.
+    Route::get('/replies/{reply}/edit', [ReplyController::class, 'edit'])->name('replies.edit');
+    Route::put('/replies/{reply}', [ReplyController::class, 'update'])->name('replies.update');
+    Route::delete('/replies/{reply}', [ReplyController::class, 'destroy'])->name('replies.destroy');
 });
 
 Route::middleware(['auth', 'verified', 'member'])->group(function () {
@@ -79,12 +85,12 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
     Route::patch('/mailing-lists/reply-to', [MailingListController::class, 'updateReplyTo'])->name('mailing-lists.reply-to');
     Route::resource('mailing-lists', MailingListController::class);
 
-    Route::resource('bulletins', BulletinController::class)->only(['index', 'create', 'store']);
+    Route::resource('bulletins', BulletinController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
     Route::get('/bulletins/{bulletin}/mail', [BulletinController::class, 'composeMail'])->name('bulletins.mail.create');
     Route::post('/bulletins/{bulletin}/mail', [BulletinController::class, 'mail'])
         ->middleware('throttle:10,1')
         ->name('bulletins.mail');
-    Route::resource('threads', ThreadController::class)->only(['index', 'create', 'store', 'show']);
+    Route::resource('threads', ThreadController::class);
     Route::post('/threads/{thread}/replies', [ThreadReplyController::class, 'store'])
         ->middleware('throttle:30,1')
         ->name('threads.replies.store');

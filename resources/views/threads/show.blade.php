@@ -12,6 +12,13 @@
 
     {{-- Cleaned by App\Support\RichText before it was stored. --}}
     <article class="rich-text rounded-lg border border-stone-200 bg-white p-5 text-stone-800">{!! $thread->rich_text !!}</article>
+    @if ($canChange)
+        <div class="mt-2 flex items-center gap-4 text-sm">
+            <a href="{{ route('threads.edit', $thread) }}" class="text-stone-600 hover:underline">Edit</a>
+            <x-delete-button :action="route('threads.destroy', $thread)" confirm="Delete this discussion? This can't be undone." />
+            <span class="text-xs text-stone-500">Until someone replies</span>
+        </div>
+    @endif
 
     <section class="mt-6">
         <h2 class="mb-3 text-lg font-semibold">{{ $thread->replies->count() }} {{ Str::plural('reply', $thread->replies->count()) }}</h2>

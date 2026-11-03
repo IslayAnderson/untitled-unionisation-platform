@@ -56,4 +56,15 @@ class Thread extends Model
     {
         return $this->hasOne(Referendum::class);
     }
+
+    /**
+     * Its author can edit or delete it until someone replies. A referendum's
+     * discussion can't be changed.
+     */
+    public function canBeChangedBy(Contact $contact): bool
+    {
+        return $this->author_id === $contact->id
+            && ! $this->replies()->exists()
+            && ! $this->referendum()->exists();
+    }
 }

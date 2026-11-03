@@ -72,6 +72,7 @@ class BulletinController extends Controller
                 'polls' => fn ($query) => $query->with('answers')->oldest(),
             ]),
             'isMember' => $isMember,
+            'canChange' => $isMember && $bulletin->canBeChangedBy($viewer),
             'isAuthor' => $isMember && $bulletin->author_id === $viewer->id,
             'votedPollIds' => $viewer->pollVotes()->whereIn('poll_id', $bulletin->polls->modelKeys())->pluck('poll_id')->all(),
             'memberCount' => $viewer->building->enrolledCount(),
@@ -79,6 +80,48 @@ class BulletinController extends Controller
             'lists' => $isMember ? $viewer->building->mailingLists()->orderBy('name')->get() : collect(),
             'rules' => $viewer->building->rules(),
         ]);
+    }
+
+    public function edit(Request $request, Bulletin $bulletin): View|RedirectResponse
+    {
+        Gate::authorize('manage-union-record', $bulletin);
+
+        if (! $bulletin->canBeChangedBy($request->user()->contact)) {
+            return $this->cannotChange($bulletin);
+        }
+
+        return view('bulletins.edit', ['bulletin' => $bulletin]);
+    }
+
+    public function update(Request $request, Bulletin $bulletin): RedirectResponse
+    {
+        Gate::authorize('manage-union-record', $bulletin);
+
+        if (! $bulletin->canBeChangedBy($request->user()->contact)) {
+            return $this->cannotChange($bulletin);
+        }
+
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:200'],
+            'body' => ['required', 'string', 'max:100000', new FilledRichText],
+        ]);
+
+        $bulletin->update(['title' => $data['title'], 'rich_text' => RichText::clean($data['body'])]);
+
+        return redirect()->route('bulletins.show', $bulletin)->with('status', 'Bulletin updated.');
+    }
+
+    public function destroy(Request $request, Bulletin $bulletin): RedirectResponse
+    {
+        Gate::authorize('manage-union-record', $bulletin);
+
+        if (! $bulletin->canBeChangedBy($request->user()->contact)) {
+            return $this->cannotChange($bulletin);
+        }
+
+        $bulletin->delete();
+
+        return redirect()->route('bulletins.index')->with('status', 'Bulletin deleted.');
     }
 
     /**
@@ -131,5 +174,11 @@ class BulletinController extends Controller
         }
 
         return redirect()->route('mail.show', $mail)->with('status', 'Your bulletin mail is waiting for approval from the union.');
+    }
+
+    private function cannotChange(Bulletin $bulletin): RedirectResponse
+    {
+        return redirect()->route('bulletins.show', $bulletin)
+            ->with('status', 'Only the author can change a bulletin, and only until it has replies, polls or mail.');
     }
 }

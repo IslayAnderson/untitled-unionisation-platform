@@ -13,6 +13,13 @@
 
     {{-- Cleaned by App\Support\RichText before it was stored. --}}
     <article class="rich-text rounded-lg border border-stone-200 bg-white p-5 text-stone-800">{!! $bulletin->rich_text !!}</article>
+    @if ($canChange)
+        <div class="mt-2 flex items-center gap-4 text-sm">
+            <a href="{{ route('bulletins.edit', $bulletin) }}" class="text-stone-600 hover:underline">Edit</a>
+            <x-delete-button :action="route('bulletins.destroy', $bulletin)" confirm="Delete this bulletin? This can't be undone." />
+            <span class="text-xs text-stone-500">Until someone replies</span>
+        </div>
+    @endif
 
     @if ($bulletin->polls->isNotEmpty() || ($isAuthor && ! $bulletin->isVouching()))
         <div class="mt-6 space-y-4">
