@@ -14,6 +14,13 @@ class DashboardController extends Controller
     {
         $contact = $request->user()->contact;
 
+        // Admin accounts made with admin:create aren't tenants of any union.
+        if (! $contact) {
+            abort_unless($request->user()->is_admin, 404);
+
+            return redirect()->route('admin.unions.index');
+        }
+
         if (! $contact->building_id) {
             return redirect()->route('onboarding');
         }

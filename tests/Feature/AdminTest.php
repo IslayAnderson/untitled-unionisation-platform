@@ -21,6 +21,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
@@ -41,6 +42,34 @@ it('grants and revokes admin access from the command line', function () {
     expect($user->fresh()->is_admin)->toBeFalse();
 
     $this->artisan('admin:grant', ['email' => 'nobody@example.test'])->assertFailed();
+});
+
+it('creates an admin account that isn\'t a tenant, asking for the password', function () {
+    $this->artisan('admin:create', ['email' => 'Sam@Example.test'])
+        ->expectsQuestion('Password', 'a long enough password')
+        ->expectsQuestion('Confirm the password', 'a long enough password')
+        ->assertSuccessful();
+
+    $user = User::where('email', 'sam@example.test')->sole();
+    expect($user->is_admin)->toBeTrue()
+        ->and($user->contact_id)->toBeNull()
+        ->and($user->hasVerifiedEmail())->toBeTrue()
+        ->and(Hash::check('a long enough password', $user->password))->toBeTrue();
+
+    $this->actingAs($user)->get(route('dashboard'))->assertRedirect(route('admin.unions.index'));
+    $this->actingAs($user)->get(route('admin.unions.index'))->assertOk()->assertDontSee(route('membership.show'));
+});
+
+it('refuses to create an admin with an email already in use or a mismatched password', function () {
+    $this->artisan('admin:create', ['email' => 'admin@example.test'])->assertFailed();
+
+    $this->artisan('admin:create', ['email' => 'new@example.test'])
+        ->expectsQuestion('Password', 'a long enough password')
+        ->expectsQuestion('Confirm the password', 'something else entirely')
+        ->expectsOutput('The passwords do not match')
+        ->assertFailed();
+
+    expect(User::where('email', 'new@example.test')->exists())->toBeFalse();
 });
 
 it('hides the admin area from everyone else', function () {

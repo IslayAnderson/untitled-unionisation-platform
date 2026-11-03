@@ -18,7 +18,7 @@
             'Contacts' => ['contacts.index', 'contacts.*'],
             'Mailing lists' => ['mailing-lists.index', 'mailing-lists.*'],
         ],
-        $user !== null => ['Your union' => ['dashboard', 'dashboard']],
+        $user?->contact !== null => ['Your union' => ['dashboard', 'dashboard']],
         default => [],
     };
 
@@ -46,7 +46,7 @@
     <header class="govuk-generic-header govuk-!-display-none-print">
         <div class="govuk-generic-header__container govuk-width-container">
             <div class="govuk-generic-header__logo">
-                <a href="{{ route($user ? 'dashboard' : 'home') }}" class="govuk-generic-header__homepage-link">{{ config('app.name') }}</a>
+                <a href="{{ route(match (true) { $user?->contact !== null => 'dashboard', (bool) $user?->is_admin => 'admin.unions.index', default => 'home' }) }}" class="govuk-generic-header__homepage-link">{{ config('app.name') }}</a>
             </div>
         </div>
     </header>
@@ -168,11 +168,11 @@
                                 <a class="govuk-footer__link" href="{{ route('demo.show') }}">Demo union</a>
                             </li>
                         @endif
-                        @auth
+                        @if ($user?->contact)
                             <li class="govuk-footer__inline-list-item">
                                 <a class="govuk-footer__link" href="{{ route('membership.show') }}">Your membership</a>
                             </li>
-                        @endauth
+                        @endif
                     </ul>
                     <p class="govuk-body-s govuk-!-margin-bottom-0">{{ config('app.name') }} is run by tenants, for tenants. It isn't a government service.</p>
                 </div>

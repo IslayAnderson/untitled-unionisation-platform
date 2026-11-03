@@ -4,8 +4,11 @@ Admins run the platform. They aren't union officers and have no say in any union
 
 ## Access
 * `users.is_admin`. It can only be granted or removed from the command line, never in the app:
-  `php artisan admin:grant someone@example.org` (add `--revoke` to take it away). The account must
-  already exist.
+  * `php artisan admin:create someone@example.org` makes a new admin account that isn't a tenant of any
+    union. It asks for the password, so it stays out of the shell history, and marks the email as
+    confirmed. Signing in takes it straight to the admin area.
+  * `php artisan admin:grant someone@example.org` makes an existing account an admin (add `--revoke` to
+    take it away).
 * The admin area is at `/admin` (`admin` middleware, `App\Http\Middleware\EnsureAdmin`). Anyone else
   gets a 404. Admins see an "Admin" link in the header.
 
