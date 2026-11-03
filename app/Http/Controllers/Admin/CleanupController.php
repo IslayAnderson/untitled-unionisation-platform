@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\DeleteUnion;
 use App\Models\Building;
 use App\Services\Cleanup;
 use Illuminate\Http\RedirectResponse;
@@ -74,8 +75,8 @@ class CleanupController extends Controller
     public function destroyAbandoned(Request $request, Cleanup $cleanup): RedirectResponse
     {
         $unions = $cleanup->unionsDueForDeletion($cleanup->abandonedUnions())->get();
-        $unions->each(fn (Building $union) => $cleanup->deleteUnion($union, $request->user()));
+        $unions->each(fn (Building $union) => DeleteUnion::dispatch($union->id, $request->user()->id));
 
-        return back()->with('status', "Deleted {$unions->count()} abandoned ".str('union')->plural($unions->count()).'.');
+        return back()->with('status', "Deleting {$unions->count()} abandoned ".str('union')->plural($unions->count()).' in the background.');
     }
 }

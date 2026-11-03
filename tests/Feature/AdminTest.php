@@ -164,14 +164,14 @@ it('emails abandoned unions and deletes those nobody came back to', function () 
         ->assertSessionHas('status', 'Emailed everyone in 2 abandoned unions.');
     Notification::assertSentTo($signup->user, CleanupWarning::class, fn (CleanupWarning $warning) => $warning->union === $abandoned->name);
 
-    $this->actingAs($this->admin)->delete(route('admin.cleanup.abandoned.destroy'))->assertSessionHas('status', 'Deleted 0 abandoned unions.');
+    $this->actingAs($this->admin)->delete(route('admin.cleanup.abandoned.destroy'))->assertSessionHas('status', 'Deleting 0 abandoned unions in the background.');
 
     $this->travel(2)->days();
     $this->actingAs($revivedSignup->user->fresh())->get(route('dashboard'));
     $this->travel(5)->days();
 
     $this->actingAs($this->admin)->delete(route('admin.cleanup.abandoned.destroy'))
-        ->assertSessionHas('status', 'Deleted 1 abandoned union.');
+        ->assertSessionHas('status', 'Deleting 1 abandoned union in the background.');
 
     expect(Building::find($abandoned->id))->toBeNull()
         ->and(User::find($signup->user->id))->toBeNull()
@@ -181,6 +181,31 @@ it('emails abandoned unions and deletes those nobody came back to', function () 
     // It had no members, so there was nobody to send its records to.
     Notification::assertNothingSentTo(new AnonymousNotifiable);
     Notification::assertSentOnDemandTimes(UnionDataExported::class, 0);
+});
+
+it('splits a long section into PDFs of no more than the page limit', function () {
+    Storage::fake('local');
+    $building = Building::factory()->create();
+    Bulletin::factory()->count(75)->create([
+        'building_id' => $building->id,
+        'rich_text' => '<p>'.str_repeat('The lift is broken again. ', 60).'</p>',
+    ]);
+
+    $path = (new UnionExport(maxPages: 12))->create($building);
+
+    $zip = new ZipArchive;
+    $zip->open(Storage::disk('local')->path($path));
+    $parts = collect(range(0, $zip->numFiles - 1))
+        ->map(fn (int $index) => $zip->getNameIndex($index))
+        ->filter(fn (string $name) => str_starts_with($name, '5-bulletins'))
+        ->values();
+    $pageCounts = $parts->map(fn (string $name) => preg_match_all('#/Type\s*/Page\b(?!s)#', $zip->getFromName($name)));
+
+    expect($parts->count())->toBeGreaterThan(1)
+        ->and($parts->first())->toBe('5-bulletins-part-1.pdf')
+        ->and($pageCounts->max())->toBeLessThanOrEqual(12)
+        ->and($pageCounts->sum())->toBeGreaterThan(12)
+        ->and($zip->getFromName('README.txt'))->toContain('5-bulletins-part-2.pdf');
 });
 
 it('deletes exports once their links have expired', function () {
@@ -282,15 +307,16 @@ it('deletes a union and everything in it, after emailing its members and waiting
     });
     $zip = new ZipArchive;
     $zip->open($notification->attachPath);
-    $index = $zip->getFromName('index.html');
-    expect($index)->toContain($bulletin->title)
-        ->toContain($thread->title)
-        ->toContain('Hello')
-        ->toContain('files/mail/'.$mail->id.'/'.$attachment->id.'-notes.txt')
-        ->not->toContain($author->user->email)
-        ->and($zip->getFromName('files/images/'.basename($image->path)))->toBe('jpeg')
-        ->and($zip->getFromName('files/mail/'.$mail->id.'/'.$attachment->id.'-notes.txt'))->toBe('notes')
-        ->and($zip->getFromName('contacts.csv'))->toContain($agent->name)
+    $files = collect(range(0, $zip->numFiles - 1))->map(fn (int $index) => $zip->getNameIndex($index));
+    expect($files)->toContain(
+        '1-constitution.pdf', '2-policies.pdf', '3-roles.pdf', '4-referendums.pdf', '5-bulletins.pdf',
+        '6-discussions.pdf', '7-mail.pdf', '8-mailing-lists.pdf', 'README.txt', 'landlords.csv', 'contacts.csv',
+        "files/mail/{$mail->id}/{$attachment->id}-notes.txt",
+    )
+        ->and($zip->getFromName('5-bulletins.pdf'))->toStartWith('%PDF')
+        ->and($zip->getFromName('README.txt'))->toContain('Doomed Court')->toContain('5-bulletins.pdf')
+        ->and($zip->getFromName("files/mail/{$mail->id}/{$attachment->id}-notes.txt"))->toBe('notes')
+        ->and($zip->getFromName('contacts.csv'))->toContain($agent->name)->not->toContain($author->user->email)
         ->and($zip->getFromName('landlords.csv'))->toContain($landlord->name);
     $zip->close();
 

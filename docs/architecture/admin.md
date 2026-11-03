@@ -67,14 +67,27 @@ vouched for don't get it, since they couldn't see members-only content; a union 
 an abandoned one) sends nothing. If the export can't be made, the union isn't deleted.
 
 The export is a zip:
-* `index.html`, readable offline: the constitution and its numbers, policies, roles and who holds them,
-  referendums (totals only: votes were secret; open ones weren't counted), bulletins with replies and
-  poll results (closed polls only), discussions, union mail and mailing lists;
+* a **PDF for each section** (rendered with dompdf from `resources/views/exports`): `1-constitution.pdf`
+  (with its numbers), `2-policies.pdf`, `3-roles.pdf` (and who holds them), `4-referendums.pdf` (totals
+  only: votes were secret; open ones weren't counted), `5-bulletins.pdf` (with replies and closed polls'
+  results), `6-discussions.pdf`, `7-mail.pdf` and `8-mailing-lists.pdf`. Images are embedded;
+* `README.txt` listing the files;
 * `landlords.csv` and `contacts.csv` (landlord and agent contacts), with cells that start like a
   formula escaped;
-* `files/images` (images in rich text, relinked in `index.html`) and `files/mail/{mail}` (attachments).
+* `files/mail/{mail}`: attachments sent with union mail.
+
+A section longer than **1000 printed pages** (`MAX_PAGES`) is split into parts
+(`5-bulletins-part-1.pdf`, `-part-2.pdf`, …). To split without rendering everything repeatedly, entries
+are rendered in batches of 25, each starting on a new page, and each batch's pages are counted alone.
+Page counts then add up, so batches are packed in order into parts of at most 1000 pages. A batch
+over the limit is halved until it fits; only a single entry over 1000 pages can make a longer part.
 
 It has no members' emails, flats or phone numbers, or who voted how.
+
+Deleting a union runs in the background (`App\Jobs\DeleteUnion`), since rendering can take minutes. It
+uses the `database-long` queue connection (`retry_after` an hour), so it needs its own worker:
+`php artisan queue:work database-long --timeout=3600`. The job checks again that nobody has logged in
+since, and runs once: if it fails, the union is left as it was and can be deleted again.
 
 Each member is emailed separately, on demand (their accounts are deleted with the union), with a signed
 download link (`GET /union-exports/{export}`) that works for **30 days** (`KEEP_DAYS`). Exports up to

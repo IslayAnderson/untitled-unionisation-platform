@@ -8,6 +8,11 @@ use App\Models\Landlord;
 use App\Models\UnionMailAttachment;
 use App\Models\UploadedImage;
 use App\Models\User;
+use Carbon\CarbonInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
@@ -16,7 +21,8 @@ use ZipArchive;
 
 /**
  * A zip of everything a union's members could see, made just before the union
- * is deleted and emailed to its members. See docs/architecture/admin.md.
+ * is deleted and emailed to its members: a PDF per section, split into parts
+ * of at most MAX_PAGES pages. See docs/architecture/admin.md.
  */
 class UnionExport
 {
@@ -29,6 +35,21 @@ class UnionExport
     public const DISK = 'local';
 
     public const DIRECTORY = 'union-exports';
+
+    /** By default, each section is split into PDFs of at most this many printed pages. */
+    public const MAX_PAGES = 1000;
+
+    /** Entries measured together when splitting a section. */
+    public const BATCH_SIZE = 25;
+
+    /**
+     * Uploaded image URLs mapped to data URIs, for the union being exported.
+     *
+     * @var array<string, string>
+     */
+    private array $images = [];
+
+    public function __construct(private int $maxPages = self::MAX_PAGES) {}
 
     /**
      * Members' login addresses, which receive the export.
@@ -60,41 +81,34 @@ class UnionExport
             throw new RuntimeException("Couldn't create the export for union {$building->id}.");
         }
 
-        $images = UploadedImage::where('building_id', $building->id)->get();
-        $imagePaths = [];
+        $this->images = UploadedImage::where('building_id', $building->id)->get()
+            ->mapWithKeys(fn (UploadedImage $image) => [$image->url() => $this->dataUri($image)])
+            ->filter()
+            ->all();
 
-        foreach ($images as $image) {
-            $name = 'files/images/'.basename($image->path);
-            $this->addFile($zip, $image->disk, $image->path, $name);
-            $imagePaths[$image->url()] = $name;
-        }
-
-        $attachments = UnionMailAttachment::whereIn('union_mail_id', $building->unionMails()->select('id'))->get();
-        $attachmentPaths = [];
-
-        foreach ($attachments as $attachment) {
+        foreach (UnionMailAttachment::whereIn('union_mail_id', $building->unionMails()->select('id'))->get() as $attachment) {
             $name = "files/mail/{$attachment->union_mail_id}/{$attachment->id}-".Str::of($attachment->name)->replaceMatches('/[^A-Za-z0-9._ -]/', '_');
             $this->addFile($zip, $attachment->disk, $attachment->path, $name);
-            $attachmentPaths[$attachment->id] = $name;
         }
 
-        $html = view('exports.union', [
-            'building' => $building->load([
-                'currentConstitution',
-                'policies' => fn ($query) => $query->orderBy('created_at'),
-                'roles' => fn ($query) => $query->with('contacts')->orderBy('created_at'),
-                'referendums' => fn ($query) => $query->with('candidate')->orderBy('created_at'),
-                'bulletins' => fn ($query) => $query->with(['author', 'replies.author', 'polls.answers'])->orderBy('published_at'),
-                'threads' => fn ($query) => $query->with(['author', 'replies.author'])->orderBy('published_at'),
-                'unionMails' => fn ($query) => $query->with(['author', 'mailingList', 'attachments'])->orderBy('created_at'),
-                'landlords',
-                'mailingLists.contacts',
-            ]),
-            'attachmentPaths' => $attachmentPaths,
-            'exportedAt' => now(),
-        ])->render();
+        $exportedAt = now();
+        $contents = [];
 
-        $zip->addFromString('index.html', strtr($html, $imagePaths));
+        foreach ($this->sections($building) as $number => [$slug, $title, $entries]) {
+            $parts = $this->paginate($building, $slug, $title, $entries, $exportedAt);
+
+            foreach ($parts as $index => $body) {
+                $file = sprintf('%d-%s%s.pdf', $number + 1, $slug, count($parts) > 1 ? '-part-'.($index + 1) : '');
+                $zip->addFromString($file, $this->pdf($building, $title, $body, $index + 1, count($parts), $exportedAt)->output());
+                $contents[] = $file;
+            }
+        }
+
+        $zip->addFromString('README.txt', view('exports.readme', [
+            'building' => $building,
+            'contents' => $contents,
+            'exportedAt' => $exportedAt,
+        ])->render());
         $zip->addFromString('landlords.csv', $this->csv(
             ['Name', 'Address', 'Telephone', 'Email', 'Company number'],
             $building->landlords->map(fn (Landlord $landlord) => [$landlord->name, $landlord->address, $landlord->telephone, $landlord->email, $landlord->company_number]),
@@ -141,6 +155,132 @@ class UnionExport
         }
 
         return $pruned;
+    }
+
+    /**
+     * Each section of the export: [file name, title, entries].
+     *
+     * @return list<array{string, string, Collection<int, Model>}>
+     */
+    private function sections(Building $building): array
+    {
+        return [
+            ['constitution', 'Constitution', collect([$building->currentConstitution])->filter()],
+            ['policies', 'Policies', $building->policies()->orderBy('created_at')->get()],
+            ['roles', 'Roles', $building->roles()->with('contacts')->orderBy('created_at')->get()],
+            ['referendums', 'Referendums', $building->referendums()->orderBy('created_at')->get()],
+            ['bulletins', 'Bulletins', $building->bulletins()->with(['author', 'replies.author', 'polls.answers'])->orderBy('published_at')->get()],
+            ['discussions', 'Discussions', $building->threads()->with(['author', 'replies.author'])->orderBy('published_at')->get()],
+            ['mail', 'Mail', $building->unionMails()->with(['author', 'mailingList', 'attachments'])->orderBy('created_at')->get()],
+            ['mailing-lists', 'Mailing lists', $building->mailingLists()->with('contacts')->orderBy('name')->get()],
+        ];
+    }
+
+    /**
+     * Split a section into parts of at most maxPages printed pages.
+     *
+     * Entries are rendered in batches, each starting on a new page, so a part's
+     * page count is at most the sum of its batches' counts measured alone. A
+     * batch longer than maxPages is halved until it fits; only a single entry
+     * longer than maxPages can make a part longer.
+     *
+     * @param  Collection<int, Model>  $entries
+     * @return list<string> Each part's HTML body
+     */
+    private function paginate(Building $building, string $slug, string $title, Collection $entries, CarbonInterface $exportedAt): array
+    {
+        if ($entries->count() <= 1) {
+            return [$this->renderEntries($slug, $entries, $exportedAt)];
+        }
+
+        $measure = fn (string $html) => $this->pdf($building, $title, $html, 1, 1, $exportedAt)->getCanvas()->get_page_count();
+        $batches = [];
+        $queue = $entries->chunk(self::BATCH_SIZE)->values()->all();
+
+        while ($queue) {
+            $batch = array_shift($queue);
+            $html = $this->renderEntries($slug, $batch, $exportedAt);
+            $pages = $measure($html);
+
+            if ($pages > $this->maxPages && $batch->count() > 1) {
+                [$first, $second] = $batch->values()->split(2)->all();
+                array_unshift($queue, $first, $second);
+
+                continue;
+            }
+
+            $batches[] = [$html, $pages];
+        }
+
+        $parts = [];
+        $current = [];
+        $total = 0;
+
+        foreach ($batches as [$html, $pages]) {
+            if ($current && $total + $pages > $this->maxPages) {
+                $parts[] = $current;
+                $current = [];
+                $total = 0;
+            }
+
+            $current[] = $html;
+            $total += $pages;
+        }
+
+        $parts[] = $current;
+
+        return array_map(fn (array $part) => implode('', array_map(
+            fn (string $batch, int $index) => $index === 0 ? $batch : "<div class=\"batch\">{$batch}</div>",
+            $part,
+            array_keys($part),
+        )), $parts);
+    }
+
+    /**
+     * @param  Collection<int, Model>  $entries
+     */
+    private function renderEntries(string $slug, Collection $entries, CarbonInterface $exportedAt): string
+    {
+        $html = $entries->isEmpty()
+            ? '<p>None.</p>'
+            : view("exports.sections.{$slug}", [
+                'entries' => $entries,
+                'fmt' => fn (?CarbonInterface $date) => $date?->format('j M Y, H:i'),
+            ])->render();
+
+        // Images are embedded, since the files they link to are deleted with the union.
+        return strtr($html, $this->images);
+    }
+
+    private function pdf(Building $building, string $title, string $body, int $part, int $parts, CarbonInterface $exportedAt): Dompdf
+    {
+        $options = new Options;
+        $options->setIsRemoteEnabled(false);
+        $options->setChroot([storage_path('framework')]);
+        $options->setDefaultPaperSize('a4');
+
+        $pdf = new Dompdf($options);
+        $pdf->loadHtml(view('exports.pdf', [
+            'union' => $building->name,
+            'address' => $building->formattedAddress(),
+            'title' => $title,
+            'body' => $body,
+            'part' => $part,
+            'parts' => $parts,
+            'exportedAt' => $exportedAt,
+        ])->render());
+        $pdf->render();
+
+        return $pdf;
+    }
+
+    private function dataUri(UploadedImage $image): ?string
+    {
+        $storage = Storage::disk($image->disk);
+
+        return $storage->exists($image->path)
+            ? "data:{$image->mime_type};base64,".base64_encode($storage->get($image->path))
+            : null;
     }
 
     private function addFile(ZipArchive $zip, string $disk, string $path, string $name): void

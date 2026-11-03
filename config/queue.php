@@ -29,6 +29,17 @@ return [
     |
     */
 
+    /*
+    |--------------------------------------------------------------------------
+    | Long-running jobs
+    |--------------------------------------------------------------------------
+    |
+    | The connection for jobs that take longer than the default retry_after.
+    |
+    */
+
+    'long_running_connection' => env('QUEUE_LONG_RUNNING_CONNECTION', env('QUEUE_CONNECTION') === 'sync' ? 'sync' : 'database-long'),
+
     'connections' => [
 
         'sync' => [
@@ -41,6 +52,17 @@ return [
             'table' => env('DB_QUEUE_TABLE', 'jobs'),
             'queue' => env('DB_QUEUE', 'default'),
             'retry_after' => (int) env('DB_QUEUE_RETRY_AFTER', 90),
+            'after_commit' => false,
+        ],
+
+        // Jobs that can run for up to an hour, such as exporting a union before
+        // deleting it. Run a worker with: php artisan queue:work database-long --timeout=3600
+        'database-long' => [
+            'driver' => 'database',
+            'connection' => env('DB_QUEUE_CONNECTION'),
+            'table' => env('DB_QUEUE_TABLE', 'jobs'),
+            'queue' => 'long-running',
+            'retry_after' => 3660,
             'after_commit' => false,
         ],
 

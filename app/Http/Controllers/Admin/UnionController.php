@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\UnionMailStatus;
 use App\Http\Controllers\Controller;
+use App\Jobs\DeleteUnion;
 use App\Models\Building;
 use App\Models\User;
 use App\Services\Cleanup;
@@ -72,9 +73,10 @@ class UnionController extends Controller
 
         abort_unless($cleanup->unionsDueForDeletion(Building::whereKey($building->id))->exists(), 409, 'This union can only be deleted '.Cleanup::GRACE_DAYS.' days after its members were warned, if none of them has logged in since.');
 
-        $cleanup->deleteUnion($building, $request->user());
+        DeleteUnion::dispatch($building->id, $request->user()->id);
 
-        return redirect()->route('admin.unions.index')->with('status', "Deleted {$building->name} and everything in it.");
+        return redirect()->route('admin.unions.index')
+            ->with('status', "Deleting {$building->name} in the background. Its members will be emailed its records first.");
     }
 
     private function confirmName(Request $request, Building $building): void
