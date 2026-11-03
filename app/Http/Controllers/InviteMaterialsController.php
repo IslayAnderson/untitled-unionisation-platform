@@ -42,12 +42,20 @@ class InviteMaterialsController extends Controller
     private function materials(Building $building): View
     {
         $joinUrl = $building->joinUrl();
+        $demoUrl = ! $building->is_demo && config('demo.enabled') && Building::where('is_demo', true)->exists() ? route('demo.show') : null;
 
         return view('invite.print', [
             'building' => $building,
             'features' => $this->features($building->rules()),
+            'versions' => array_filter([
+                'invite' => ['Invitation', 'A headline, your message and the sign-up code'],
+                'info' => ['Information', 'Also explains how the union works and what members can do'],
+                'demo' => $demoUrl ? ['Demo', 'Invites neighbours to look around a demo union before they join'] : null,
+            ]),
             'joinUrl' => $joinUrl,
             'joinQr' => QrCode::dataUri($joinUrl),
+            'demoUrl' => $demoUrl,
+            'demoQr' => $demoUrl ? QrCode::dataUri($demoUrl) : null,
             'headlines' => self::HEADLINES,
             'message' => "Tenants of {$building->formattedAddress()} are getting together to get repairs done, keep rents fair and look out for each other. It's free to join.",
         ]);

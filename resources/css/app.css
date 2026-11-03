@@ -79,6 +79,13 @@
     }
 }
 
+/* Bulk printing puts each sheet on its own page. */
+@media print {
+    .invite-sheet {
+        break-after: page;
+    }
+}
+
 .invite-card {
     container-type: inline-size;
     overflow: hidden;

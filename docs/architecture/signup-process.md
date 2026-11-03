@@ -63,7 +63,9 @@ Any confirmed tenant can print recruitment material from the dashboard's "Invite
 section (`GET /invite/print`). They choose:
 * a **version**: an invitation (headline, message and sign-up code), or an information version that
   also explains how the union works (vouching, the private noticeboard, anonymous union mail, secret
-  ballots, the constitution and elected roles, with numbers taken from the constitution);
+  ballots, the constitution and elected roles, with numbers taken from the constitution), or, when
+  the [demo](demo.md) is on, a demo version ("Not sure yet? Look around first") whose code leads to
+  the demo union, with the building's join link underneath for when they're ready;
 * a **size**: an A4 poster, two A5 flyers or four door slips per A4 sheet. To fit, door slips leave
   out the message, information flyers leave out the message, and information door slips list only
   the feature titles.
@@ -72,3 +74,12 @@ They can pick or write a headline and edit the message. Each one shows the union
 building's join link and its QR code (SVG, so it prints sharply). Nothing is stored, and the material
 never names a member. The page hides the app's header when printing and sets `@page` to A4 with no
 margin.
+
+### Sets to cut and staple
+For bulk printing, "Sets to cut and staple" replaces the single version with a choice of which
+versions go in each set and how many sheets of each (up to 50). The sheets print in set order (one
+of each chosen version, then the next set), one per page. Stacked as they come out and cut along the
+dashed lines, every pile runs invitation, information, demo, invitation… so each group from the top
+is a set to staple. The page says how many sheets it will print and how many sets they make; only the
+first set is previewed on screen. The two QR codes become blob URLs when the page loads, so hundreds
+of cards don't each carry a copy of the data URI.
