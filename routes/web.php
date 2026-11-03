@@ -11,6 +11,7 @@ use App\Http\Controllers\BulletinReplyController;
 use App\Http\Controllers\ConstitutionController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DemoController;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\InviteMaterialsController;
 use App\Http\Controllers\LandlordController;
@@ -29,6 +30,9 @@ use App\Http\Controllers\VouchController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
+
+Route::get('/demo', [DemoController::class, 'show'])->name('demo.show');
+Route::post('/demo', [DemoController::class, 'enter'])->middleware(['guest', 'throttle:20,1'])->name('demo.enter');
 
 Route::get('/address/search', AddressSearchController::class)
     ->middleware('throttle:30,1')

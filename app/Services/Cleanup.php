@@ -89,6 +89,7 @@ class Cleanup
             ->where('is_admin', false)
             ->whereNotNull('email_verified_at')
             ->where('created_at', '<=', now()->subDays(self::UNVOUCHED_DAYS))
+            ->whereDoesntHave('contact.building', fn (Builder $building) => $building->where('is_demo', true))
             ->whereHas('contact', fn (Builder $contact) => $contact
                 ->whereNotNull('unit_id')
                 ->whereNull('enrolled_at')
@@ -105,6 +106,7 @@ class Cleanup
         $since = now()->subDays(self::ABANDONED_DAYS);
 
         return Building::query()
+            ->where('is_demo', false)
             ->where('created_at', '<=', $since)
             ->whereDoesntHave('contacts', fn (Builder $contact) => $contact->whereNotNull('enrolled_at'))
             ->whereDoesntHave('contacts', fn (Builder $contact) => $contact->whereHas('user', fn (Builder $user) => $user->where('created_at', '>', $since)));
@@ -201,6 +203,7 @@ class Cleanup
     public function unionsDueForDeletion(Builder $buildings): Builder
     {
         return $buildings->clone()
+            ->where('is_demo', false)
             ->where('cleanup_warned_at', '<=', now()->subDays(self::GRACE_DAYS))
             ->whereDoesntHave('contacts.user', fn (Builder $user) => $user->whereColumn('users.last_seen_at', '>=', 'buildings.cleanup_warned_at'));
     }
@@ -249,6 +252,32 @@ class Cleanup
         $recipients = $this->exports->recipients($building);
         $export = $recipients ? $this->exports->create($building) : null;
 
+        $this->purge($building);
+
+        if ($export) {
+            $disk = Storage::disk(UnionExport::DISK);
+            $notification = new UnionDataExported(
+                $building->name,
+                $this->exports->downloadUrl($export),
+                now()->addDays(UnionExport::KEEP_DAYS),
+                $disk->size($export) <= UnionExport::ATTACH_MAX_BYTES ? $disk->path($export) : null,
+            );
+
+            // Separately, so members don't see each other's addresses.
+            foreach ($recipients as $email) {
+                Notification::route('mail', $email)->notify($notification);
+            }
+        }
+
+        Log::info('Admin deleted a union', ['admin_id' => $admin->id, 'building_id' => $building->id, 'name' => $building->name, 'export_sent_to' => count($recipients)]);
+    }
+
+    /**
+     * Remove a union and everything in it, without exporting or telling anyone.
+     * Used by deleteUnion() and to rebuild the public demo.
+     */
+    public function purge(Building $building): void
+    {
         $files = UploadedImage::where('building_id', $building->id)->get(['disk', 'path'])
             ->concat(UnionMailAttachment::whereIn('union_mail_id', $building->unionMails()->select('id'))->get(['disk', 'path']));
 
@@ -272,22 +301,5 @@ class Cleanup
         });
 
         $files->each(fn ($file) => Storage::disk($file->disk)->delete($file->path));
-
-        if ($export) {
-            $disk = Storage::disk(UnionExport::DISK);
-            $notification = new UnionDataExported(
-                $building->name,
-                $this->exports->downloadUrl($export),
-                now()->addDays(UnionExport::KEEP_DAYS),
-                $disk->size($export) <= UnionExport::ATTACH_MAX_BYTES ? $disk->path($export) : null,
-            );
-
-            // Separately, so members don't see each other's addresses.
-            foreach ($recipients as $email) {
-                Notification::route('mail', $email)->notify($notification);
-            }
-        }
-
-        Log::info('Admin deleted a union', ['admin_id' => $admin->id, 'building_id' => $building->id, 'name' => $building->name, 'export_sent_to' => count($recipients)]);
     }
 }

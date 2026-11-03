@@ -17,6 +17,10 @@
             <a href="{{ route('login') }}" class="rounded-md border border-stone-300 px-4 py-2 text-sm font-medium hover:bg-stone-100">Log in</a>
         </div>
 
+        @if (config('demo.enabled'))
+            <p class="text-sm"><a href="{{ route('demo.show') }}" class="underline">Look around a demo union first</a></p>
+        @endif
+
         <p class="text-sm text-stone-500">Has a neighbour already started one? Ask them for your building's join link.</p>
     </section>
 </x-layouts.app>

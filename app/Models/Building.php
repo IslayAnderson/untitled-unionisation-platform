@@ -38,6 +38,7 @@ class Building extends Model
     {
         return [
             'cleanup_warned_at' => 'datetime',
+            'is_demo' => 'boolean',
         ];
     }
 

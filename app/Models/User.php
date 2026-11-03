@@ -41,4 +41,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo(Contact::class);
     }
+
+    /**
+     * A visitor to the public demo union, who can't change anything.
+     */
+    public function isDemo(): bool
+    {
+        // A query rather than relations, so a building set later in the request isn't hidden by a cached null.
+        return $this->contact_id !== null
+            && Building::where('is_demo', true)->whereHas('contacts', fn ($contacts) => $contacts->whereKey($this->contact_id))->exists();
+    }
 }

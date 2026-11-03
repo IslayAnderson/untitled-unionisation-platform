@@ -53,6 +53,7 @@ class UnionController extends Controller
      */
     public function warn(Request $request, Building $building, Cleanup $cleanup): RedirectResponse
     {
+        abort_if($building->is_demo, 409, 'The demo union is managed with php artisan demo:reset.');
         $this->confirmName($request, $building);
 
         $cleanup->warnUnion($building, "The platform's administrators are closing {$building->name}.", $request->user());

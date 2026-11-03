@@ -45,6 +45,21 @@
         </div>
     </header>
 
+    @if (auth()->user()?->isDemo())
+        <div class="border-b border-amber-200 bg-amber-50 print:hidden">
+            <div class="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-2 px-4 py-2 text-sm text-amber-900">
+                <span>You're looking around a demo union. Nothing you do here is saved.</span>
+                <span class="flex gap-4">
+                    <a href="{{ route('demo.show') }}" class="underline">About the demo</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="font-medium underline">Leave the demo</button>
+                    </form>
+                </span>
+            </div>
+        </div>
+    @endif
+
     <main class="mx-auto max-w-3xl px-4 py-8 print:max-w-none print:p-0">
         @if (session('status') && session('status') !== 'verification-link-sent')
             <div class="mb-6 rounded-md border border-emerald-200 print:hidden bg-emerald-50 px-4 py-3 text-sm text-emerald-900">

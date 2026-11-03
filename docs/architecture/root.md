@@ -37,6 +37,8 @@
   * Image uploads: compression, metadata stripping and Cloudflare CSAM scanning
 * /docs/architecture/admin.md
   * Platform admin: usage numbers per union and clean-up tools
+* /docs/architecture/demo.md
+  * The public read-only demo union, Larkspur House
 
 ## Milestones
 1. Scaffold the app, migrate every entity in the entity diagram, build the signup flow end to end

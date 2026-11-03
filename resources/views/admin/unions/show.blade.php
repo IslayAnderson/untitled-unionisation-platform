@@ -43,6 +43,12 @@
         </section>
     @endforeach
 
+    @if ($union->is_demo)
+        <p class="mt-10 rounded-md bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            This is the public demo union. Rebuild it with <code>php artisan demo:reset</code>, or remove it with
+            <code>php artisan demo:reset --remove</code>.
+        </p>
+    @else
     <section class="mt-10 rounded-lg border border-red-200 bg-white p-5">
         <h2 class="text-lg font-semibold text-red-800">Delete this union</h2>
         <p class="mt-1 text-sm text-stone-600">
@@ -88,4 +94,5 @@
             </div>
         @endif
     </section>
+    @endif
 </x-layouts.app>

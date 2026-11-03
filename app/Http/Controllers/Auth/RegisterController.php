@@ -44,11 +44,15 @@ class RegisterController extends Controller
      */
     public function createJoin(Building $building): View
     {
+        abort_if($building->is_demo, 404);
+
         return view('auth.join', ['building' => $building]);
     }
 
     public function storeJoin(Request $request, Building $building, RegisterTenant $register): RedirectResponse
     {
+        abort_if($building->is_demo, 404);
+
         $details = $request->validate($this->rules());
 
         Auth::login($register->forExistingBuilding($details, $building));

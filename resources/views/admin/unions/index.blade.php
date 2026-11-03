@@ -36,6 +36,9 @@
                         <tr class="hover:bg-stone-50">
                             <td class="px-4 py-2">
                                 <a href="{{ route('admin.unions.show', $union) }}" class="font-medium hover:underline">{{ $union->name }}</a>
+                                @if ($union->is_demo)
+                                    <span class="ml-1 rounded bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-900">Demo</span>
+                                @endif
                                 <span class="block text-xs text-stone-500">Started {{ $union->created_at->format('j M Y') }}</span>
                             </td>
                             <td class="px-3 py-2 text-right tabular-nums">{{ $union->members_count }}</td>
