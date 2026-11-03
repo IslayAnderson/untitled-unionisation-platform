@@ -36,6 +36,7 @@
         <p class="mt-1 text-sm text-stone-600">
             @if (App\Support\ReplyAddress::enabled())
                 Replies to your union's emails appear on the mail's bulletin, and a copy (with any attachments) is sent here.
+                If it's blank, the copy is emailed to every member instead.
             @else
                 Replies to your union's emails go here. If it's blank, replies go to the platform's address and won't reach you.
             @endif

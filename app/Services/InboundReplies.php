@@ -107,9 +107,12 @@ class InboundReplies
         $html = RichText::fromPlainText($visible) ?: '<p><em>This reply has no text.</em></p>';
 
         if ($count = count($email->attachments)) {
-            $note = $mail->building->contact_email
-                ? sprintf('This reply had %d %s, forwarded to the union’s inbox.', $count, str('attachment')->plural($count))
-                : sprintf('This reply had %d %s, which aren’t kept.', $count, str('attachment')->plural($count));
+            $note = sprintf(
+                'This reply had %d %s, forwarded to %s.',
+                $count,
+                str('attachment')->plural($count),
+                $mail->building->contact_email ? 'the union’s inbox' : 'every member by email',
+            );
 
             $html .= '<p><em>'.e($note).'</em></p>';
         }
@@ -117,17 +120,26 @@ class InboundReplies
         return $html;
     }
 
+    /**
+     * Send a full copy, with attachments, to the union's inbox, or to every
+     * member separately if the union hasn't set one.
+     */
     private function forwardToUnion(UnionMail $mail, InboundEmail $email): void
     {
-        if (! $mail->building->contact_email) {
-            return;
-        }
+        $building = $mail->building;
+        $recipients = $building->contact_email
+            ? collect([[$building->contact_email, $building->name]])
+            : $building->contacts()->confirmedTenants()->enrolled()->with('user')->get()
+                ->filter(fn (Contact $member) => $member->user?->email)
+                ->map(fn (Contact $member) => [$member->user->email, $member->name]);
 
-        try {
-            Mail::to($mail->building->contact_email, $mail->building->name)->send(new ForwardedReply($mail, $email));
-        } catch (Throwable $e) {
-            // The reply is already on the bulletin; a failed copy shouldn't stop the rest.
-            report($e);
+        foreach ($recipients as [$address, $name]) {
+            try {
+                Mail::to($address, $name)->send(new ForwardedReply($mail, $email, toMembers: ! $building->contact_email));
+            } catch (Throwable $e) {
+                // The reply is already on the bulletin; a failed copy shouldn't stop the rest.
+                report($e);
+            }
         }
     }
 }

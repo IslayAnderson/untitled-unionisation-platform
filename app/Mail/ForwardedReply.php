@@ -11,14 +11,16 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 
 /**
- * A copy of an email reply to union mail, for the union's own inbox. Sent
- * straight away rather than queued, so attachments aren't serialised.
+ * A copy of an email reply to union mail, for the union's own inbox, or for
+ * each member when the union hasn't set one. Sent straight away rather than
+ * queued, so attachments aren't serialised.
  */
 class ForwardedReply extends Mailable
 {
     public function __construct(
         public UnionMail $unionMail,
         public InboundEmail $email,
+        public bool $toMembers = false,
     ) {}
 
     public function envelope(): Envelope

@@ -111,6 +111,28 @@ it('adds an email reply to the bulletin without the quoted message, and forwards
         && $forward->hasAttachment(Attachment::fromData(fn () => '%PDF-1.4', 'schedule.pdf')->withMime('application/pdf')));
 });
 
+it('emails the copy to every member separately when the union has no inbox', function () {
+    $this->building->update(['contact_email' => null]);
+    $mail = sentMail($this->author, $this->list);
+    $this->mailbox->receive(inboundReply($mail, ['attachments' => [
+        ['filename' => 'schedule.pdf', 'content_type' => 'application/pdf', 'contents' => '%PDF-1.4'],
+    ]]));
+    $tenant = Contact::factory()->tenantOf($this->building)->create();
+
+    $this->artisan('union-mail:fetch-replies')->assertSuccessful();
+
+    $members = $this->building->contacts()->enrolled()->with('user')->get();
+    expect($members)->toHaveCount(3);
+    Mail::assertSent(ForwardedReply::class, 3);
+    $members->each(fn (Contact $member) => Mail::assertSent(ForwardedReply::class, fn (ForwardedReply $forward) => $forward->hasTo($member->user->email)
+        && count($forward->to) === 1
+        && $forward->toMembers
+        && $forward->hasAttachment(Attachment::fromData(fn () => '%PDF-1.4', 'schedule.pdf')->withMime('application/pdf'))));
+    Mail::assertNotSent(ForwardedReply::class, fn (ForwardedReply $forward) => $forward->hasTo($tenant->user->email));
+
+    expect($mail->bulletin->replies()->sole()->rich_text)->toContain('This reply had 1 attachment, forwarded to every member by email.');
+});
+
 it('shows email replies and members\' posts in the bulletin thread', function () {
     $mail = sentMail($this->author, $this->list);
     $this->mailbox->receive(inboundReply($mail));

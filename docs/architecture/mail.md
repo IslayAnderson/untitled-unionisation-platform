@@ -128,7 +128,9 @@ mailbox and, for each one addressed to the token of a **sent** mail:
 1. strips the quoted original ("On … wrote:", "-----Original Message-----", `>` lines, etc.) and adds
    the rest to the mail's bulletin as an email reply, as escaped plain text, never the sender's HTML;
 2. matches the sender to a contact on the mail's list, if there is one;
-3. forwards a full copy, with attachments, to the union's inbox (`buildings.contact_email`), if set.
+3. forwards a full copy, with attachments, to the union's inbox (`buildings.contact_email`). If the
+   union hasn't set one, it emails the copy to every member separately (to their login address), so
+   nobody sees the others' addresses and the attachments still reach the union.
    Attachments aren't stored in the app; the reply notes how many there were.
 
 Every message is marked as seen once processed, including ones that don't match a sent mail (they're
