@@ -71,10 +71,12 @@ Each bulletin has a reply thread holding:
 ## Rich text
 Bulletins, instant mail and members' replies are written in TinyMCE (self-hosted under its GPL
 licence, bundled by Vite, loaded only on pages with an editor). The editor offers paragraphs, two
-heading levels, bold/italic/underline/strikethrough, lists, quotes and links.
+heading levels, bold/italic/underline/strikethrough, lists, quotes, links and images. Images are
+compressed, stripped of metadata and scanned for CSAM: see `uploads.md`.
 
-The server never trusts the editor: `App\Support\RichText::clean()` keeps only those elements (and
-`href` on links, limited to http, https and mailto) before anything is stored, and emails clean the
+The server never trusts the editor: `App\Support\RichText::clean()` keeps only those elements (with
+`href` on links, limited to http, https and mailto, and `src`/`alt` on images from our own uploads)
+before anything is stored, and emails clean the
 body again when rendering. The text part of each email is made with `RichText::toPlainText()`.
 
 ## Replies

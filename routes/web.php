@@ -8,6 +8,7 @@ use App\Http\Controllers\BulletinController;
 use App\Http\Controllers\BulletinReplyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\LandlordController;
 use App\Http\Controllers\MailingListController;
 use App\Http\Controllers\OnboardingController;
@@ -66,6 +67,10 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
     Route::post('/bulletins/{bulletin}/mail', [BulletinController::class, 'mail'])
         ->middleware('throttle:10,1')
         ->name('bulletins.mail');
+    Route::post('/uploads/images', [ImageUploadController::class, 'store'])
+        ->middleware('throttle:30,1')
+        ->name('uploads.images.store');
+
     Route::post('/bulletins/{bulletin}/replies', [BulletinReplyController::class, 'store'])
         ->middleware('throttle:30,1')
         ->name('bulletins.replies.store');

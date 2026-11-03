@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 
@@ -29,15 +30,22 @@ class RichText
         'blockquote' => [],
         'hr' => [],
         'a' => ['href'],
+        'img' => ['src', 'alt'],
     ];
 
     /**
-     * Strip everything the editor can't produce: scripts, styles, attributes and unsafe links.
+     * Strip everything the editor can't produce: scripts, styles, attributes, unsafe
+     * links, and images that aren't our own uploads (so every image shown has been
+     * through upload compression and Cloudflare's CSAM scanning).
      */
     public static function clean(string $html): string
     {
+        $uploads = self::uploadsUrl();
+
         $config = (new HtmlSanitizerConfig)
             ->allowLinkSchemes(['https', 'http', 'mailto'])
+            ->allowMediaSchemes(['https', 'http'])
+            ->allowMediaHosts([(string) parse_url($uploads, PHP_URL_HOST)])
             ->forceAttribute('a', 'rel', 'noopener noreferrer nofollow')
             ->withMaxInputLength(200_000);
 
@@ -45,7 +53,24 @@ class RichText
             $config = $config->allowElement($element, $attributes);
         }
 
-        return trim((new HtmlSanitizer($config))->sanitize($html));
+        $clean = (new HtmlSanitizer($config))->sanitize($html);
+
+        $clean = preg_replace_callback('/<img\b[^>]*>/i', function (array $match) use ($uploads) {
+            preg_match('/\ssrc="([^"]*)"/i', $match[0], $src);
+            $url = html_entity_decode($src[1] ?? '');
+
+            return str_starts_with($url, $uploads) && ! str_contains($url, '..') ? $match[0] : '';
+        }, $clean);
+
+        return trim($clean);
+    }
+
+    /**
+     * The URL every uploaded image starts with.
+     */
+    public static function uploadsUrl(): string
+    {
+        return rtrim(url(Storage::disk(config('uploads.disk'))->url('uploads')), '/').'/';
     }
 
     /**
@@ -69,6 +94,11 @@ class RichText
             fn (array $match) => strip_tags($match[2]) === html_entity_decode($match[1]) ? $match[2] : "{$match[2]} ({$match[1]})",
             $html,
         );
+        $text = preg_replace_callback(
+            '/<img\b[^>]*>/i',
+            fn (array $match) => preg_match('/\salt="([^"]+)"/i', $match[0], $alt) ? "[Image: {$alt[1]}]" : '[Image]',
+            $text,
+        );
         $text = preg_replace('/<li\b[^>]*>/i', '- ', $text);
         $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
         $text = preg_replace('/<\/(p|h2|h3|li|ul|ol|blockquote)>|<hr\s*\/?>/i', "\n\n", $text);
@@ -79,10 +109,11 @@ class RichText
     }
 
     /**
-     * Whether the HTML has no visible text, such as an empty editor's "<p>&nbsp;</p>".
+     * Whether the HTML has no visible text or images, such as an empty editor's "<p>&nbsp;</p>".
      */
     public static function isBlank(string $html): bool
     {
-        return trim(self::toPlainText($html), " \t\n\r\0\x0B\u{A0}") === '';
+        return ! str_contains(strtolower($html), '<img')
+            && trim(self::toPlainText($html), " \t\n\r\0\x0B\u{A0}") === '';
     }
 }

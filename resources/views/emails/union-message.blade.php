@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <style>img { max-width: 100%; height: auto; }</style>
+</head>
 <body style="font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; color: #1c1917; line-height: 1.5; max-width: 600px;">
     {{-- Cleaned when stored, and again here because it leaves the app. --}}
     <div>{!! App\Support\RichText::clean($messageBody) !!}</div>
