@@ -56,3 +56,127 @@
 .rich-text hr {
     border-color: var(--color-stone-200);
 }
+
+/* Printable posters, flyers and door slips (invite/print.blade.php). */
+@page {
+    size: A4;
+    margin: 0;
+}
+
+.invite-sheet {
+    width: 210mm;
+    height: 297mm;
+    max-width: 100%;
+    aspect-ratio: 210 / 297;
+    overflow: hidden;
+    background: white;
+    print-color-adjust: exact;
+}
+
+@media screen {
+    .invite-sheet {
+        height: auto;
+    }
+}
+
+.invite-card {
+    container-type: inline-size;
+    overflow: hidden;
+}
+
+.invite-cut {
+    border: 0.3mm dashed var(--color-stone-300);
+}
+
+.invite-card--poster {
+    padding: 9cqw;
+    gap: 4cqw;
+}
+
+.invite-card--poster .invite-card__union {
+    font-size: 3.2cqw;
+}
+
+.invite-card--poster .invite-card__headline {
+    font-size: 11cqw;
+}
+
+.invite-card--poster .invite-card__message {
+    font-size: 4.2cqw;
+}
+
+.invite-card--poster .invite-card__join {
+    gap: 5cqw;
+}
+
+.invite-card--poster .invite-card__qr {
+    width: 40cqw;
+}
+
+.invite-card--poster .invite-card__how {
+    font-size: 3cqw;
+}
+
+.invite-card--flyer {
+    padding: 6cqw 8cqw;
+    gap: 2.5cqw;
+}
+
+.invite-card--flyer .invite-card__union {
+    font-size: 2.6cqw;
+}
+
+.invite-card--flyer .invite-card__headline {
+    font-size: 7.5cqw;
+}
+
+.invite-card--flyer .invite-card__message {
+    font-size: 3.1cqw;
+}
+
+.invite-card--flyer .invite-card__join {
+    gap: 4cqw;
+}
+
+.invite-card--flyer .invite-card__qr {
+    width: 26cqw;
+}
+
+.invite-card--flyer .invite-card__how {
+    font-size: 2.6cqw;
+}
+
+.invite-card--slip {
+    padding: 7cqw;
+    gap: 3cqw;
+}
+
+.invite-card--slip .invite-card__union {
+    font-size: 4.5cqw;
+}
+
+.invite-card--slip .invite-card__headline {
+    font-size: 10cqw;
+}
+
+.invite-card--slip .invite-card__message {
+    display: none;
+}
+
+.invite-card--slip .invite-card__join {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3cqw;
+}
+
+.invite-card--slip .invite-card__qr {
+    width: 50cqw;
+}
+
+.invite-card--slip .invite-card__how {
+    font-size: 4.2cqw;
+}
+
+.invite-card__how > * + * {
+    margin-top: 0.4em;
+}

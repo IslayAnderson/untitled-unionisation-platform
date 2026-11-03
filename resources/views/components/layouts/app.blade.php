@@ -9,8 +9,8 @@
     <title>{{ $title ? $title.' · ' : '' }}{{ config('app.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-stone-50 text-stone-900 antialiased">
-    <header class="border-b border-stone-200 bg-white">
+<body class="min-h-screen bg-stone-50 print:bg-white text-stone-900 antialiased">
+    <header class="print:hidden border-b border-stone-200 bg-white">
         <div class="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-2 px-4 py-3">
             <a href="{{ route('home') }}" class="font-semibold">{{ config('app.name') }}</a>
             <nav class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
@@ -42,9 +42,9 @@
         </div>
     </header>
 
-    <main class="mx-auto max-w-3xl px-4 py-8">
+    <main class="mx-auto max-w-3xl px-4 py-8 print:max-w-none print:p-0">
         @if (session('status') && session('status') !== 'verification-link-sent')
-            <div class="mb-6 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+            <div class="mb-6 rounded-md border border-emerald-200 print:hidden bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
                 {{ session('status') }}
             </div>
         @endif

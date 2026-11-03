@@ -86,6 +86,7 @@
             <p class="mt-1 text-stone-600">Share this link, or print the QR code for a noticeboard or door.</p>
             <img src="{{ $joinQr }}" alt="QR code to join {{ $building->name }}" class="mt-4 h-40 w-40">
             <p class="mt-2 break-all font-mono text-sm">{{ $joinUrl }}</p>
+            <a href="{{ route('invite.print') }}" class="mt-4 inline-block rounded-md bg-stone-900 px-3 py-2 text-sm font-medium text-white hover:bg-stone-700">Print flyers and posters</a>
         </section>
     </div>
 </x-layouts.app>

@@ -10,6 +10,7 @@ use App\Http\Controllers\ConstitutionController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImageUploadController;
+use App\Http\Controllers\InviteMaterialsController;
 use App\Http\Controllers\LandlordController;
 use App\Http\Controllers\MailingListController;
 use App\Http\Controllers\OnboardingController;
@@ -59,6 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/onboarding/building', [OnboardingController::class, 'storeBuilding'])->name('onboarding.building');
 
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::get('/invite/print', InviteMaterialsController::class)->name('invite.print');
 
     Route::get('/vouch/{contact:vouch_token}', [VouchController::class, 'show'])->name('vouch.show');
     Route::post('/vouch/{contact:vouch_token}', [VouchController::class, 'store'])->name('vouch.store');
