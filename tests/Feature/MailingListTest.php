@@ -77,3 +77,16 @@ it('does not HTML-escape the plain-text version', function () {
         ->assertSeeInText("Example Court Tenants' Union")
         ->assertDontSeeInText('&#039;');
 });
+
+it('says where copies of replies go', function () {
+    config(['inbound.address' => 'replies@union.test']);
+    Contact::factory()->tenantOf($this->building)->enrolled()->create();
+    $this->building->update(['contact_email' => null]);
+
+    $this->actingAs($this->member)->get('/mailing-lists')
+        ->assertSee('No inbox is set, so copies of replies go to all 2 members.');
+
+    $this->building->update(['contact_email' => 'union@example.test']);
+    $this->actingAs($this->member->fresh())->get('/mailing-lists')
+        ->assertSeeText('Copies of replies go to union@example.test.');
+});
