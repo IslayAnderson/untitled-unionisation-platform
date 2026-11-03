@@ -4,7 +4,10 @@
         <a href="{{ route('bulletins.create') }}" class="rounded-md bg-stone-900 px-3 py-2 text-sm font-medium text-white hover:bg-stone-700">Write a bulletin</a>
     </div>
 
-    <p class="mb-6 text-stone-600">Your union's noticeboard. Only members can see it.</p>
+    <p class="mb-6 text-stone-600">
+        Your union's noticeboard. Only members can see it, except the pinned vouching bulletin, which neighbours
+        waiting to be vouched for can also read.
+    </p>
 
     @if ($bulletins->isEmpty())
         <div class="rounded-lg border border-dashed border-stone-300 p-8 text-center text-stone-600">No bulletins yet.</div>
