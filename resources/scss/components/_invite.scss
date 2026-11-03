@@ -141,20 +141,16 @@
   margin: 0;
 }
 
+// The height follows the width, since Safari prints into a page narrower than
+// 210mm: max-width shrinks the sheet, and a fixed height would spill onto the
+// next page.
 .app-invite-sheet {
   width: 210mm;
-  height: 297mm;
   max-width: 100%;
   aspect-ratio: 210 / 297;
   overflow: hidden;
   background: white;
   print-color-adjust: exact;
-}
-
-@media screen {
-  .app-invite-sheet {
-    height: auto;
-  }
 }
 
 // Bulk printing puts each sheet on its own page.
