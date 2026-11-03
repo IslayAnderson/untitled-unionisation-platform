@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\LandlordFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,9 +12,22 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * A building owner, landlord or letting agent.
  */
-#[Fillable(['type_id', 'name', 'address', 'telephone', 'email', 'primary_contact_id', 'company_number'])]
+#[Fillable(['building_id', 'type_id', 'name', 'address', 'telephone', 'email', 'primary_contact_id', 'company_number'])]
 class Landlord extends Model
 {
+    /** @use HasFactory<LandlordFactory> */
+    use HasFactory;
+
+    /**
+     * The union that keeps this record.
+     *
+     * @return BelongsTo<Building, $this>
+     */
+    public function building(): BelongsTo
+    {
+        return $this->belongsTo(Building::class);
+    }
+
     /**
      * @return BelongsTo<LandlordType, $this>
      */

@@ -39,6 +39,10 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
   * `latitude`, `longitude`
   * `signup_token`: random token behind the building's join URL / QR code
   * `building_owner_id` (Landlord) is nullable. Landlords are added after setup, not during signup.
+  * `contact_email`: the union's reply-to address for emails sent to mailing lists
+* `landlords`
+  * `building_id`: the union that keeps this record. Landlord records are private to each union
+    (see `contacts.md`).
 * `constitutions`
   * `rules` (JSON): machine-readable settings the code reads, alongside the human-readable rich text.
     Defaults from the boilerplate:
@@ -61,6 +65,8 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
 * `vouches`: `voucher_contact_id`, `vouchee_contact_id`, timestamps. Unique on the pair. Records one
   tenant scanning another's QR code.
 * `contact_mailing_list`, `contact_role`: pivots (see above).
+* `mailing_list_messages`: `mailing_list_id`, `sender_contact_id`, `subject`, `body`,
+  `recipient_count`, `sent_at`. A log of emails sent to a mailing list.
 
 ## Lookup data
 `landlord_types` (Individual, Company, Housing association, Local authority) and `contact_types`

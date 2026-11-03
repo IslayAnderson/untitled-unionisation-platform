@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Building;
 use App\Models\Contact;
+use App\Models\Landlord;
 use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -40,6 +41,17 @@ class ContactFactory extends Factory
                 'contact_id' => $contact->id,
                 'email' => $contact->email,
             ]));
+    }
+
+    /**
+     * A person at a landlord or agent, kept by the given union. No login.
+     */
+    public function atLandlord(Landlord $landlord): static
+    {
+        return $this->state(fn () => [
+            'building_id' => $landlord->building_id,
+            'landlord_id' => $landlord->id,
+        ]);
     }
 
     public function enrolled(): static

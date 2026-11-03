@@ -4,7 +4,11 @@ use App\Http\Controllers\AddressSearchController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LandlordController;
+use App\Http\Controllers\MailingListController;
+use App\Http\Controllers\MailingListMessageController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\VouchController;
 use Illuminate\Support\Facades\Route;
@@ -47,4 +51,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/vouch/{contact:vouch_token}', [VouchController::class, 'show'])->name('vouch.show');
     Route::post('/vouch/{contact:vouch_token}', [VouchController::class, 'store'])->name('vouch.store');
+});
+
+Route::middleware(['auth', 'verified', 'member'])->group(function () {
+    Route::resource('contacts', ContactController::class)->except('show');
+    Route::resource('landlords', LandlordController::class)->except(['index', 'show']);
+
+    Route::patch('/mailing-lists/reply-to', [MailingListController::class, 'updateReplyTo'])->name('mailing-lists.reply-to');
+    Route::resource('mailing-lists', MailingListController::class);
+    Route::post('/mailing-lists/{mailing_list}/messages', [MailingListMessageController::class, 'store'])
+        ->middleware('throttle:10,1')
+        ->name('mailing-lists.messages.store');
 });

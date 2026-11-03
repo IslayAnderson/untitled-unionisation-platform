@@ -61,6 +61,16 @@ class Contact extends Model
         $query->whereNotNull('enrolled_at');
     }
 
+    /**
+     * People the union deals with who have no login, e.g. landlord or agent staff.
+     *
+     * @param  Builder<Contact>  $query
+     */
+    public function scopeExternal(Builder $query): void
+    {
+        $query->whereDoesntHave('user');
+    }
+
     public function isConfirmedTenant(): bool
     {
         return $this->building_id !== null

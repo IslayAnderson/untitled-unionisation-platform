@@ -3,11 +3,16 @@
 namespace App\Providers;
 
 use App\Models\Constitution;
+use App\Models\Contact;
 use App\Models\Policy;
+use App\Models\User;
 use App\Services\AddressLookup\AddressLookup;
 use App\Services\AddressLookup\Drivers\FakeDriver;
 use App\Services\AddressLookup\Drivers\GeoapifyDriver;
+use Illuminate\Auth\Access\Response;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use InvalidArgumentException;
 
@@ -34,5 +39,18 @@ class AppServiceProvider extends ServiceProvider
             'constitution' => Constitution::class,
             'policy' => Policy::class,
         ]);
+
+        // Members may manage their own union's landlords, external contacts and
+        // mailing lists. Tenant contacts are never managed through these tools.
+        // Refusals are 404s so other unions can't confirm a record exists.
+        Gate::define('manage-union-record', function (User $user, Model $record): Response {
+            $member = $user->contact;
+
+            $allowed = $member?->isEnrolled()
+                && $record->getAttribute('building_id') === $member->building_id
+                && ! ($record instanceof Contact && $record->user()->exists());
+
+            return $allowed ? Response::allow() : Response::denyAsNotFound();
+        });
     }
 }

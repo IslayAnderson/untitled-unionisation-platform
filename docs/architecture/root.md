@@ -25,6 +25,8 @@
   * Signup, address matching, vouching and enrolment rules
 * /docs/architecture/address-lookup.md
   * Swappable address lookup harness (Geoapify by default)
+* /docs/architecture/contacts.md
+  * Landlords, external contacts and mailing lists (milestone 4)
 
 ## Milestones
 1. Scaffold the app, migrate every entity in the entity diagram, build the signup flow end to end

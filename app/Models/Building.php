@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
  * A building and its union (the two are 1:1).
  */
 #[Fillable([
-    'name', 'address_line_1', 'address_line_2', 'city', 'postcode',
+    'name', 'contact_email', 'address_line_1', 'address_line_2', 'city', 'postcode',
     'address_provider', 'address_provider_id', 'latitude', 'longitude',
     'building_owner_id', 'current_constitution_id',
 ])]
@@ -92,6 +92,26 @@ class Building extends Model
     public function constitutions(): HasMany
     {
         return $this->hasMany(Constitution::class);
+    }
+
+    /**
+     * Landlords and agents this union keeps records of.
+     *
+     * @return HasMany<Landlord, $this>
+     */
+    public function landlords(): HasMany
+    {
+        return $this->hasMany(Landlord::class);
+    }
+
+    /**
+     * Contacts at landlords/agents and other non-tenants, i.e. people without a login.
+     *
+     * @return HasMany<Contact, $this>
+     */
+    public function externalContacts(): HasMany
+    {
+        return $this->contacts()->external();
     }
 
     /**

@@ -15,6 +15,10 @@
             <nav class="flex items-center gap-4 text-sm">
                 @auth
                     <a href="{{ route('dashboard') }}" class="hover:underline">Your union</a>
+                    @if (auth()->user()->contact?->isEnrolled())
+                        <a href="{{ route('contacts.index') }}" class="hover:underline">Contacts</a>
+                        <a href="{{ route('mailing-lists.index') }}" class="hover:underline">Mailing lists</a>
+                    @endif
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="hover:underline">Log out</button>
