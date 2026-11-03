@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Support\ConstitutionRules;
+use App\Support\ConstitutionText;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,6 +28,14 @@ class Constitution extends Model
     public function parsedRules(): ConstitutionRules
     {
         return ConstitutionRules::fromArray($this->rules ?? []);
+    }
+
+    /**
+     * The text with its placeholders replaced by this version's numbers.
+     */
+    public function renderedText(): string
+    {
+        return ConstitutionText::render($this->rich_text, $this->parsedRules());
     }
 
     /**

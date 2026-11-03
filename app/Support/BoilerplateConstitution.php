@@ -16,7 +16,7 @@ final class BoilerplateConstitution
 
         $constitution = $building->constitutions()->create([
             'title' => "Constitution of {$building->name}",
-            'rich_text' => view('constitutions.boilerplate', ['building' => $building, 'rules' => $rules])->render(),
+            'rich_text' => view('constitutions.boilerplate', ['building' => $building])->render(),
             'rules' => $rules->toArray(),
             'opened_at' => now(),
             'published_at' => now(),

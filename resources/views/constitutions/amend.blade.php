@@ -14,7 +14,7 @@
 
         <fieldset class="rounded-lg border border-stone-200 bg-white p-4">
             <legend class="px-1 text-sm font-medium">The numbers</legend>
-            <p class="mb-3 text-xs text-stone-500">If you change one, also change the text that mentions it.</p>
+            <p class="mb-3 text-xs text-stone-500">The text shows these with placeholders, so changing a number here changes it in the text too.</p>
             <div class="grid gap-3 sm:grid-cols-2">
                 @foreach (App\Support\ConstitutionRules::FIELDS as $name => $field)
                     <div>
@@ -30,7 +30,18 @@
             </div>
         </fieldset>
 
-        <x-rich-editor name="body" label="Constitution" :value="$constitution?->rich_text" />
+        <div>
+            <x-rich-editor name="body" label="Constitution" :value="$constitution?->rich_text" />
+            <details class="mt-2 text-sm">
+                <summary class="cursor-pointer text-stone-600">Placeholders you can use in the text</summary>
+                <dl class="mt-2 grid gap-x-4 gap-y-1 sm:grid-cols-[auto_1fr]">
+                    @foreach (App\Support\ConstitutionText::placeholders() as $placeholder => $meaning)
+                        <dt class="font-mono text-xs">{{ $placeholder }}</dt>
+                        <dd class="text-xs text-stone-600">{{ $meaning }}</dd>
+                    @endforeach
+                </dl>
+            </details>
+        </div>
         <x-button>Put it to a referendum</x-button>
     </form>
 </x-layouts.app>

@@ -15,7 +15,7 @@
     </p>
 
     {{-- Cleaned by App\Support\RichText before it was stored. --}}
-    <article class="rich-text rounded-lg border border-stone-200 bg-white p-5 text-stone-800">{!! $constitution->rich_text !!}</article>
+    <article class="rich-text rounded-lg border border-stone-200 bg-white p-5 text-stone-800">{!! $constitution->renderedText() !!}</article>
 
     <section class="mt-6 rounded-lg border border-stone-200 bg-white p-5">
         <h2 class="text-lg font-semibold">The numbers</h2>

@@ -64,4 +64,9 @@ numbers side by side, and the text paragraph by paragraph (`App\Support\TextDiff
 | `bulletin_mail_expiry_hours` | 168 | 24–720 |
 
 A constitution without a rule (for example `referendum_days`, added after launch) uses the default.
-The text and the numbers are edited separately, so the amendment form reminds members to change both.
+
+The text refers to the numbers with placeholders such as `{vouches_required}`
+(`App\Support\ConstitutionText`), filled in wherever the constitution is shown, so the text always
+matches the numbers the platform follows. Amending a number changes the text, and the referendum's
+text comparison shows it. The amendment form lists the placeholders. Unknown placeholders are shown
+as typed. Constitutions created before placeholders existed have the numbers written into the text.

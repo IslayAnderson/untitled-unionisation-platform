@@ -233,3 +233,22 @@ it('lists referendums waiting for a member\'s vote on the dashboard', function (
         ->assertSee('Join the federation?')
         ->assertDontSee('Adopt a logo?');
 });
+
+it('fills the constitution\'s numbers into its text, so amending a number changes the text', function () {
+    $constitution = $this->building->currentConstitution;
+    expect($constitution->rich_text)->toContain('once {vouches_required} existing members')
+        ->and($constitution->renderedText())->toContain('once 2 existing members');
+
+    $this->actingAs($this->proposer->user)->post(route('constitution.propose'), amendment(['vouches_required' => 3], ['body' => $constitution->rich_text]));
+    $referendum = Referendum::sole();
+
+    $this->actingAs($this->member->user)->get(route('referendums.show', $referendum))
+        ->assertSeeInOrder(['What changes', 'once 2 existing members', 'once 3 existing members'])
+        ->assertDontSee('{vouches_required}');
+
+    decide($referendum, [ReferendumAnswer::For, ReferendumAnswer::For]);
+
+    $this->actingAs($this->member->user->fresh())->get(route('constitution.show'))
+        ->assertSee('once 3 existing members')
+        ->assertDontSee('{vouches_required}');
+});

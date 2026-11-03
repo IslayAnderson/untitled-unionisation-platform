@@ -95,7 +95,11 @@ class ReferendumController extends Controller
 
         return [
             'previous' => $previous,
-            'diff' => $previous ? TextDiff::paragraphs($previous->rich_text, $subject->rich_text) : [],
+            'diff' => match (true) {
+                $previous instanceof Constitution => TextDiff::paragraphs($previous->renderedText(), $subject->renderedText()),
+                $previous !== null => TextDiff::paragraphs($previous->rich_text, $subject->rich_text),
+                default => [],
+            },
         ];
     }
 }

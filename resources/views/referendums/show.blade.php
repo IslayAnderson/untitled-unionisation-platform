@@ -123,7 +123,7 @@
                 <p class="mb-2 font-medium">{{ $subject->title }}</p>
             @endunless
             {{-- Cleaned by App\Support\RichText before it was stored. --}}
-            <article class="rich-text rounded-lg border border-stone-200 bg-white p-5 text-stone-800">{!! $subject->rich_text !!}</article>
+            <article class="rich-text rounded-lg border border-stone-200 bg-white p-5 text-stone-800">{!! $isConstitution ? $subject->renderedText() : $subject->rich_text !!}</article>
             @if ($isConstitution && ! $previous)
                 <x-rules-table :rules="$subject->parsedRules()" class="mt-4 rounded-lg border border-stone-200 bg-white px-4" />
             @endif
