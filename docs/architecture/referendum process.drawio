@@ -1,0 +1,130 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="cXC7bhFaKO5r64kfRYh9">
+    <mxGraphModel dx="1169" dy="1840" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1840" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-39" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-20" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1130" y="1385" /><mxPoint x="1130" y="1750" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-38" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-20" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1130" y="1150" /><mxPoint x="1130" y="1750" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-37" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-20" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-36" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;dashed=1;endArrow=none;endFill=0;" target="cXC7bhFaKO5r64kfRYh9-19" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-35" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-18" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-34" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-17" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-33" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-16" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-32" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-15" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-31" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-30" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-13" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-29" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-7" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1090" y="790" /><mxPoint x="1090" y="420" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-28" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-12" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-27" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-11" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-26" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-10" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-25" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-24" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;dashed=1;endArrow=none;endFill=0;" target="cXC7bhFaKO5r64kfRYh9-8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-23" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-22" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;dashed=1;endArrow=none;endFill=0;" target="cXC7bhFaKO5r64kfRYh9-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-21" edge="1" parent="1" source="cXC7bhFaKO5r64kfRYh9-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="cXC7bhFaKO5r64kfRYh9-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=16;" value="Referendums" vertex="1">
+          <mxGeometry height="30" width="600" x="20" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Member proposes a change, with a reason" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Amend the constitution; adopt, revise or repeal a policy; create or abolish a role; elect or remove a role holder; remove a member" vertex="1">
+          <mxGeometry height="100" width="260" x="720.0" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-5" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:Referendum&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Kind = what&amp;#x27;s proposed&lt;br&gt;Quorum % = from constitution&lt;br&gt;Pass % = from constitution&lt;br&gt;Closes = now + referendum_days&lt;/p&gt;" vertex="1">
+          <mxGeometry height="108" width="180" x="40.0" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Start a members&#x27; discussion and email every other member a link, not what&#x27;s proposed" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Members vote for, against or abstain, once and in secret" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-8" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:ReferendumVoter&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Referendum = referendum&lt;br&gt;Contact = voter&lt;br&gt;(no timestamps; totals kept apart)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="91" width="220" x="10.0" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-9" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Proposer withdraws it?" vertex="1">
+          <mxGeometry height="140" width="140" x="300.0" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Withdrawn: nothing changes, votes aren&#x27;t shown" vertex="1">
+          <mxGeometry height="100" width="180" x="760.0" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-11" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Voting period over?" vertex="1">
+          <mxGeometry height="140" width="140" x="300.0" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Wait. Totals stay hidden; turnout is shown" vertex="1">
+          <mxGeometry height="100" width="180" x="760.0" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="referendums:close counts it (every minute)" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-14" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="At least quorum % of members voted? (abstentions count)" vertex="1">
+          <mxGeometry height="160" width="160" x="290.0" y="1070" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Outcome: no quorum" vertex="1">
+          <mxGeometry height="100" width="180" x="760.0" y="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-16" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="More than pass % of for and against votes are for? (removal_pass_percent for removing a member)" vertex="1">
+          <mxGeometry height="210" width="210" x="265.0" y="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Outcome: rejected. A tie fails" vertex="1">
+          <mxGeometry height="100" width="180" x="760.0" y="1335" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Outcome: passed. Put it into effect" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="1530" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-19" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="The constitution is published and followed straight away; the policy is adopted, superseded or repealed; the role is created or abolished; the holder is added or removed; the member is removed (see the leaving and removal process)" vertex="1">
+          <mxGeometry height="170" width="220" x="0.0" y="1500" as="geometry" />
+        </mxCell>
+        <mxCell id="cXC7bhFaKO5r64kfRYh9-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Email every member a link to the result, not what was decided" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="1700" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

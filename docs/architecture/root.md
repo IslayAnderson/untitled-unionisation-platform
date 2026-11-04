@@ -18,14 +18,16 @@
 * [Data model](data-model.md): changes to the entity diagram agreed before build, with the [entity diagram](<Entity Diagram.drawio>) of tables and their relationships. Where they differ, the data model takes precedence
 * [Signup process](signup-process.md): signup, address matching, vouching and enrolment rules, clarifying the [signup diagram](<signup process.drawio>) of how users sign up, buildings are registered and tenants authenticated
 * [Address lookup](address-lookup.md): the swappable address lookup harness (Geoapify by default)
-* [Governance](governance.md): constitution amendments, policies, roles and referendums (milestone 3)
-* [Polls](polls.md): secret-ballot polls on bulletins
+* [Governance](governance.md): constitution amendments, policies, roles and referendums (milestone 3), with the [referendum diagram](<referendum process.drawio>) and the [leaving and removal diagram](<leaving and removal process.drawio>)
+* [Polls](polls.md): secret-ballot polls on bulletins, with the [polls diagram](<polls process.drawio>)
 * [Contacts, landlords and mailing lists](contacts.md): landlords, external contacts and mailing lists (milestone 4)
-* [Union mail](mail.md): instant mail and bulletin mail, how union email is approved and sent, and email replies
+* [Union mail](mail.md): instant mail and bulletin mail, how union email is approved and sent, and email replies, with the [union mail diagram](<union mail process.drawio>) and the [email replies diagram](<email replies process.drawio>)
 * [Image uploads](uploads.md): compression, metadata stripping and Cloudflare CSAM scanning
-* [Platform admin](admin.md): usage numbers per union, clean-up tools and union exports
+* [Platform admin](admin.md): usage numbers per union, clean-up tools and union exports, with the [clean-up diagram](<clean-up process.drawio>)
 * [Demo union](demo.md): the public read-only demo union, Larkspur House
 * [Front end](frontend.md): the GOV.UK Design System, how pages are built, and the app's own components
+
+The process diagrams open in [draw.io](https://www.drawio.com), and use the same shapes as the signup diagram: rounded boxes are steps, diamonds are decisions, and Object boxes are the records a step creates.
 
 See also the [knowledge base](../knowledge-base/README.md) for the platform's commands, and [tests.md](../../tests.md) for what the tests check.
 

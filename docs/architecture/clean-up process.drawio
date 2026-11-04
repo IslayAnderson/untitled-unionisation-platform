@@ -1,0 +1,94 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="s78IhT2jlV5xdO11YBX2">
+    <mxGraphModel dx="1169" dy="1600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="s78IhT2jlV5xdO11YBX2-29" edge="1" parent="1" source="s78IhT2jlV5xdO11YBX2-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="s78IhT2jlV5xdO11YBX2-15" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-28" edge="1" parent="1" source="s78IhT2jlV5xdO11YBX2-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="s78IhT2jlV5xdO11YBX2-16" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-27" edge="1" parent="1" source="s78IhT2jlV5xdO11YBX2-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="s78IhT2jlV5xdO11YBX2-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-26" edge="1" parent="1" source="s78IhT2jlV5xdO11YBX2-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="s78IhT2jlV5xdO11YBX2-16" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-25" edge="1" parent="1" source="s78IhT2jlV5xdO11YBX2-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="s78IhT2jlV5xdO11YBX2-13" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-24" edge="1" parent="1" source="s78IhT2jlV5xdO11YBX2-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="s78IhT2jlV5xdO11YBX2-12" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-23" edge="1" parent="1" source="s78IhT2jlV5xdO11YBX2-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="s78IhT2jlV5xdO11YBX2-11" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-22" edge="1" parent="1" source="s78IhT2jlV5xdO11YBX2-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="s78IhT2jlV5xdO11YBX2-10" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-21" edge="1" parent="1" source="s78IhT2jlV5xdO11YBX2-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="s78IhT2jlV5xdO11YBX2-9" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-20" edge="1" parent="1" source="s78IhT2jlV5xdO11YBX2-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="s78IhT2jlV5xdO11YBX2-8" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-19" edge="1" parent="1" source="s78IhT2jlV5xdO11YBX2-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="s78IhT2jlV5xdO11YBX2-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-18" edge="1" parent="1" source="s78IhT2jlV5xdO11YBX2-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;dashed=1;endArrow=none;endFill=0;" target="s78IhT2jlV5xdO11YBX2-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-17" edge="1" parent="1" source="s78IhT2jlV5xdO11YBX2-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="s78IhT2jlV5xdO11YBX2-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=16;" value="Admin clean-up" vertex="1">
+          <mxGeometry height="30" width="600" x="20" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Admin opens /admin/cleanup" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Unconfirmed accounts: 7 days. Unfinished sign-ups: 30 days. Never vouched for, in a union with members: 90 days. Abandoned unions, no members and no sign-ups: 90 days" vertex="1">
+          <mxGeometry height="120" width="280" x="710.0" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Admin emails everyone a tool covers who hasn&#x27;t been warned, saying why and the deadline" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-6" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:User&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Cleanup warned at = now&lt;br&gt;(Building too, for a union)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="74" width="210" x="745.0" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-7" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Logged in within 7 days? (any account holder, for a union)" vertex="1">
+          <mxGeometry height="180" width="180" x="280.0" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Clear the warning: they keep the account or union" vertex="1">
+          <mxGeometry height="100" width="180" x="760.0" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="From the deadline, admin deletes those who haven&#x27;t been back" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-10" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="A union?" vertex="1">
+          <mxGeometry height="140" width="140" x="300.0" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Delete the user, sessions and contact. What they wrote stays, by a former member" vertex="1">
+          <mxGeometry height="100" width="200" x="750.0" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-12" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Does it have members?" vertex="1">
+          <mxGeometry height="140" width="140" x="300.0" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Email each member the union&#x27;s records (zip of PDFs, link for 30 days)" vertex="1">
+          <mxGeometry height="100" width="180" x="40.0" y="1110" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-14" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Export made?" vertex="1">
+          <mxGeometry height="140" width="140" x="60.0" y="1260" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Union isn&#x27;t deleted; try again later" vertex="1">
+          <mxGeometry height="100" width="180" x="40.0" y="1460" as="geometry" />
+        </mxCell>
+        <mxCell id="s78IhT2jlV5xdO11YBX2-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Background job checks nobody has logged in since, then deletes the union and everything in it" vertex="1">
+          <mxGeometry height="100" width="200" x="510.0" y="1280" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

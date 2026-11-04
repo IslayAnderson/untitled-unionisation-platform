@@ -8,12 +8,12 @@ Untitled unionisation platform is a unified platform aimed at apartment blocks a
   * [Data model](docs/architecture/data-model.md) and the [entity diagram](<docs/architecture/Entity Diagram.drawio>)
   * [Signup process](docs/architecture/signup-process.md): signup, address matching, vouching and enrolment, with the [signup diagram](<docs/architecture/signup process.drawio>)
   * [Address lookup](docs/architecture/address-lookup.md)
-  * [Governance](docs/architecture/governance.md): constitution, policies, roles and referendums
-  * [Polls](docs/architecture/polls.md)
+  * [Governance](docs/architecture/governance.md): constitution, policies, roles and referendums, with the [referendum diagram](<docs/architecture/referendum process.drawio>) and the [leaving and removal diagram](<docs/architecture/leaving and removal process.drawio>)
+  * [Polls](docs/architecture/polls.md), with the [polls diagram](<docs/architecture/polls process.drawio>)
   * [Contacts, landlords and mailing lists](docs/architecture/contacts.md)
-  * [Union mail](docs/architecture/mail.md): approval, sending and email replies
+  * [Union mail](docs/architecture/mail.md): approval, sending and email replies, with the [union mail diagram](<docs/architecture/union mail process.drawio>) and the [email replies diagram](<docs/architecture/email replies process.drawio>)
   * [Image uploads](docs/architecture/uploads.md)
-  * [Platform admin](docs/architecture/admin.md): usage numbers, clean-up and union exports
+  * [Platform admin](docs/architecture/admin.md): usage numbers, clean-up and union exports, with the [clean-up diagram](<docs/architecture/clean-up process.drawio>)
   * [Demo union](docs/architecture/demo.md)
   * [Front end](docs/architecture/frontend.md): the GOV.UK Design System
 * [Knowledge base](docs/knowledge-base/README.md): how to use the platform's Artisan commands, the scheduler, queue workers and Tinker

@@ -1,0 +1,102 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="WkxyStfs5Bjz6zuoatZf">
+    <mxGraphModel dx="1169" dy="1560" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1560" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-29" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="WkxyStfs5Bjz6zuoatZf-14" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="610" y="1470" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-28" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="WkxyStfs5Bjz6zuoatZf-14" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="130" y="1470" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-27" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="WkxyStfs5Bjz6zuoatZf-13" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-26" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="WkxyStfs5Bjz6zuoatZf-12" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-25" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="WkxyStfs5Bjz6zuoatZf-11" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-24" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;dashed=1;endArrow=none;endFill=0;" target="WkxyStfs5Bjz6zuoatZf-9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-23" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="WkxyStfs5Bjz6zuoatZf-10" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-22" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="WkxyStfs5Bjz6zuoatZf-8" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-21" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="WkxyStfs5Bjz6zuoatZf-14" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1090" y="420" /><mxPoint x="1090" y="1470" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-20" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="WkxyStfs5Bjz6zuoatZf-14" value="Yes">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="850" y="620" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-19" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="WkxyStfs5Bjz6zuoatZf-7" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-18" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="WkxyStfs5Bjz6zuoatZf-6" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-17" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="WkxyStfs5Bjz6zuoatZf-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-16" edge="1" parent="1" source="WkxyStfs5Bjz6zuoatZf-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="WkxyStfs5Bjz6zuoatZf-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=16;" value="Email replies to union mail" vertex="1">
+          <mxGeometry height="30" width="600" x="20" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Landlord replies to union mail, to replies+token@…" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="union-mail:fetch-replies reads unseen messages (every minute)" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-5" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Sent to the token of a sent mail?" vertex="1">
+          <mxGeometry height="140" width="140" x="300.0" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Log it" vertex="1">
+          <mxGeometry height="100" width="180" x="760.0" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-7" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Message ID already added?" vertex="1">
+          <mxGeometry height="140" width="140" x="300.0" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Strip the quoted original. Use the text part, or the HTML turned into plain text" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-9" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:Reply&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Bulletin = the mail&amp;#x27;s bulletin&lt;br&gt;Contact = sender, if on the list&lt;br&gt;From = sender&amp;#x27;s address&lt;br&gt;Text = escaped plain text&lt;br&gt;Attachments = how many&lt;/p&gt;" vertex="1">
+          <mxGeometry height="125" width="180" x="40.0" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Add it to the bulletin&#x27;s thread as an email reply" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-11" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Union has an inbox?" vertex="1">
+          <mxGeometry height="140" width="140" x="300.0" y="1070" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Forward a full copy with attachments to the union&#x27;s inbox" vertex="1">
+          <mxGeometry height="100" width="180" x="40.0" y="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Email the copy to every member separately" vertex="1">
+          <mxGeometry height="100" width="180" x="520.0" y="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Mark the message seen" vertex="1">
+          <mxGeometry height="100" width="180" x="760.0" y="1420" as="geometry" />
+        </mxCell>
+        <mxCell id="WkxyStfs5Bjz6zuoatZf-15" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="The sender&#x27;s HTML is never shown, and attachments aren&#x27;t stored: they&#x27;re only forwarded" vertex="1">
+          <mxGeometry height="80" width="220" x="540.0" y="760" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

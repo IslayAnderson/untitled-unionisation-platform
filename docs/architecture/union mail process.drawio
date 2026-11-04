@@ -1,0 +1,140 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="MbmlbZtjemB6ZcMMwq51">
+    <mxGraphModel dx="1169" dy="1900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-43" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-21" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-42" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-21" value="No">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="410.0" y="1470" /><mxPoint x="410.0" y="1810" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-41" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-20" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-40" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-19" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-39" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-12" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1150" y="1470" /><mxPoint x="1150" y="1000" /><mxPoint x="250.0" y="1000" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-38" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-17" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-37" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-16" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-36" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-15" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-35" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-14" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-34" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-13" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-33" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-18" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-32" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-12" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-31" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-11" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-30" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-11" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-29" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-10" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-28" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-9" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-27" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-26" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-7" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-25" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-6" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-24" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-23" edge="1" parent="1" source="MbmlbZtjemB6ZcMMwq51-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="MbmlbZtjemB6ZcMMwq51-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=16;" value="Union mail: approving and sending" vertex="1">
+          <mxGeometry height="30" width="600" x="20" y="0" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Member writes instant mail: subject, message, mailing list and any attachments" vertex="1">
+          <mxGeometry height="100" width="180" x="40.0" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Bulletin&#x27;s author turns it into mail, reworking it after the discussion" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-5" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Enough other members to give the approvals needed?" vertex="1">
+          <mxGeometry height="170" width="170" x="165.0" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Mail can&#x27;t be created" vertex="1">
+          <mxGeometry height="100" width="180" x="520.0" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-7" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:UnionMail&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Kind = instant or bulletin&lt;br&gt;Subject = subject&lt;br&gt;Body = message&lt;br&gt;Mailing list = list&lt;br&gt;Approvals needed = % of members&lt;br&gt;Expires = now + expiry hours&lt;/p&gt;" vertex="1">
+          <mxGeometry height="142" width="180" x="160.0" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-8" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Instant mail?" vertex="1">
+          <mxGeometry height="140" width="140" x="180.0" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Draw instant_mail_approver_percent (20%) of members at random as approvers" vertex="1">
+          <mxGeometry height="100" width="180" x="40.0" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Every other member is an approver" vertex="1">
+          <mxGeometry height="100" width="180" x="280.0" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Email each approver a link. The mail&#x27;s content isn&#x27;t in the email" vertex="1">
+          <mxGeometry height="100" width="180" x="160.0" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-12" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Approved by enough members? (10% instant, 50% bulletin)" vertex="1">
+          <mxGeometry height="180" width="180" x="160.0" y="1020" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-13" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Can it still get enough approvals?" vertex="1">
+          <mxGeometry height="140" width="140" x="580.0" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Rejected" vertex="1">
+          <mxGeometry height="100" width="180" x="800.0" y="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-15" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Past its expiry time?" vertex="1">
+          <mxGeometry height="140" width="140" x="580.0" y="1230" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Expired by union-mail:expire" vertex="1">
+          <mxGeometry height="100" width="180" x="800.0" y="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Wait for approvers to approve or reject" vertex="1">
+          <mxGeometry height="100" width="180" x="560.0" y="1420" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Send to each contact on the list separately, signed by the union, never naming the author" vertex="1">
+          <mxGeometry height="100" width="180" x="160.0" y="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-19" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Instant mail?" vertex="1">
+          <mxGeometry height="140" width="140" x="180.0" y="1400" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Post it as a bulletin by the author, so every member sees what the union said" vertex="1">
+          <mxGeometry height="100" width="180" x="160.0" y="1600" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Replies come back by email: see the email replies process" vertex="1">
+          <mxGeometry height="100" width="180" x="160.0" y="1760" as="geometry" />
+        </mxCell>
+        <mxCell id="MbmlbZtjemB6ZcMMwq51-22" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="The author is never an approver. Content is locked once the mail is created; the author can withdraw it while it&#x27;s pending" vertex="1">
+          <mxGeometry height="90" width="220" x="780.0" y="740" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
