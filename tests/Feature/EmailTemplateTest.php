@@ -5,6 +5,7 @@ use App\Mail\UnionMessage;
 use App\Models\Building;
 use App\Models\UnionMail;
 use App\Notifications\CleanupWarning;
+use App\Notifications\FeedbackReceived;
 use App\Services\InboundMail\InboundEmail;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\AnonymousNotifiable;
@@ -21,6 +22,18 @@ it('renders notifications in the platform\'s template', function () {
         ->not->toContain('Regards')
         ->not->toContain('Hello!')
         ->not->toContain('laravel.com');
+});
+
+it('keeps Markdown in someone\'s text from loading images from another site', function () {
+    $html = (string) (new FeedbackReceived(
+        '![x](https://evil.test/name.png)',
+        null,
+        'Great site ![pixel](https://evil.test/pixel.png) <img src="https://evil.test/raw.png">',
+    ))->toMail(new AnonymousNotifiable)->render();
+
+    expect($html)->toContain('Great site')
+        ->toContain('&lt;img src=')
+        ->not->toMatch('/<img\\b/i');
 });
 
 it('heads and signs union mail with the union, keeping its rich text as HTML', function () {

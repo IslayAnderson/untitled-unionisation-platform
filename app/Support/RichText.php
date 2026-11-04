@@ -55,14 +55,25 @@ class RichText
 
         $clean = (new HtmlSanitizer($config))->sanitize($html);
 
-        $clean = preg_replace_callback('/<img\b[^>]*>/i', function (array $match) use ($uploads) {
-            preg_match('/\ssrc="([^"]*)"/i', $match[0], $src);
+        return trim(self::withoutOutsideImages($clean));
+    }
+
+    /**
+     * HTML with every image removed except those uploaded to the platform, so
+     * showing it never loads anything from another site. Email bodies need
+     * this as well as clean(): Markdown turns escaped text such as
+     * "![x](https://…)" back into an image.
+     */
+    public static function withoutOutsideImages(string $html): string
+    {
+        $uploads = self::uploadsUrl();
+
+        return preg_replace_callback('/<img\b[^>]*>/i', function (array $match) use ($uploads) {
+            preg_match('/\ssrc\s*=\s*"([^"]*)"/i', $match[0], $src);
             $url = html_entity_decode($src[1] ?? '');
 
-            return str_starts_with($url, $uploads) && ! str_contains($url, '..') ? $match[0] : '';
-        }, $clean);
-
-        return trim($clean);
+            return str_starts_with($url, $uploads) && ! str_contains($url, '..') && ! preg_match('/\ssrcset\s*=/i', $match[0]) ? $match[0] : '';
+        }, $html);
     }
 
     /**

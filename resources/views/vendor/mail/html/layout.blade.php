@@ -47,9 +47,9 @@ text-align: center !important;
 <table class="inner-body" align="center" width="600" cellpadding="0" cellspacing="0" role="presentation">
 <tr>
 <td class="content-cell">
-{!! $html ?? Illuminate\Mail\Markdown::parse($slot) !!}
+{!! App\Support\RichText::withoutOutsideImages($html ?? Illuminate\Mail\Markdown::parse($slot)) !!}
 
-{!! $subcopy ?? '' !!}
+{!! App\Support\RichText::withoutOutsideImages($subcopy ?? '') !!}
 </td>
 </tr>
 </table>

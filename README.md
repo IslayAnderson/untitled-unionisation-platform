@@ -27,4 +27,5 @@ With `ADDRESS_LOOKUP_DRIVER=fake` (the default in `.env.example`) the address se
 sample addresses (try "example"), and no API key is needed. With `MAIL_MAILER=log`, confirmation
 emails are written to `storage/logs/laravel.log`.
 
-Run the tests with `php artisan test` (Pest, against in-memory SQLite).
+Run the tests with `php artisan test` (Pest, against in-memory SQLite). [tests.md](tests.md) summarises what
+each test file checks, with the results of the latest run.
