@@ -27,7 +27,7 @@
 * [Demo union](demo.md): the public read-only demo union, Larkspur House
 * [Front end](frontend.md): the GOV.UK Design System, how pages are built, and the app's own components
 
-The process diagrams open in [draw.io](https://www.drawio.com), and use the same shapes: rounded boxes are steps, diamonds are decisions, and Object boxes are the records a step creates.
+The process diagrams open in [draw.io](https://www.drawio.com), and use the same shapes: rounded boxes are steps, diamonds are decisions, and Object boxes are the records a step creates. All the diagrams are drawn by the scripts in [diagrams](diagrams): change them there, not in draw.io (see the [knowledge base](../knowledge-base/README.md#redrawing-the-diagrams)).
 
 See also the [knowledge base](../knowledge-base/README.md) for the platform's commands, and [tests.md](../../tests.md) for what the tests check.
 

@@ -37,3 +37,5 @@ auth.json
 /public/fonts-manifest.dev.json
 _ide_helper.php
 /database/database.sqlite
+
+__pycache__/

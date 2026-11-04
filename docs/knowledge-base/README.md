@@ -1,7 +1,8 @@
 # Knowledge base: commands
 
-How to run the platform's own Artisan commands, the jobs that keep it running, and useful Tinker
-snippets for looking into problems. For how each feature works, see [docs/architecture](../architecture).
+How to run the platform's own Artisan commands, the jobs that keep it running, how to redraw the
+architecture diagrams, and useful Tinker snippets for looking into problems. For how each feature
+works, see [docs/architecture](../architecture).
 
 ## Running a command
 
@@ -274,6 +275,43 @@ To check a setting as the app sees it:
 ```bash
 php artisan config:show mail
 ```
+
+## Redrawing the diagrams
+
+The diagrams in [docs/architecture](../architecture) are drawn by scripts in
+[docs/architecture/diagrams](../architecture/diagrams). They need Python 3 and nothing else.
+
+**After changing the database**, redraw the entity diagram so it matches:
+
+```bash
+python3 docs/architecture/diagrams/entities.py
+```
+
+```
+Drew 28 tables and 52 relationships in docs/architecture/Entity Diagram.drawio
+```
+
+It runs the migrations into a throwaway SQLite database, so your own database isn't touched. A new
+table has to be given a place in the diagram first. If it hasn't been, the script stops and names it:
+
+```
+Add these tables to COLUMNS in entities.py: rent_strikes
+```
+
+Add the table to the column for its area in `COLUMNS`, then run the script again.
+
+**After changing a process**, edit its section in `processes.py`, then redraw them all:
+
+```bash
+python3 docs/architecture/diagrams/processes.py
+```
+
+Each diagram is laid out by hand in the script: a step, decision, Object box or note at a position,
+then the arrows between them. `make.py` holds the shapes. Running the script rewrites every diagram,
+so make changes in the script rather than in draw.io, or they'll be lost the next time it runs.
+Open a diagram in draw.io (or export it with
+`/Applications/draw.io.app/Contents/MacOS/draw.io -x -f png "docs/architecture/signup process.drawio"`)
+to check the result.
 
 ## Tinker
 
