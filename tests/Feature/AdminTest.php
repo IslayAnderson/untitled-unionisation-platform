@@ -234,7 +234,7 @@ it('splits a long section into PDFs of no more than the page limit', function ()
         ->and($parts->first())->toBe('5-bulletins-part-1.pdf')
         ->and($pageCounts->max())->toBeLessThanOrEqual(12)
         ->and($pageCounts->sum())->toBeGreaterThan(12)
-        ->and($zip->getFromName('README.txt'))->toContain('5-bulletins-part-2.pdf');
+        ->and($zip->getFromName('README.txt'))->toContain('5-bulletins-part-2.pdf')->not->toContain('files/mail');
 });
 
 it('deletes exports once their links have expired', function () {
@@ -343,7 +343,7 @@ it('deletes a union and everything in it, after emailing its members and waiting
         "files/mail/{$mail->id}/{$attachment->id}-notes.txt",
     )
         ->and($zip->getFromName('5-bulletins.pdf'))->toStartWith('%PDF')
-        ->and($zip->getFromName('README.txt'))->toContain('Doomed Court')->toContain('5-bulletins.pdf')
+        ->and($zip->getFromName('README.txt'))->toContain('Doomed Court')->toContain('5-bulletins.pdf')->toContain('files/mail:')->not->toContain('deleted')
         ->and($zip->getFromName("files/mail/{$mail->id}/{$attachment->id}-notes.txt"))->toBe('notes')
         ->and($zip->getFromName('contacts.csv'))->toContain($agent->name)->not->toContain($author->user->email)
         ->and($zip->getFromName('landlords.csv'))->toContain($landlord->name);

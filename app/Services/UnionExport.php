@@ -86,7 +86,9 @@ class UnionExport
             ->filter()
             ->all();
 
-        foreach (UnionMailAttachment::whereIn('union_mail_id', $building->unionMails()->select('id'))->get() as $attachment) {
+        $attachments = UnionMailAttachment::whereIn('union_mail_id', $building->unionMails()->select('id'))->get();
+
+        foreach ($attachments as $attachment) {
             $name = "files/mail/{$attachment->union_mail_id}/{$attachment->id}-".Str::of($attachment->name)->replaceMatches('/[^A-Za-z0-9._ -]/', '_');
             $this->addFile($zip, $attachment->disk, $attachment->path, $name);
         }
@@ -107,6 +109,7 @@ class UnionExport
         $zip->addFromString('README.txt', view('exports.readme', [
             'building' => $building,
             'contents' => $contents,
+            'hasAttachments' => $attachments->isNotEmpty(),
             'exportedAt' => $exportedAt,
         ])->render());
         $zip->addFromString('landlords.csv', $this->csv(

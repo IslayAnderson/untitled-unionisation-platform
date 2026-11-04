@@ -41,7 +41,7 @@ class UnionDataExported extends Notification implements ShouldQueue
         $message = (new MailMessage)
             ->subject($this->reason->subject($this->union))
             ->line($this->reason->intro($this->union))
-            ->line(($this->reason === ExportReason::UnionDeleted ? 'Here is a copy of everything members could see' : 'Here is a copy of everything members can see, as it is today').': the constitution, policies, roles, referendum results, bulletins, discussions, mail and landlord contacts. Open index.html in the zip to read it. Votes were secret, so only totals are included.')
+            ->line(($this->reason === ExportReason::UnionDeleted ? 'Here is a copy of everything members could see' : 'Here is a copy of everything members can see, as it is today').': the constitution, policies, roles, referendum results, bulletins, discussions, mail and landlord contacts. Each section is a PDF in the zip, and README.txt lists them. Votes were secret, so only totals are included.')
             ->action('Download the records', $this->downloadUrl)
             ->line('The link works until '.$this->expiresAt->format('j F Y').'. Keep the records somewhere safe: they include other members\' names and what they wrote.');
 
