@@ -1,7 +1,7 @@
 <x-layouts.app title="Admin">
     @include('admin.nav', ['title' => 'Unions'])
 
-    <p class="govuk-body">Numbers only. Admins can't see members' names or anything a union has written. QR code scans count which code was opened, never who opened it.</p>
+    <p class="govuk-body">Numbers only. Admins can't see members' names or anything a union has written. QR code scans count which code was opened, never who opened it. The totals leave out the demo union.</p>
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-half">

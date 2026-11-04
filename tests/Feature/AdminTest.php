@@ -1,12 +1,14 @@
 <?php
 
 use App\Enums\ApprovalDecision;
+use App\Enums\QrScanKind;
 use App\Models\Building;
 use App\Models\Bulletin;
 use App\Models\Contact;
 use App\Models\Landlord;
 use App\Models\MailingList;
 use App\Models\Poll;
+use App\Models\QrScan;
 use App\Models\Referendum;
 use App\Models\Reply;
 use App\Models\Thread;
@@ -98,6 +100,24 @@ it('shows usage numbers for each union without names or content', function () {
         ->assertOk()
         ->assertSeeInOrder(['Members', '3', 'Waiting to be vouched for', '1'])
         ->assertDontSeeText($members[0]->name);
+});
+
+it('leaves the demo union out of the totals but still lists it', function () {
+    $real = Building::factory()->create();
+    Contact::factory()->count(2)->tenantOf($real)->enrolled()->create();
+    Bulletin::factory()->create(['building_id' => $real->id]);
+    $demo = Building::factory()->create(['name' => 'Larkspur House', 'is_demo' => true]);
+    Contact::factory()->count(5)->tenantOf($demo)->enrolled()->create();
+    Bulletin::factory()->create(['building_id' => $demo->id]);
+    QrScan::create(['kind' => QrScanKind::Join, 'building_id' => $demo->id]);
+    QrScan::create(['kind' => QrScanKind::Join, 'building_id' => $real->id]);
+    QrScan::create(['kind' => QrScanKind::Demo, 'building_id' => null]);
+
+    $this->actingAs($this->admin)->get(route('admin.unions.index'))
+        ->assertOk()
+        ->assertSeeInOrder(['Unions', '1', 'Members', '2', 'Waiting to be vouched for', '0', 'Accounts', '3', 'Active unions (last 30 days)', '1', 'Inactive unions (nothing new in 30 days)', '0'])
+        ->assertSeeInOrder(['Join codes scanned', '1', 'Vouching codes scanned', '0', 'Campaign leaflets scanned', '0', 'Demo codes scanned', '1', 'All QR code scans', '2'])
+        ->assertSeeInOrder(['Larkspur House', 'Demo', '5']);
 });
 
 it('counts unions with nothing new in 30 days as inactive', function () {

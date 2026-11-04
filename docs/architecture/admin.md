@@ -26,6 +26,10 @@ Admins run the platform. They aren't union officers and have no say in any union
 `/admin` also totals QR code scans across the platform by kind: join codes, vouching codes, campaign
 leaflets and demo codes (`App\Enums\QrScanKind`).
 
+The demo union is listed, tagged "Demo", but left out of the totals: its unions, members, accounts
+and scans of its codes aren't counted, as they're visitors trying it out rather than real use. Scans
+of demo flyers, which aren't tied to a union, still count under demo codes.
+
 Admins see **counts only**: never members' names or emails, or anything a union has written. The
 union's name and address are shown because they identify the union, not a person.
 

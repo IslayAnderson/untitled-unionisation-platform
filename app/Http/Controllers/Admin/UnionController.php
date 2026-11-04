@@ -25,17 +25,20 @@ class UnionController extends Controller
     public function index(): View
     {
         $unions = $this->withStats(Building::query())->latest()->get();
-        $active = $unions->filter(fn (Building $union) => $union->last_active_at?->gt(now()->subDays(30)))->count();
+
+        // The demo is listed, but left out of the totals: its visitors aren't real usage.
+        $real = $unions->reject(fn (Building $union) => $union->is_demo);
+        $active = $real->filter(fn (Building $union) => $union->last_active_at?->gt(now()->subDays(30)))->count();
 
         return view('admin.unions.index', [
             'unions' => $unions,
             'totals' => [
-                'Unions' => $unions->count(),
-                'Members' => $unions->sum('members_count'),
-                'Waiting to be vouched for' => $unions->sum('waiting_count'),
-                'Accounts' => User::count(),
+                'Unions' => $real->count(),
+                'Members' => $real->sum('members_count'),
+                'Waiting to be vouched for' => $real->sum('waiting_count'),
+                'Accounts' => User::whereDoesntHave('contact.building', fn (Builder $building) => $building->where('is_demo', true))->count(),
                 'Active unions (last 30 days)' => $active,
-                'Inactive unions (nothing new in 30 days)' => $unions->count() - $active,
+                'Inactive unions (nothing new in 30 days)' => $real->count() - $active,
             ],
             'qrScans' => $this->qrScansByKind(),
         ]);
@@ -86,13 +89,14 @@ class UnionController extends Controller
     }
 
     /**
-     * How many times each kind of QR code has been scanned, on the whole platform.
+     * How many times each kind of QR code has been scanned, on the whole platform except the demo.
      *
      * @return array<string, int> Label => scans
      */
     private function qrScansByKind(): array
     {
-        $counts = QrScan::toBase()->selectRaw('kind, count(*) as scans')->groupBy('kind')->pluck('scans', 'kind');
+        $counts = QrScan::whereDoesntHave('building', fn (Builder $building) => $building->where('is_demo', true))
+            ->toBase()->selectRaw('kind, count(*) as scans')->groupBy('kind')->pluck('scans', 'kind');
 
         return collect(QrScanKind::cases())
             ->mapWithKeys(fn (QrScanKind $kind) => [$kind->label() => (int) ($counts[$kind->value] ?? 0)])
