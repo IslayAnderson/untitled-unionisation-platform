@@ -4,10 +4,20 @@ Untitled unionisation platform is a unified platform aimed at apartment blocks a
 
 # Docs
 
-* Architecture
-  * /docs/architecture/root.md
-* Knowledge Base
-  * /docs/knowledge-base/root.md
+* [Architecture](docs/architecture/root.md): the tech stack, milestones, and an index of the docs below
+  * [Data model](docs/architecture/data-model.md) and the [entity diagram](<docs/architecture/Entity Diagram.drawio>)
+  * [Signup process](docs/architecture/signup-process.md): signup, address matching, vouching and enrolment, with the [signup diagram](<docs/architecture/signup process.drawio>)
+  * [Address lookup](docs/architecture/address-lookup.md)
+  * [Governance](docs/architecture/governance.md): constitution, policies, roles and referendums
+  * [Polls](docs/architecture/polls.md)
+  * [Contacts, landlords and mailing lists](docs/architecture/contacts.md)
+  * [Union mail](docs/architecture/mail.md): approval, sending and email replies
+  * [Image uploads](docs/architecture/uploads.md)
+  * [Platform admin](docs/architecture/admin.md): usage numbers, clean-up and union exports
+  * [Demo union](docs/architecture/demo.md)
+  * [Front end](docs/architecture/frontend.md): the GOV.UK Design System
+* [Knowledge base](docs/knowledge-base/README.md): how to use the platform's Artisan commands, the scheduler, queue workers and Tinker
+* [Tests](tests.md): what each test file checks, with the results of the latest run
 
 # Development
 

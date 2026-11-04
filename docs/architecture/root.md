@@ -18,7 +18,7 @@
 * /docs/architecture/Entity Diagram.drawio
   * Describes tables and their relationships
   * Amended by /docs/architecture/data-model.md, which takes precedence where they differ
-* /docs/architecture/Signup process.drawio
+* /docs/architecture/signup process.drawio
   * Describes how users sign up, buildings are registered and tenants authenticated
   * Rules clarified in /docs/architecture/signup-process.md
 * /docs/architecture/data-model.md
