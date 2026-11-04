@@ -23,6 +23,8 @@
         td { padding: 1mm 2mm 1mm 0; border-bottom: 0.5pt solid #e7e5e4; vertical-align: top; }
         img { max-width: 100%; }
         .batch { page-break-before: always; }
+        .plain-list { list-style: none; padding: 0; margin: 0 0 3mm; }
+        .plain-list li { margin: 0 0 1mm; }
     </style>
 </head>
 <body>
