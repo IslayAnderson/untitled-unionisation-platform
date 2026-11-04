@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome')->middleware('qr-scan:campaign')->name('home');
 
 Route::get('/how-vouching-works', HowVouchingWorksController::class)->name('vouching.guide');
+Route::view('/how-the-platform-is-run', 'how-the-platform-is-run')->name('administration');
 Route::view('/privacy', 'privacy.show')->name('privacy');
 Route::post('/cookies/hide-banner', CookieBannerController::class)->name('cookies.hide-banner');
 Route::get('/feedback', [FeedbackController::class, 'create'])->name('feedback.create');

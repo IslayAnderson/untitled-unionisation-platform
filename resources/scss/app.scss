@@ -22,6 +22,7 @@
 @use "components/diagram";
 @use "components/dialog";
 @use "components/email-frame";
+@use "components/example";
 
 [x-cloak] {
   display: none !important;

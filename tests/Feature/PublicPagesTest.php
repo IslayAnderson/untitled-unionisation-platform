@@ -78,3 +78,15 @@ it('accepts anonymous feedback, and shows errors on the feedback page', function
         ->assertRedirect(route('feedback.create'))
         ->assertSessionHasErrors(['feedback_details' => 'Enter your feedback']);
 });
+
+it('explains how the platform is run with made-up examples, never real unions', function () {
+    $real = Building::factory()->create(['name' => 'Real Court Tenants\' Union']);
+
+    $this->get(route('home'))->assertSee(route('administration'));
+    $this->get(route('administration'))
+        ->assertOk()
+        ->assertSeeText('Example: the admin area\'s totals')
+        ->assertSeeText('not vouched for after 90 days')
+        ->assertSeeText('They have 7 days')
+        ->assertDontSeeText($real->name);
+});

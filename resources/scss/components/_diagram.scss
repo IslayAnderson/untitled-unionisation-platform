@@ -97,3 +97,9 @@
   font-weight: $govuk-font-weight-bold;
   fill: govuk-colour("white");
 }
+
+.app-diagram__box--warning {
+  fill: govuk-colour("red", $variant: "tint-95");
+  stroke: govuk-functional-colour(error);
+  stroke-width: 3;
+}

@@ -188,6 +188,9 @@
                             <a class="govuk-footer__link" href="{{ route('vouching.guide') }}">How vouching works</a>
                         </li>
                         <li class="govuk-footer__inline-list-item">
+                            <a class="govuk-footer__link" href="{{ route('administration') }}">How the platform is run</a>
+                        </li>
+                        <li class="govuk-footer__inline-list-item">
                             <a class="govuk-footer__link" href="{{ route('privacy') }}">Privacy</a>
                         </li>
                         <li class="govuk-footer__inline-list-item">
