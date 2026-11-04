@@ -15,34 +15,19 @@
 
 
 ## Docs
-* /docs/architecture/Entity Diagram.drawio
-  * Describes tables and their relationships
-  * Amended by /docs/architecture/data-model.md, which takes precedence where they differ
-* /docs/architecture/signup process.drawio
-  * Describes how users sign up, buildings are registered and tenants authenticated
-  * Rules clarified in /docs/architecture/signup-process.md
-* /docs/architecture/data-model.md
-  * Changes to the entity diagram agreed before build
-* /docs/architecture/signup-process.md
-  * Signup, address matching, vouching and enrolment rules
-* /docs/architecture/address-lookup.md
-  * Swappable address lookup harness (Geoapify by default)
-* /docs/architecture/contacts.md
-  * Landlords, external contacts and mailing lists (milestone 4)
-* /docs/architecture/mail.md
-  * Instant mail and bulletin mail: how union email is approved and sent
-* /docs/architecture/governance.md
-  * Constitution amendments, policies, roles and referendums (milestone 3)
-* /docs/architecture/polls.md
-  * Secret-ballot polls on bulletins
-* /docs/architecture/uploads.md
-  * Image uploads: compression, metadata stripping and Cloudflare CSAM scanning
-* /docs/architecture/admin.md
-  * Platform admin: usage numbers per union and clean-up tools
-* /docs/architecture/demo.md
-  * The public read-only demo union, Larkspur House
-* /docs/architecture/frontend.md
-  * The GOV.UK Design System: how pages are built, and the app's own components
+* [Data model](data-model.md): changes to the entity diagram agreed before build, with the [entity diagram](<Entity Diagram.drawio>) of tables and their relationships. Where they differ, the data model takes precedence
+* [Signup process](signup-process.md): signup, address matching, vouching and enrolment rules, clarifying the [signup diagram](<signup process.drawio>) of how users sign up, buildings are registered and tenants authenticated
+* [Address lookup](address-lookup.md): the swappable address lookup harness (Geoapify by default)
+* [Governance](governance.md): constitution amendments, policies, roles and referendums (milestone 3)
+* [Polls](polls.md): secret-ballot polls on bulletins
+* [Contacts, landlords and mailing lists](contacts.md): landlords, external contacts and mailing lists (milestone 4)
+* [Union mail](mail.md): instant mail and bulletin mail, how union email is approved and sent, and email replies
+* [Image uploads](uploads.md): compression, metadata stripping and Cloudflare CSAM scanning
+* [Platform admin](admin.md): usage numbers per union, clean-up tools and union exports
+* [Demo union](demo.md): the public read-only demo union, Larkspur House
+* [Front end](frontend.md): the GOV.UK Design System, how pages are built, and the app's own components
+
+See also the [knowledge base](../knowledge-base/README.md) for the platform's commands, and [tests.md](../../tests.md) for what the tests check.
 
 ## Milestones
 1. Scaffold the app, migrate every entity in the entity diagram, build the signup flow end to end
