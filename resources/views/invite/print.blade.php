@@ -3,7 +3,7 @@
         'poster' => ['Poster', 'One A4 sheet, for noticeboards and lifts'],
         'flyers' => ['Flyers', 'Two A5 flyers per A4 sheet'],
         'slips' => ['Door slips', 'Four small slips per A4 sheet'],
-        'letter' => ['Letter for a DL envelope', 'One A4 sheet folded in three, with the address where a window envelope shows it'],
+        'letter' => ['Letter for a DL envelope', 'One A4 sheet folded in three, addressed to the occupier where a window envelope shows it'],
     ];
 @endphp
 
@@ -174,12 +174,9 @@
                 </div>
 
                 <div class="govuk-inset-text" x-show="design === 'letter'" x-cloak>
-                    <p class="govuk-body">
-                        Fold along the marks on the edges: the bottom third up, then the top third back, so the address faces out.
-                        It fits a DL envelope (110 × 220mm). In a window envelope the address shows through the window.
-                    </p>
                     <p class="govuk-body govuk-!-margin-bottom-0">
-                        There's a line to write the flat number on by hand. Don't print it: the sheets don't name anyone.
+                        Fold along the marks on the edges: the bottom third up, then the top third back, so "To the occupier"
+                        faces out. It fits a DL envelope (110 × 220mm), and shows through the window of a window envelope.
                     </p>
                 </div>
 
@@ -212,7 +209,7 @@
                                 </template>
                                 <template x-if="design === 'letter'">
                                     <div class="app-invite-sheet__layout">
-                                        <x-invite-letter :union="$union" :recipient="$recipient" :address-lines="$addressLines" :join-url="$joinUrl" :join-title="$joinTitle" :join-text="$joinText" :demo-url="$demoUrl" :features="$features" />
+                                        <x-invite-letter :union="$union" :join-url="$joinUrl" :join-title="$joinTitle" :join-text="$joinText" :demo-url="$demoUrl" :features="$features" />
                                     </div>
                                 </template>
                                 <template x-if="design === 'slips'">

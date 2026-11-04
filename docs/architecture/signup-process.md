@@ -71,11 +71,11 @@ section (`GET /invite/print`). They choose:
   information door slips list only the feature titles.
 
 The letter is one A4 sheet in three 99mm panels, so the folds (marked at the edges) never cross text
-or the code: the headline, address and message on top, how the union works in the middle (just the
-titles on the invitation), the code at the bottom. The address sits 20mm from the left and 50mm from
-the top, inside a DL window (90 × 45mm) wherever the folded sheet settles in the envelope. It's "To the
-tenant", a blank line to write the flat on by hand, and the building's address; campaign letters are
-"To the occupier" with blank lines. Folded bottom up, then top back, the address faces out.
+or the code: the headline, "To the occupier" and message on top, how the union works in the middle (just the
+titles on the invitation), the code at the bottom. It's addressed only "To the occupier", so it names
+nobody and the same letter goes through any door. That line sits 20mm from the left and 50mm from the
+top, inside a DL window (90 × 45mm) wherever the folded sheet settles in the envelope. Folded bottom
+up, then top back, it faces out.
 
 They can pick or write a headline and edit the message. Each one shows the union's name, the
 building's join link and its QR code (SVG, so it prints sharply). Nothing is stored, and the material

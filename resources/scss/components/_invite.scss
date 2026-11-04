@@ -467,22 +467,10 @@
   position: absolute;
   top: 23.8cqw;
   left: 9.5cqw;
-  display: flex;
-  flex-direction: column;
   width: 38cqw;
-  font-size: 2.1cqw;
-  font-style: normal;
-  line-height: 1.35;
-}
-
-.app-invite-letter__recipient {
+  margin: 0;
+  font-size: 2.6cqw;
   font-weight: $govuk-font-weight-bold;
-}
-
-// A line to fill in by pen.
-.app-invite-letter__write-in {
-  min-height: 1.35em;
-  border-bottom: 0.15cqw solid govuk-colour("black", $variant: "tint-50");
 }
 
 .app-invite-letter__message {

@@ -1,9 +1,9 @@
-@props(['union', 'recipient', 'addressLines', 'joinUrl', 'joinTitle', 'joinText', 'demoUrl' => null, 'features'])
+@props(['union', 'joinUrl', 'joinTitle', 'joinText', 'demoUrl' => null, 'features'])
 
 {{--
     A letter on one A4 sheet, folded in three to fit a DL envelope (110 × 220mm). Each third is a panel,
-    so no fold runs through text or a QR code. The address sits where a DL window envelope shows it,
-    in the top third. Bound to the same Alpine state as the other sizes on the print page. Styled by
+    so no fold runs through text or a QR code. It's addressed only "To the occupier", where a DL window
+    envelope shows it in the top third, so it names nobody and suits any door. Bound to the same Alpine state as the other sizes on the print page. Styled by
     resources/scss/components/_invite.scss.
 --}}
 <div class="app-invite-slot">
@@ -12,16 +12,7 @@
             <p class="app-invite-card__union">{{ $union }}</p>
             <h2 class="app-invite-card__headline" x-text="kind === 'demo' ? 'Not sure yet? Look around first' : headline"></h2>
 
-            <address class="app-invite-letter__address">
-                <span class="app-invite-letter__recipient">{{ $recipient }}</span>
-                <span class="app-invite-letter__write-in">Flat</span>
-                @forelse ($addressLines as $line)
-                    <span>{{ $line }}</span>
-                @empty
-                    <span class="app-invite-letter__write-in"></span>
-                    <span class="app-invite-letter__write-in"></span>
-                @endforelse
-            </address>
+            <p class="app-invite-letter__address">To the occupier</p>
 
             <p class="app-invite-card__message app-invite-letter__message" x-show="kind !== 'demo' && message" x-text="message"></p>
             @if ($demoUrl)

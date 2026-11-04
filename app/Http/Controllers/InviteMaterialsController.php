@@ -68,8 +68,6 @@ class InviteMaterialsController extends Controller
             'demoUrl' => $demoUrl,
             'demoQr' => $demoUrl ? QrCode::dataUri($demoUrl) : null,
             'headlines' => self::CAMPAIGN_HEADLINES,
-            'recipient' => 'To the occupier',
-            'addressLines' => [],
             'message' => 'Get together with your neighbours to get repairs done, keep rents fair and look out for each other. Register your building and invite the people who live there. It\'s free.',
         ]);
     }
@@ -91,8 +89,6 @@ class InviteMaterialsController extends Controller
             'demoUrl' => $demoUrl,
             'demoQr' => $demoUrl ? QrCode::dataUri($demoUrl) : null,
             'headlines' => self::HEADLINES,
-            'recipient' => 'To the tenant',
-            'addressLines' => array_values(array_filter([$building->address_line_1, $building->address_line_2, $building->city, $building->postcode])),
             'message' => "Tenants of {$building->formattedAddress()} are getting together to get repairs done, keep rents fair and look out for each other. It's free to join.",
         ]);
     }
