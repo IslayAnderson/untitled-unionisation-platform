@@ -42,7 +42,7 @@ It never records who scanned it. Codes printed before this was added don't carry
 aren't counted.
 
 ## Campaign printables
-`/admin/printables` (`InviteMaterialsController::campaign`) prints posters, flyers and door slips for
+`/admin/printables` (`InviteMaterialsController::campaign`) prints posters, flyers, door slips and letters for
 leafleting buildings that don't have a union yet. It's the tenants' print page, with the same sizes,
 versions and bulk sets to cut and staple, except that the leaflets:
 * are headed with the platform's name, not a union's, and name no building or address;

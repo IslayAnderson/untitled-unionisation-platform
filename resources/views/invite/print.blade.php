@@ -3,6 +3,7 @@
         'poster' => ['Poster', 'One A4 sheet, for noticeboards and lifts'],
         'flyers' => ['Flyers', 'Two A5 flyers per A4 sheet'],
         'slips' => ['Door slips', 'Four small slips per A4 sheet'],
+        'letter' => ['Letter for a DL envelope', 'One A4 sheet folded in three, with the address where a window envelope shows it'],
     ];
 @endphp
 
@@ -17,7 +18,7 @@
         setKinds: @js(array_keys($versions)),
         copies: 10,
         versions: @js(array_map(fn ($version) => $version[0], $versions)),
-        cardsPerSheet: { poster: 1, flyers: 2, slips: 4 },
+        cardsPerSheet: { poster: 1, flyers: 2, slips: 4, letter: 1 },
         qr: { join: @js($joinQr), demo: @js($demoQr) },
         get orderedSetKinds() {
             return Object.keys(this.versions).filter(version => this.setKinds.includes(version));
@@ -137,8 +138,9 @@
                         <p class="govuk-body govuk-!-margin-bottom-0">
                             The sheets print in order: one of each version, then the next set.
                             <span x-show="design !== 'poster'">Print single-sided and keep the sheets in the order they come out. Square up the stack, cut along the dashed lines through the whole stack, and each pile is in order.</span>
-                            <span x-show="design === 'poster'">Print single-sided and keep the sheets in the order they come out.</span>
-                            <span x-show="orderedSetKinds.length > 1" x-text="`Staple each group of ${orderedSetKinds.length} from the top.`"></span>
+                            <span x-show="design === 'poster' || design === 'letter'">Print single-sided and keep the sheets in the order they come out.</span>
+                            <span x-show="design !== 'letter' && orderedSetKinds.length > 1" x-text="`Staple each group of ${orderedSetKinds.length} from the top.`"></span>
+                            <span x-show="design === 'letter' && orderedSetKinds.length > 1" x-text="`Fold each group of ${orderedSetKinds.length} together and put them in one envelope.`"></span>
                         </p>
                     </div>
                 </div>
@@ -171,6 +173,16 @@
                     </div>
                 </div>
 
+                <div class="govuk-inset-text" x-show="design === 'letter'" x-cloak>
+                    <p class="govuk-body">
+                        Fold along the marks on the edges: the bottom third up, then the top third back, so the address faces out.
+                        It fits a DL envelope (110 × 220mm). In a window envelope the address shows through the window.
+                    </p>
+                    <p class="govuk-body govuk-!-margin-bottom-0">
+                        There's a line to write the flat number on by hand. Don't print it: the sheets don't name anyone.
+                    </p>
+                </div>
+
                 <x-button type="button" @click="window.print()" x-bind:disabled="! sheetKinds.length">Print</x-button>
                 <p class="govuk-body-s">Print on A4 at 100% scale, with headers and footers turned off.</p>
 
@@ -196,6 +208,11 @@
                                         @foreach (range(1, 2) as $i)
                                             <x-invite-card size="flyer" :union="$union" :join-url="$joinUrl" :join-title="$joinTitle" :join-text="$joinText" :demo-url="$demoUrl" :features="$features" cut />
                                         @endforeach
+                                    </div>
+                                </template>
+                                <template x-if="design === 'letter'">
+                                    <div class="app-invite-sheet__layout">
+                                        <x-invite-letter :union="$union" :recipient="$recipient" :address-lines="$addressLines" :join-url="$joinUrl" :join-title="$joinTitle" :join-text="$joinText" :demo-url="$demoUrl" :features="$features" />
                                     </div>
                                 </template>
                                 <template x-if="design === 'slips'">

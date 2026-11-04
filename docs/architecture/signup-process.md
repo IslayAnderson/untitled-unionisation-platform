@@ -66,9 +66,16 @@ section (`GET /invite/print`). They choose:
   ballots, the constitution and elected roles, with numbers taken from the constitution), or, when
   the [demo](demo.md) is on, a demo version ("Not sure yet? Look around first") whose code leads to
   the demo union, with the building's join link underneath for when they're ready;
-* a **size**: an A4 poster, two A5 flyers or four door slips per A4 sheet. To fit, door slips leave
-  out the message, information flyers leave out the message, and information door slips list only
-  the feature titles.
+* a **size**: an A4 poster, two A5 flyers or four door slips per A4 sheet, or a letter for a DL
+  envelope. To fit, door slips leave out the message, information flyers leave out the message, and
+  information door slips list only the feature titles.
+
+The letter is one A4 sheet in three 99mm panels, so the folds (marked at the edges) never cross text
+or the code: the headline, address and message on top, how the union works in the middle (just the
+titles on the invitation), the code at the bottom. The address sits 20mm from the left and 50mm from
+the top, inside a DL window (90 × 45mm) wherever the folded sheet settles in the envelope. It's "To the
+tenant", a blank line to write the flat on by hand, and the building's address; campaign letters are
+"To the occupier" with blank lines. Folded bottom up, then top back, the address faces out.
 
 They can pick or write a headline and edit the message. Each one shows the union's name, the
 building's join link and its QR code (SVG, so it prints sharply). Nothing is stored, and the material

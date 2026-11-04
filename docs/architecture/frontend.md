@@ -104,7 +104,7 @@ looks and behaves like the rest:
 | `app-related` | Related links beside the main column |
 | `app-sub-navigation` | Links between the admin pages |
 | `app-table-wrapper` | Lets a wide table scroll sideways on small screens |
-| `app-invite-*` | The printable posters, flyers and door slips (sized in millimetres and container query units so the screen preview matches the printed sheet) |
+| `app-invite-*` | The printable posters, flyers, door slips and DL letters (sized in millimetres and container query units so the screen preview matches the printed sheet) |
 
 ## Not covered
 

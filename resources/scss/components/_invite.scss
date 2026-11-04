@@ -410,3 +410,153 @@
 .app-invite-card--slip.app-invite-card--info .app-invite-card__how {
   font-size: 3.4cqw;
 }
+
+// A letter for a DL envelope: one A4 sheet in three panels of 99mm, folded
+// along the marks at the edges. Sizes are in cqw of the sheet's width, so
+// 1mm is 1 / 2.1 = 0.476cqw.
+.app-invite-letter {
+  @include govuk-typography-common;
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  height: 100%;
+  container-type: inline-size;
+  color: govuk-colour("black");
+  background: govuk-colour("white");
+}
+
+.app-invite-letter__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4cqw;
+  min-height: 0;
+  padding: 7cqw 7.6cqw;
+  overflow: hidden;
+}
+
+// Fold marks at both edges of each fold, inside printers' unprintable margin.
+.app-invite-letter__panel + .app-invite-letter__panel::before,
+.app-invite-letter__panel + .app-invite-letter__panel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 3.4cqw;
+  border-top: 0.2cqw solid govuk-colour("black", $variant: "tint-50");
+}
+
+.app-invite-letter__panel + .app-invite-letter__panel::before {
+  left: 2.4cqw;
+}
+
+.app-invite-letter__panel + .app-invite-letter__panel::after {
+  right: 2.4cqw;
+}
+
+.app-invite-letter .app-invite-card__union {
+  font-size: 1.9cqw;
+}
+
+.app-invite-letter .app-invite-card__headline {
+  max-width: 85%;
+  font-size: 4.6cqw;
+}
+
+// A DL window is 90 × 45mm, 20mm from the left. With the sheet folded, this
+// spot sits in the window wherever the letter settles in the envelope.
+.app-invite-letter__address {
+  position: absolute;
+  top: 23.8cqw;
+  left: 9.5cqw;
+  display: flex;
+  flex-direction: column;
+  width: 38cqw;
+  font-size: 2.1cqw;
+  font-style: normal;
+  line-height: 1.35;
+}
+
+.app-invite-letter__recipient {
+  font-weight: $govuk-font-weight-bold;
+}
+
+// A line to fill in by pen.
+.app-invite-letter__write-in {
+  min-height: 1.35em;
+  border-bottom: 0.15cqw solid govuk-colour("black", $variant: "tint-50");
+}
+
+.app-invite-letter__message {
+  position: absolute;
+  top: 23.8cqw;
+  left: 52cqw;
+  width: 40.4cqw;
+  font-size: 1.95cqw;
+}
+
+.app-invite-letter .app-invite-card__subhead {
+  padding-top: 1.4cqw;
+  border-top-width: 0.3cqw;
+  font-size: 2.3cqw;
+}
+
+.app-invite-letter .app-invite-card__feature-list {
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 3.4cqw;
+  row-gap: 2.6cqw;
+  font-size: 1.6cqw;
+}
+
+.app-invite-letter .app-invite-card__feature-list dt {
+  margin-bottom: 0.4cqw;
+  font-size: 1.8cqw;
+}
+
+// The invitation lists what the union does, without the details.
+.app-invite-letter:not(.app-invite-letter--info) .app-invite-card__feature-list {
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 1.6cqw;
+  font-size: 2.3cqw;
+}
+
+.app-invite-letter:not(.app-invite-letter--info) .app-invite-card__feature-list dt {
+  font-size: 2.3cqw;
+  font-weight: 400;
+}
+
+.app-invite-letter:not(.app-invite-letter--info) .app-invite-card__feature-list dt::before {
+  content: "✓ ";
+  font-weight: 700;
+}
+
+.app-invite-letter:not(.app-invite-letter--info) .app-invite-card__feature-list dd {
+  display: none;
+}
+
+.app-invite-letter__panel--join {
+  justify-content: center;
+}
+
+.app-invite-letter .app-invite-card__join {
+  gap: 5cqw;
+  margin-top: 0;
+}
+
+.app-invite-letter .app-invite-card__qr {
+  width: 30cqw;
+}
+
+.app-invite-letter .app-invite-card__how {
+  font-size: 2.3cqw;
+}
+
+// The information version's features need the whole middle panel.
+.app-invite-letter--info .app-invite-letter__panel:nth-child(2) {
+  gap: 1.6cqw;
+  padding-top: 4.8cqw;
+  padding-bottom: 4.8cqw;
+}
+
+.app-invite-letter--info .app-invite-card__feature-list {
+  row-gap: 1.8cqw;
+  font-size: 1.5cqw;
+}

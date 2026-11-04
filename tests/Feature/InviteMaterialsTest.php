@@ -47,6 +47,16 @@ it('explains how the union works on the leaflet, using the constitution\'s numbe
         ->assertSeeText('Referendums stay open for 10 days.');
 });
 
+it('prints a letter for a DL window envelope, addressed to the building', function () {
+    $building = Building::factory()->create(['address_line_1' => '1 Example Road', 'address_line_2' => null, 'city' => 'London', 'postcode' => 'EX1 2MP']);
+    $tenant = Contact::factory()->tenantOf($building, 'Flat 417')->create();
+
+    $this->actingAs($tenant->user)->get(route('invite.print'))
+        ->assertSeeText('Letter for a DL envelope')
+        ->assertSeeInOrder(['app-invite-letter__address', 'To the tenant', 'Flat', '1 Example Road', 'London', 'EX1 2MP'], false)
+        ->assertDontSee('Flat 417');
+});
+
 it('links to the print page from the dashboard', function () {
     $tenant = Contact::factory()->tenantOf(Building::factory()->create())->enrolled()->create();
 
@@ -70,6 +80,7 @@ it('gives admins generic leaflets for campaigns, linking to the home page', func
         ->assertOk()
         ->assertSeeText(config('app.name'))
         ->assertSeeText('Scan to start a union for your building')
+        ->assertSeeText('To the occupier')
         ->assertSee(route('home'))
         ->assertSeeText('Scan to look around a demo union')
         ->assertSeeText('Sets to cut and staple')
