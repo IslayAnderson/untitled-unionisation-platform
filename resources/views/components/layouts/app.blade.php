@@ -197,6 +197,12 @@
                             <li class="govuk-footer__inline-list-item">
                                 <a class="govuk-footer__link" href="{{ route('demo.show') }}">Demo union</a>
                             </li>
+                            <li class="govuk-footer__inline-list-item">
+                                <a class="govuk-footer__link" href="{{ route('demo.printables') }}">Example flyers and posters</a>
+                            </li>
+                            <li class="govuk-footer__inline-list-item">
+                                <a class="govuk-footer__link" href="{{ route('demo.emails.index') }}">Example emails</a>
+                            </li>
                         @endif
                         @if ($user?->contact)
                             <li class="govuk-footer__inline-list-item">

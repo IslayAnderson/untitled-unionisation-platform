@@ -122,6 +122,7 @@ it('shows anyone every email the platform sends, as the demo union\'s, without s
     Notification::fake();
 
     $this->get(route('demo.show'))->assertSee(route('demo.emails.index'));
+    $this->get(route('home'))->assertSee(route('demo.emails.index'))->assertSee(route('demo.printables'));
     $index = $this->get(route('demo.emails.index'))->assertOk()->assertSeeText('The demo union\'s emails');
 
     foreach (SampleEmails::for($demo, DemoEmailController::ADDRESS) as $email) {
@@ -144,6 +145,7 @@ it('hides the demo when it is turned off, and nobody can join it', function () {
     $this->get(route('join', $demo->signup_token))->assertNotFound();
 
     config(['demo.enabled' => false]);
+    $this->get(route('home'))->assertDontSee(route('demo.emails.index'))->assertDontSee(route('demo.printables'));
     $this->get(route('demo.show'))->assertNotFound();
     $this->get(route('demo.printables'))->assertNotFound();
     $this->get(route('demo.emails.index'))->assertNotFound();
