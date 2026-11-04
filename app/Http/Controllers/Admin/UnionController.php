@@ -25,6 +25,7 @@ class UnionController extends Controller
     public function index(): View
     {
         $unions = $this->withStats(Building::query())->latest()->get();
+        $active = $unions->filter(fn (Building $union) => $union->last_active_at?->gt(now()->subDays(30)))->count();
 
         return view('admin.unions.index', [
             'unions' => $unions,
@@ -33,7 +34,8 @@ class UnionController extends Controller
                 'Members' => $unions->sum('members_count'),
                 'Waiting to be vouched for' => $unions->sum('waiting_count'),
                 'Accounts' => User::count(),
-                'Active unions (last 30 days)' => $unions->filter(fn (Building $union) => $union->last_active_at?->gt(now()->subDays(30)))->count(),
+                'Active unions (last 30 days)' => $active,
+                'Inactive unions (nothing new in 30 days)' => $unions->count() - $active,
             ],
             'qrScans' => $this->qrScansByKind(),
         ]);

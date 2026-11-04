@@ -100,6 +100,20 @@ it('shows usage numbers for each union without names or content', function () {
         ->assertDontSeeText($members[0]->name);
 });
 
+it('counts unions with nothing new in 30 days as inactive', function () {
+    $active = Building::factory()->create();
+    Bulletin::factory()->create(['building_id' => $active->id]);
+    $this->travel(-40)->days();
+    $quiet = Building::factory()->create();
+    Bulletin::factory()->create(['building_id' => $quiet->id]);
+    Building::factory()->create();
+    $this->travelBack();
+
+    $this->actingAs($this->admin)->get(route('admin.unions.index'))
+        ->assertOk()
+        ->assertSeeInOrder(['Active unions (last 30 days)', '1', 'Inactive unions (nothing new in 30 days)', '2']);
+});
+
 it('emails account holders first, and deletes only those who do not log in within 7 days', function () {
     Notification::fake();
     $building = Building::factory()->create(['name' => 'Example Court']);
