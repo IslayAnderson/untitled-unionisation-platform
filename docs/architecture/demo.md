@@ -43,3 +43,13 @@ created and filled, a member removed, and every outcome), and mail that was sent
 
 Every email address ends in `.invalid` or `.example`, so nothing in the demo can reach a real
 inbox. Accounts get random passwords that nobody knows.
+
+## Emails
+`/demo/emails` (`DemoEmailController`) shows anyone, without entering the demo, every email the platform
+sends, as the demo union's would look. Each has a page saying who gets it and its subject, with the email
+in a sandboxed frame (no scripts; links open in a new tab), and links to the previous and next one.
+Nothing is sent.
+
+The emails come from `App\Support\SampleEmails`, which `php artisan mail:samples` also uses. For the demo
+they use its own mail and referendums, so their links lead into the demo; the rest of the details are made
+up, and they're addressed to `you@example.com`.

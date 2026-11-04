@@ -1,0 +1,10 @@
+@use "pkg:govuk-frontend/base" as *;
+
+// An email shown in a frame, at the height of the email once it loads.
+.app-email-frame {
+  display: block;
+  width: 100%;
+  min-height: 600px;
+  border: 1px solid govuk-functional-colour(border);
+  @include govuk-responsive-margin(6, "bottom");
+}

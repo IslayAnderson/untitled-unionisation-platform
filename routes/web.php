@@ -13,6 +13,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CookieBannerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemoController;
+use App\Http\Controllers\DemoEmailController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HowVouchingWorksController;
 use App\Http\Controllers\ImageUploadController;
@@ -46,6 +47,9 @@ Route::post('/feedback', [FeedbackController::class, 'store'])
 
 Route::get('/demo', [DemoController::class, 'show'])->middleware('qr-scan:demo')->name('demo.show');
 Route::get('/demo/printables', [InviteMaterialsController::class, 'demo'])->name('demo.printables');
+Route::get('/demo/emails', [DemoEmailController::class, 'index'])->name('demo.emails.index');
+Route::get('/demo/emails/{sample}', [DemoEmailController::class, 'show'])->name('demo.emails.show');
+Route::get('/demo/emails/{sample}/html', [DemoEmailController::class, 'html'])->name('demo.emails.html');
 Route::post('/demo', [DemoController::class, 'enter'])->middleware(['guest', 'throttle:20,1'])->name('demo.enter');
 
 Route::get('/address/search', AddressSearchController::class)

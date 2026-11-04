@@ -21,6 +21,7 @@
 @use "components/sub-navigation";
 @use "components/diagram";
 @use "components/dialog";
+@use "components/email-frame";
 
 [x-cloak] {
   display: none !important;

@@ -18,7 +18,8 @@
             </p>
             <p class="govuk-body">
                 You can also <a href="{{ route('demo.printables') }}" class="govuk-link">see its printable flyers and posters</a>
-                without entering, the ones members put up to invite their neighbours.
+                without entering, the ones members put up to invite their neighbours, and
+                <a href="{{ route('demo.emails.index') }}" class="govuk-link">read the emails the platform sends</a>.
             </p>
 
             @auth

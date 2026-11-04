@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DemoEmailController;
 use App\Models\Building;
 use App\Models\Bulletin;
 use App\Models\Contact;
@@ -7,7 +8,10 @@ use App\Models\Referendum;
 use App\Models\User;
 use App\Services\Cleanup;
 use App\Services\DemoUnion;
+use App\Support\SampleEmails;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 beforeEach(function () {
     config(['demo.enabled' => true]);
@@ -111,6 +115,28 @@ it('saves nothing a demo visitor does', function () {
     $this->assertGuest();
 });
 
+it('shows anyone every email the platform sends, as the demo union\'s, without sending them', function () {
+    app(DemoUnion::class)->build();
+    $demo = Building::where('is_demo', true)->sole();
+    Mail::fake();
+    Notification::fake();
+
+    $this->get(route('demo.show'))->assertSee(route('demo.emails.index'));
+    $index = $this->get(route('demo.emails.index'))->assertOk()->assertSeeText('The demo union\'s emails');
+
+    foreach (SampleEmails::for($demo, DemoEmailController::ADDRESS) as $email) {
+        $index->assertSee(route('demo.emails.show', $email->slug));
+        $this->get(route('demo.emails.show', $email->slug))->assertOk()->assertSeeText($email->subject());
+        $this->get(route('demo.emails.html', $email->slug))->assertOk()->assertSee('<base target="_blank">', false);
+    }
+
+    $this->get(route('demo.emails.html', 'union-mail-to-a-landlord'))->assertSee($demo->name, false);
+    $this->get(route('demo.emails.show', 'no-such-email'))->assertNotFound();
+    Mail::assertNothingOutgoing();
+    Notification::assertNothingSent();
+    $this->assertGuest();
+});
+
 it('hides the demo when it is turned off, and nobody can join it', function () {
     app(DemoUnion::class)->build();
     $demo = Building::where('is_demo', true)->sole();
@@ -120,6 +146,7 @@ it('hides the demo when it is turned off, and nobody can join it', function () {
     config(['demo.enabled' => false]);
     $this->get(route('demo.show'))->assertNotFound();
     $this->get(route('demo.printables'))->assertNotFound();
+    $this->get(route('demo.emails.index'))->assertNotFound();
     $this->post(route('demo.enter'))->assertNotFound();
 });
 
