@@ -156,3 +156,20 @@ by referendum.
 five minutes (`php artisan schedule:work` locally, or a cron entry for `schedule:run` in production),
 alongside `union-mail:fetch-replies`.
 Decisions on an overdue mail are refused even before the command runs.
+
+## Email template
+Every HTML email the platform sends uses one template: Laravel's mail components, published to
+`resources/views/vendor/mail` and restyled like the site (Arial, GOV.UK colours, a black header bar and a
+green button), with the theme in `html/themes/default.css`, which Laravel inlines.
+* **Notifications** (`resources/views/vendor/notifications/email.blade.php`) are headed with the platform's
+  name and have its footer: who runs it, and links to the privacy policy and feedback form. There's no
+  "Hello!" or "Regards" unless a notification sets one. Laravel's email confirmation is reworded in
+  `AppServiceProvider`.
+* **Union mail** (`emails/union-message`) is headed and signed by the union, with no link to or mention of
+  the platform. Its rich text body is passed as HTML (`:html`), not parsed as Markdown.
+* **Forwarded replies** (`emails/forwarded-reply`) are headed with the union's name. The sender's message
+  is escaped plain text, passed as HTML so Markdown in it isn't turned into links.
+
+`php artisan mail:samples you@example.org` sends one of every email, with made-up details, to check how
+they look in a real inbox. Nothing is saved, so links in them lead nowhere.
+

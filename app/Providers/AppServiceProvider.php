@@ -17,8 +17,10 @@ use App\Services\InboundMail\Drivers\FakeDriver as FakeInboundMailbox;
 use App\Services\InboundMail\Drivers\ImapDriver;
 use App\Services\InboundMail\InboundMailbox;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use InvalidArgumentException;
@@ -48,6 +50,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Laravel's own email, worded like the platform's other emails.
+        VerifyEmail::toMailUsing(fn (object $notifiable, string $url) => (new MailMessage)
+            ->subject('Confirm your email address')
+            ->line('Confirm your email address to finish signing up to '.config('app.name').'.')
+            ->action('Confirm email address', $url)
+            ->line('The link works for '.config('auth.verification.expire', 60).' minutes. If you didn\'t sign up, you can ignore this email.'));
+
         Relation::enforceMorphMap([
             'building' => Building::class,
             'bulletin' => Bulletin::class,

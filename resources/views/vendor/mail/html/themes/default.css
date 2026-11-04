@@ -1,0 +1,303 @@
+/*
+ * The platform's email theme, inlined into every HTML email. Colours and type
+ * follow the GOV.UK Design System as the site does: Arial, no GOV.UK branding.
+ */
+
+/* Base */
+
+body,
+body *:not(html):not(style):not(br):not(tr):not(code) {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+}
+
+body {
+    -webkit-text-size-adjust: none;
+    background-color: #f4f8fb;
+    color: #0b0c0c;
+    height: 100%;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+}
+
+p,
+ul,
+ol,
+blockquote {
+    font-size: 19px;
+    line-height: 1.4;
+    margin-top: 0;
+    text-align: left;
+}
+
+a {
+    color: #1d70b8;
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Type */
+
+h1 {
+    color: #0b0c0c;
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1.1;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+h2 {
+    color: #0b0c0c;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+h3 {
+    color: #0b0c0c;
+    font-size: 19px;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+p {
+    margin-bottom: 20px;
+}
+
+p.sub {
+    font-size: 16px;
+}
+
+blockquote {
+    border-left: 5px solid #cecece;
+    margin-left: 0;
+    padding-left: 15px;
+}
+
+/* Layout */
+
+.wrapper {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    background-color: #f4f8fb;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.content {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* Header: a black bar with the service's or union's name, like the site's Generic header. */
+
+.header {
+    background-color: #0b0c0c;
+    border-bottom: 10px solid #1d70b8;
+    padding: 0;
+}
+
+.header-cell {
+    padding: 15px 30px;
+}
+
+.header-link {
+    color: #ffffff;
+    display: inline-block;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.25;
+    text-decoration: none;
+}
+
+/* Body */
+
+.body {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    background-color: #f4f8fb;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.inner-body {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 600px;
+    margin: 0 auto;
+    padding: 0;
+    width: 600px;
+}
+
+.body .inner-body {
+    background-color: #ffffff;
+}
+
+.content-cell {
+    max-width: 100vw;
+    padding: 30px;
+}
+
+/* Subcopy: the link under a button, for when it doesn't work. */
+
+.subcopy {
+    border-top: 1px solid #cecece;
+    margin-top: 25px;
+    padding-top: 20px;
+}
+
+.subcopy p {
+    color: #484949;
+    font-size: 16px;
+}
+
+/* Footer */
+
+.footer {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 600px;
+    margin: 0 auto;
+    padding: 0;
+    width: 600px;
+}
+
+.footer-cell {
+    padding: 20px 30px 40px;
+}
+
+.footer p {
+    color: #484949;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.footer a {
+    color: #484949;
+}
+
+/* Tables */
+
+.table table {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 20px 0 30px;
+    width: 100%;
+}
+
+.table th {
+    border-bottom: 1px solid #cecece;
+    font-size: 19px;
+    margin: 0;
+    padding: 10px 20px 10px 0;
+    text-align: left;
+}
+
+.table td {
+    border-bottom: 1px solid #cecece;
+    font-size: 19px;
+    margin: 0;
+    padding: 10px 20px 10px 0;
+}
+
+/* Buttons: like the GOV.UK Button component. */
+
+.action {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    float: unset;
+    margin: 10px 0 30px;
+    padding: 0;
+    width: 100%;
+}
+
+.button {
+    -webkit-text-size-adjust: none;
+    border-radius: 0;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 19px;
+    font-weight: normal;
+    line-height: 1.2;
+    overflow: hidden;
+    padding: 10px 15px;
+    text-decoration: none;
+}
+
+.button-blue,
+.button-primary,
+.button-green,
+.button-success {
+    background-color: #0f7a52;
+    border-bottom: 2px solid #083d29;
+}
+
+.button-red,
+.button-error {
+    background-color: #ca3535;
+    border-bottom: 2px solid #651b1b;
+}
+
+.button-secondary {
+    background-color: #f3f3f3;
+    border-bottom: 2px solid #858686;
+    color: #0b0c0c;
+}
+
+/* Panels: like the GOV.UK Inset text component. */
+
+.panel {
+    border-left: 10px solid #cecece;
+    margin: 0 0 25px;
+}
+
+.panel-content {
+    color: #0b0c0c;
+    padding: 15px;
+}
+
+.panel-content p {
+    color: #0b0c0c;
+}
+
+.panel-content p:last-child {
+    margin-bottom: 0;
+}
+
+.panel-item {
+    padding: 0;
+}
+
+.panel-item p:last-of-type {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* Utilities */
+
+.break-all {
+    word-break: break-all;
+}

@@ -43,7 +43,7 @@ it('never names the sending member in the email', function () {
     $mail = new UnionMessage($this->building, 'Broken lift', 'The lift has been broken for three weeks.');
 
     $mail->assertSeeInHtml('The lift has been broken for three weeks.')
-        ->assertSeeInHtml("Example Court's Union")
+        ->assertSeeInHtml("Example Court's Union", false)
         ->assertDontSeeInHtml('Morgan Member')
         ->assertSeeInText("Example Court's Union")
         ->assertDontSeeInText('Morgan Member');
@@ -51,7 +51,7 @@ it('never names the sending member in the email', function () {
 
 it('strips unsafe HTML from the message body but keeps formatting', function () {
     (new UnionMessage($this->building, 'Hi', '<p onclick="steal()"><strong>Fix the lift</strong></p><script>alert(1)</script>'))
-        ->assertSeeInHtml('<p><strong>Fix the lift</strong></p>', false)
+        ->assertSeeInHtml('>Fix the lift</strong></p>', false)
         ->assertDontSeeInHtml('<script', false)
         ->assertDontSeeInHtml('onclick', false)
         ->assertSeeInText('Fix the lift')

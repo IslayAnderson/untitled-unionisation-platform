@@ -46,7 +46,7 @@ class UnionMessage extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'emails.union-message',
+            markdown: 'emails.union-message',
             text: 'emails.union-message-text',
             with: ['acceptsReplies' => (bool) ($this->replyAddress ?? $this->building->contact_email)],
         );
