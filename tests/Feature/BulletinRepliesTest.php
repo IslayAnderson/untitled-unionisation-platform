@@ -111,6 +111,31 @@ it('adds an email reply to the bulletin without the quoted message, and forwards
         && $forward->hasAttachment(Attachment::fromData(fn () => '%PDF-1.4', 'schedule.pdf')->withMime('application/pdf')));
 });
 
+it('shows a hostile email reply only as escaped text', function (?string $text, ?string $html) {
+    $mail = sentMail($this->author, $this->list);
+    $this->mailbox->receive(inboundReply($mail, [
+        'fromName' => '<img src=x onerror=alert(1)>',
+        'subject' => 'Re: <script>alert(1)</script>',
+        'text' => $text,
+        'html' => $html,
+    ]));
+
+    $this->artisan('union-mail:fetch-replies')->assertSuccessful();
+
+    $page = $this->actingAs($this->member->user)->get(route('bulletins.show', $mail->bulletin))->assertOk();
+
+    foreach (['<script', '<img', 'onerror=', 'javascript:', '<a '] as $markup) {
+        expect($mail->bulletin->replies()->sole()->rich_text)->not->toContain($markup);
+    }
+    $page->assertDontSee('<script>alert', false)
+        ->assertDontSee('<img src=x', false)
+        ->assertSeeText('Fixed.');
+})->with([
+    'script in the text part' => ['Fixed. <script>alert(1)</script>', null],
+    'HTML-only email' => [null, '<p>Fixed. <script>alert(1)</script><img src=x onerror="alert(1)"><a href="javascript:alert(1)">click</a></p>'],
+    'escaped markup that decodes to a script' => [null, '<p>Fixed. &lt;script&gt;alert(1)&lt;/script&gt;</p>'],
+]);
+
 it('emails the copy to every member separately when the union has no inbox', function () {
     $this->building->update(['contact_email' => null]);
     $mail = sentMail($this->author, $this->list);
