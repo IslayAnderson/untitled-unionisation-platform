@@ -1,202 +1,182 @@
 <mxfile host="Electron">
-  <diagram name="Page-1" id="mKzRmP7icLYrJMlAR50N">
-    <mxGraphModel dx="1169" dy="1603" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+  <diagram name="Page-1" id="i2gzyXkvFYMJsGjaZMTk">
+    <mxGraphModel dx="1169" dy="2440" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="2440" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-69" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-4">
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-55" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;dashed=1;endArrow=none;endFill=0;" target="i2gzyXkvFYMJsGjaZMTk-27" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-1" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:User&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Email = email&lt;br&gt;Password = password&lt;/p&gt;" vertex="1">
-          <mxGeometry height="80" width="160" x="10" y="200" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-64" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-9">
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-54" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-26" value="Yes">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-65" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-52">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-66" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="User Completes new building signup form" vertex="1">
-          <mxGeometry height="100" width="180" x="170" y="40" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Send confirmation email" vertex="1">
-          <mxGeometry height="100" width="180" x="170" y="360" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Confirmation email complete" vertex="1">
-          <mxGeometry height="100" width="100" x="880" y="40" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-22" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-21">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="User Completes Building detail form" vertex="1">
-          <mxGeometry height="100" width="100" x="770" y="360" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-67" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-4">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-9" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:Contact&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Name = name&lt;br&gt;Address = address&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Telephone = telephone&lt;/p&gt;" vertex="1">
-          <mxGeometry height="80" width="160" x="180" y="200" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-16" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-7">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-17" connectable="0" parent="CxdGvgUjjNjDyXp0arTx-16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="No" vertex="1">
-          <mxGeometry relative="1" x="0.0156" y="2" as="geometry">
-            <mxPoint as="offset" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-19" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-18">
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-53" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-18" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1040" y="360" as="targetPoint" />
+            <Array as="points"><mxPoint x="1150" y="2080" /><mxPoint x="1150" y="1550" /></Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-20" connectable="0" parent="CxdGvgUjjNjDyXp0arTx-19" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="Yes" vertex="1">
-          <mxGeometry relative="1" x="0.2444" as="geometry">
-            <mxPoint y="-15" as="offset" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-14" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Address matches existing building" vertex="1">
-          <mxGeometry height="120" width="120" x="870" y="170" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-15" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-14">
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-52" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-25" value="No">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="User Completes Unit detail form" vertex="1">
-          <mxGeometry height="100" width="100" x="990" y="360" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate boilerplate constitution and building Unit signup URL and QR code" vertex="1">
-          <mxGeometry height="100" width="100" x="770" y="530" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-28" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-27">
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-51" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-24" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-31" connectable="0" parent="CxdGvgUjjNjDyXp0arTx-28" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="Yes" vertex="1">
-          <mxGeometry relative="1" x="-0.019" y="3" as="geometry">
-            <mxPoint as="offset" />
-          </mxGeometry>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-50" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;dashed=1;endArrow=none;endFill=0;" target="i2gzyXkvFYMJsGjaZMTk-23" value="">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-33" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-32">
-          <mxGeometry relative="1" x="0.8" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-49" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-22" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-34" connectable="0" parent="CxdGvgUjjNjDyXp0arTx-33" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="No" vertex="1">
-          <mxGeometry relative="1" x="-0.1083" y="-1" as="geometry">
-            <mxPoint as="offset" />
-          </mxGeometry>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-48" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;dashed=1;endArrow=none;endFill=0;" target="i2gzyXkvFYMJsGjaZMTk-20" value="">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-24" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="&amp;gt;= 3 tenants have signed up" vertex="1">
-          <mxGeometry height="120" width="120" x="860" y="700" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-25" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-24">
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-47" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-21" value="No">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="820" y="660" />
-              <mxPoint x="920" y="660" />
-            </Array>
+            <Array as="points"><mxPoint x="680" y="1720" /><mxPoint x="680" y="1800" /><mxPoint x="890" y="1800" /></Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-26" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-24">
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-46" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-19" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-45" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-18" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-44" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-17" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-43" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-15" value="">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1040" y="660" />
-              <mxPoint x="920" y="660" />
-            </Array>
-            <mxPoint x="1040" y="460" as="sourcePoint" />
+            <Array as="points"><mxPoint x="890" y="1090" /><mxPoint x="410" y="1090" /></Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-27" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate Authentication URLs and QR Codes" vertex="1">
-          <mxGeometry height="100" width="100" x="760" y="860" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-37" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-36">
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-42" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-16" value="No">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-38" connectable="0" parent="CxdGvgUjjNjDyXp0arTx-37" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="Yes" vertex="1">
-          <mxGeometry relative="1" x="0.1608" y="3" as="geometry">
-            <mxPoint as="offset" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-41" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-40" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;dashed=1;endArrow=none;endFill=0;" target="i2gzyXkvFYMJsGjaZMTk-13" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-39" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-38" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-14" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="890" y="1000" /></Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-40" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-39" value="No">
-          <mxGeometry relative="1" x="0.7273" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-29" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Has tenant been authenticated by two other tenants" vertex="1">
-          <mxGeometry height="120" width="120" x="750" y="1010" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-30" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-29">
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-37" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-11" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-32" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Wait" vertex="1">
-          <mxGeometry height="100" width="100" x="980" y="860" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-36" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-10" value="No">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-35" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-24">
-          <mxGeometry relative="1" x="-0.4167" as="geometry">
-            <Array as="points">
-              <mxPoint x="1120" y="910" />
-              <mxPoint x="1120" y="660" />
-              <mxPoint x="920" y="660" />
-            </Array>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-35" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-12" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-34" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-33" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-32" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;dashed=1;endArrow=none;endFill=0;" target="i2gzyXkvFYMJsGjaZMTk-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-31" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;dashed=1;endArrow=none;endFill=0;" target="i2gzyXkvFYMJsGjaZMTk-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-30" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-5" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="650" y="190" /><mxPoint x="410" y="190" /></Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-36" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Enrol Tenant into Union" vertex="1">
-          <mxGeometry height="100" width="100" x="650" y="1190" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-39" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Wait" vertex="1">
-          <mxGeometry height="100" width="100" x="870" y="1190" as="geometry" />
-        </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-41" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-29">
-          <mxGeometry relative="1" x="-0.375" as="geometry">
-            <Array as="points">
-              <mxPoint x="1010" y="1240" />
-              <mxPoint x="1010" y="980" />
-              <mxPoint x="810" y="980" />
-            </Array>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-29" edge="1" parent="1" source="i2gzyXkvFYMJsGjaZMTk-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="i2gzyXkvFYMJsGjaZMTk-5" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="170" y="190" /><mxPoint x="410" y="190" /></Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-63" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-47">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=16;" value="Signing up, joining a building and being vouched for" vertex="1">
+          <mxGeometry height="30" width="700" x="20" y="0" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-43" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:User&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Email = email&lt;br&gt;Password = password&lt;/p&gt;" vertex="1">
-          <mxGeometry height="80" width="160" x="15.25" y="760" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Tenant completes the new building signup form: name, email, password, telephone, flat and address (from address lookup)" vertex="1">
+          <mxGeometry height="110" width="220" x="60.0" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-58" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-49">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Tenant completes the join form, from a building&#x27;s join link or QR code" vertex="1">
+          <mxGeometry height="110" width="200" x="550.0" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-59" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-55">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Create their account and send a confirmation email. Nothing counts towards the building until it&#x27;s confirmed" vertex="1">
+          <mxGeometry height="110" width="220" x="300.0" y="220" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-60" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-43">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-6" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:User&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Email = email&lt;br&gt;Password = password&lt;/p&gt;" vertex="1">
+          <mxGeometry height="74" width="230" x="795.0" y="200" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-46" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="User Completes Join building signup form" vertex="1">
-          <mxGeometry height="100" width="180" x="170" y="600" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-7" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:Contact&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Name = name&lt;br&gt;Telephone = telephone&lt;br&gt;Pending signup = address or building, and flat&lt;/p&gt;" vertex="1">
+          <mxGeometry height="91" width="230" x="795.0" y="285" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-47" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Send confirmation email" vertex="1">
-          <mxGeometry height="100" width="180" x="170" y="920" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Tenant confirms their email" vertex="1">
+          <mxGeometry height="100" width="220" x="300.0" y="400" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-62" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-47">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-9" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Joined by link, or address matches a registered building?" vertex="1">
+          <mxGeometry height="180" width="180" x="320.0" y="550" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-49" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:Contact&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Name = name&lt;br&gt;Address = address&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Telephone = telephone&lt;/p&gt;" vertex="1">
-          <mxGeometry height="80" width="160" x="179.75" y="760" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Tenant completes the building detail form: the union&#x27;s name, and their flat" vertex="1">
+          <mxGeometry height="100" width="200" x="790.0" y="590" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-51" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;endArrow=none;endFill=0;entryX=0.358;entryY=0.175;entryDx=0;entryDy=0;entryPerimeter=0;" target="CxdGvgUjjNjDyXp0arTx-29">
-          <mxGeometry relative="1" x="-0.0367" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Create the building with its boilerplate constitution, join link and QR code, and the pinned vouching bulletin" vertex="1">
+          <mxGeometry height="120" width="200" x="790.0" y="750" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-50" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Users will have their personal QR code that must be scanned by other tenants to be authenticated" vertex="1">
-          <mxGeometry height="30" width="170" x="540" y="990" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Tenant confirms their flat on the unit detail form" vertex="1">
+          <mxGeometry height="100" width="220" x="300.0" y="790" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-68" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-4">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-13" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:Unit&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Name = flat&lt;br&gt;Normalised name = flat 4&lt;br&gt;(also matches FLAT 4.)&lt;/p&gt;" vertex="1">
+          <mxGeometry height="91" width="190" x="5.0" y="950" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-52" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:Unit&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Name = name&lt;/p&gt;" vertex="1">
-          <mxGeometry height="80" width="160" x="350" y="200" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Place the tenant in the building and their flat, reusing a flat with the same normalised name" vertex="1">
+          <mxGeometry height="100" width="220" x="300.0" y="950" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-61" edge="1" parent="1" source="CxdGvgUjjNjDyXp0arTx-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="CxdGvgUjjNjDyXp0arTx-47">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-15" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="At least min_signups (3) tenants have confirmed?" vertex="1">
+          <mxGeometry height="170" width="170" x="325.0" y="1110" as="geometry" />
         </mxCell>
-        <mxCell id="CxdGvgUjjNjDyXp0arTx-55" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:Unit&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Name = name&lt;/p&gt;" vertex="1">
-          <mxGeometry height="80" width="160" x="344.75" y="760" as="geometry" />
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Wait. Invite neighbours with printed flyers and posters" vertex="1">
+          <mxGeometry height="100" width="200" x="790.0" y="1145" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Every tenant gets a personal vouching QR code. They arrange to meet on the vouching bulletin" vertex="1">
+          <mxGeometry height="100" width="220" x="300.0" y="1340" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Another tenant scans the QR code in person and confirms" vertex="1">
+          <mxGeometry height="100" width="220" x="300.0" y="1500" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-19" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Can they vouch?" vertex="1">
+          <mxGeometry height="140" width="140" x="340.0" y="1650" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-20" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="A member of the same building, or any confirmed tenant while it has fewer than vouches_required + 1 members. Not for themselves, twice, or someone removed by referendum" vertex="1">
+          <mxGeometry height="110" width="240" x="770.0" y="1665" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Refused, with the reason" vertex="1">
+          <mxGeometry height="100" width="200" x="790.0" y="1820" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Record the vouch" vertex="1">
+          <mxGeometry height="100" width="220" x="300.0" y="1850" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-23" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:Vouch&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Voucher = scanning tenant&lt;br&gt;Vouchee = QR code&amp;#x27;s tenant&lt;/p&gt;" vertex="1">
+          <mxGeometry height="74" width="190" x="5.0" y="1865" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-24" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Has vouches_required (2) vouches?" vertex="1">
+          <mxGeometry height="160" width="160" x="330.0" y="2000" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-25" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Wait for more neighbours to vouch" vertex="1">
+          <mxGeometry height="100" width="200" x="790.0" y="2030" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Enrol the tenant as a member of the union" vertex="1">
+          <mxGeometry height="100" width="220" x="300.0" y="2220" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-27" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Object:Contact&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;Enrolled at = now&lt;/p&gt;" vertex="1">
+          <mxGeometry height="57" width="170" x="15.0" y="2240" as="geometry" />
+        </mxCell>
+        <mxCell id="i2gzyXkvFYMJsGjaZMTk-28" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="min_signups and vouches_required come from the building&#x27;s current constitution and can be changed by referendum" vertex="1">
+          <mxGeometry height="50" width="300" x="260.0" y="2350" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

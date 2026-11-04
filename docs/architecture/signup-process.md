@@ -1,6 +1,6 @@
 # Signup process
 
-Clarifies `signup process.drawio`.
+The rules behind `signup process.drawio`.
 
 ## Entry points
 1. **New building signup form**: the user enters email, password, name, telephone, their unit

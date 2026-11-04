@@ -1,7 +1,9 @@
 # Data model amendments
 
-These changes to `Entity Diagram.drawio` were agreed before the build. Where this
-document and the diagram disagree, this document wins.
+These changes to the original entity diagram were agreed before the build, and explain why the
+schema looks as it does. `Entity Diagram.drawio` has since been redrawn from the database schema,
+so it shows every table and column as they are now, including tables added after these decisions
+(union mail, vouches, uploads, QR scans). Names in the "Diagram" column below are from the original.
 
 ## Naming
 Table names follow Laravel conventions (snake_case plurals). Spelling in the diagram is corrected:

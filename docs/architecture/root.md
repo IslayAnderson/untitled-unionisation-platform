@@ -15,8 +15,8 @@
 
 
 ## Docs
-* [Data model](data-model.md): changes to the entity diagram agreed before build, with the [entity diagram](<Entity Diagram.drawio>) of tables and their relationships. Where they differ, the data model takes precedence
-* [Signup process](signup-process.md): signup, address matching, vouching and enrolment rules, clarifying the [signup diagram](<signup process.drawio>) of how users sign up, buildings are registered and tenants authenticated
+* [Data model](data-model.md): the decisions behind the schema, agreed before build, with the [entity diagram](<Entity Diagram.drawio>) of every table, column and relationship as they are now
+* [Signup process](signup-process.md): signup, address matching, vouching and enrolment rules, with the [signup diagram](<signup process.drawio>) of how tenants sign up, buildings are registered and tenants are vouched for
 * [Address lookup](address-lookup.md): the swappable address lookup harness (Geoapify by default)
 * [Governance](governance.md): constitution amendments, policies, roles and referendums (milestone 3), with the [referendum diagram](<referendum process.drawio>) and the [leaving and removal diagram](<leaving and removal process.drawio>)
 * [Polls](polls.md): secret-ballot polls on bulletins, with the [polls diagram](<polls process.drawio>)
@@ -27,7 +27,7 @@
 * [Demo union](demo.md): the public read-only demo union, Larkspur House
 * [Front end](frontend.md): the GOV.UK Design System, how pages are built, and the app's own components
 
-The process diagrams open in [draw.io](https://www.drawio.com), and use the same shapes as the signup diagram: rounded boxes are steps, diamonds are decisions, and Object boxes are the records a step creates.
+The process diagrams open in [draw.io](https://www.drawio.com), and use the same shapes: rounded boxes are steps, diamonds are decisions, and Object boxes are the records a step creates.
 
 See also the [knowledge base](../knowledge-base/README.md) for the platform's commands, and [tests.md](../../tests.md) for what the tests check.
 
