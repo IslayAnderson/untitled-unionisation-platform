@@ -80,7 +80,7 @@ if missing:
 
 x = 40
 for group, tables in COLUMNS:
-    y = 120
+    y = 330
     for entry in tables:
         name, _, g = entry.partition(":")
         y += table(name, g or group, x, y) + 70
@@ -92,11 +92,49 @@ for parent, child, col in edges:
     edges_xml = f'<mxCell id="{nid()}" edge="1" parent="1" source="{src}" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;endArrow=ERmany;endFill=0;strokeColor={colour};jumpStyle=arc;jumpSize=8;" target="{rowid[(child, col)]}"><mxGeometry relative="1" as="geometry" /></mxCell>'
     cells.insert(0, edges_xml)
 
-legend = ("Generated from the database schema. Every table also has created_at and updated_at, except "
-          "poll_voters and referendum_voters (no timestamps, so a vote's timing can't reveal it) and qr_scans "
-          "(created_at only). Blue lines come from buildings, green from contacts. referendable and replyable "
-          "are polymorphic, so have no lines. policies.replaces_policy_id points to another policy.")
-cells.append(f'<mxCell id="{nid()}" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=top;rounded=0;" value="&lt;b style=&quot;font-size:16px&quot;&gt;Entities&lt;/b&gt;&lt;br&gt;{html.escape(legend)}" vertex="1"><mxGeometry height="80" width="1100" x="40" y="10" as="geometry" /></mxCell>')
+legend = ("Generated from the database schema by docs/architecture/diagrams/entities.py. Every table also has "
+          "created_at and updated_at, except poll_voters and referendum_voters (no timestamps, so a vote's timing "
+          "can't reveal it) and qr_scans (created_at only). referendable and replyable are polymorphic, so have no "
+          "lines. policies.replaces_policy_id points to another policy.")
+cells.append(f'<mxCell id="{nid()}" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=top;rounded=0;" value="&lt;b style=&quot;font-size:16px&quot;&gt;Entities&lt;/b&gt;&lt;br&gt;{html.escape(legend)}" vertex="1"><mxGeometry height="70" width="1100" x="40" y="10" as="geometry" /></mxCell>')
+
+# Key ---------------------------------------------------------------------------
+GROUP_NAMES = {
+    "building": "Buildings, flats and landlords", "people": "People, mailing lists and roles",
+    "governance": "Constitutions, policies and referendums", "noticeboard": "Bulletins, polls and discussions",
+    "mail": "Union mail", "files": "Uploaded images",
+}
+KX, KY, KW = 40, 100, 1560
+TEXT = "text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;"
+
+
+def key_cell(style, value, x, y, w, h):
+    cells.append(f'<mxCell id="{nid()}" parent="1" style="{style}" value="{html.escape(value)}" vertex="1"><mxGeometry height="{h}" width="{w}" x="{x}" y="{y}" as="geometry" /></mxCell>')
+
+
+def key_line(colour, x, y, w=60):
+    cells.append(f'<mxCell id="{nid()}" edge="1" parent="1" style="edgeStyle=none;rounded=0;html=1;endArrow=ERmany;endFill=0;strokeColor={colour};" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="{x}" y="{y}" as="sourcePoint" /><mxPoint x="{x + w}" y="{y}" as="targetPoint" /></mxGeometry></mxCell>')
+
+
+key_cell("swimlane;startSize=30;fontStyle=1;align=center;html=1;fillColor=#ffffff;strokeColor=#666666;swimlaneFillColor=#ffffff;collapsible=0;", "Key", KX, KY, KW, 190)
+for i, (group, label) in enumerate(GROUP_NAMES.items()):
+    fill, stroke = COLOURS[group]
+    gx = KX + 20 + i * 255
+    key_cell(f"rounded=0;html=1;fillColor={fill};strokeColor={stroke};", "", gx, KY + 45, 30, 20)
+    key_cell(TEXT, label, gx + 38, KY + 40, 215, 30)
+key_cell(TEXT + "fontStyle=1;", "PK", KX + 20, KY + 85, 30, 30)
+key_cell(TEXT, "Primary key: the table's own id (underlined). Two PKs mean the pair is unique", KX + 50, KY + 85, 520, 30)
+key_cell(TEXT + "fontStyle=1;", "FK", KX + 780, KY + 85, 30, 30)
+key_cell(TEXT, "Foreign key: holds the id of a row in another table, shown by a line", KX + 810, KY + 85, 600, 30)
+for i, (colour, label) in enumerate([
+    (EDGE["buildings"], "From buildings: the union a row belongs to"),
+    (EDGE["contacts"], "From contacts: the person a row is about or by"),
+    ("#666666", "From any other table"),
+]):
+    lx = KX + 20 + i * 500
+    key_line(colour, lx, KY + 145)
+    key_cell(TEXT, label, lx + 70, KY + 130, 330, 30)
+key_cell(TEXT + "fontColor=#666666;", "Each line runs from a table's id to the column that points to it. The forked end is the many side: one building has many flats, one contact has many vouches.", KX + 20, KY + 158, 1200, 30)
 
 width, height = x + 40, 2400
 open(OUT, "w").write(
