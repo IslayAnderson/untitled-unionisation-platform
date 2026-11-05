@@ -5,15 +5,15 @@ Untitled unionisation platform is a unified platform aimed at apartment blocks a
 # Docs
 
 * [Architecture](docs/architecture/root.md): the tech stack, milestones, and an index of the docs below
-  * [Data model](docs/architecture/data-model.md) and the [entity diagram](<docs/architecture/Entity Diagram.svg>) ([draw.io](<docs/architecture/Entity Diagram.drawio>))
-  * [Signup process](docs/architecture/signup-process.md): signup, address matching, vouching and enrolment, with the [signup diagram](<docs/architecture/signup process.svg>) ([draw.io](<docs/architecture/signup process.drawio>))
+  * [Data model](docs/architecture/data-model.md) and the [entity diagram](<docs/architecture/Entity Diagram.svg>)
+  * [Signup process](docs/architecture/signup-process.md): signup, address matching, vouching and enrolment, with the [signup diagram](<docs/architecture/signup process.svg>)
   * [Address lookup](docs/architecture/address-lookup.md)
-  * [Governance](docs/architecture/governance.md): constitution, policies, roles and referendums, with the [referendum diagram](<docs/architecture/referendum process.svg>) ([draw.io](<docs/architecture/referendum process.drawio>)) and the [leaving and removal diagram](<docs/architecture/leaving and removal process.svg>) ([draw.io](<docs/architecture/leaving and removal process.drawio>))
-  * [Polls](docs/architecture/polls.md), with the [polls diagram](<docs/architecture/polls process.svg>) ([draw.io](<docs/architecture/polls process.drawio>))
+  * [Governance](docs/architecture/governance.md): constitution, policies, roles and referendums, with the [referendum diagram](<docs/architecture/referendum process.svg>) and the [leaving and removal diagram](<docs/architecture/leaving and removal process.svg>)
+  * [Polls](docs/architecture/polls.md), with the [polls diagram](<docs/architecture/polls process.svg>)
   * [Contacts, landlords and mailing lists](docs/architecture/contacts.md)
-  * [Union mail](docs/architecture/mail.md): approval, sending and email replies, with the [union mail diagram](<docs/architecture/union mail process.svg>) ([draw.io](<docs/architecture/union mail process.drawio>)) and the [email replies diagram](<docs/architecture/email replies process.svg>) ([draw.io](<docs/architecture/email replies process.drawio>))
+  * [Union mail](docs/architecture/mail.md): approval, sending and email replies, with the [union mail diagram](<docs/architecture/union mail process.svg>) and the [email replies diagram](<docs/architecture/email replies process.svg>)
   * [Image uploads](docs/architecture/uploads.md)
-  * [Platform admin](docs/architecture/admin.md): usage numbers, clean-up and union exports, with the [clean-up diagram](<docs/architecture/clean-up process.svg>) ([draw.io](<docs/architecture/clean-up process.drawio>))
+  * [Platform admin](docs/architecture/admin.md): usage numbers, clean-up and union exports, with the [clean-up diagram](<docs/architecture/clean-up process.svg>)
   * [Demo union](docs/architecture/demo.md)
   * [Front end](docs/architecture/frontend.md): the GOV.UK Design System
 * [Knowledge base](docs/knowledge-base/README.md): how to use the platform's Artisan commands, the scheduler, queue workers and Tinker

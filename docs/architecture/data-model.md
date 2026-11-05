@@ -1,7 +1,7 @@
 # Data model amendments
 
 These changes to the original entity diagram were agreed before the build, and explain why the
-schema looks as it does. `Entity Diagram.drawio` has since been redrawn from the database schema,
+schema looks as it does. The [entity diagram](<Entity Diagram.svg>) has since been redrawn from the database schema,
 so it shows every table and column as they are now, including tables added after these decisions
 (union mail, vouches, uploads, QR scans). Names in the "Diagram" column below are from the original.
 

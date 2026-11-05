@@ -1,6 +1,6 @@
 # Signup process
 
-The rules behind `signup process.drawio`.
+The rules behind the [signup diagram](<signup process.svg>).
 
 ## Entry points
 1. **New building signup form**: the user enters email, password, name, telephone, their unit
