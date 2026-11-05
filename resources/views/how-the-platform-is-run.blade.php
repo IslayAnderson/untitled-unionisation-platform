@@ -31,6 +31,7 @@
                 <li>when each union started, and when it was last active</li>
                 <li>counts of members, posts, mail, referendums and so on</li>
                 <li>how many times QR codes have been scanned</li>
+                <li>how many times people have entered the demo union</li>
             </ul>
             <p class="govuk-body">The admin area never shows:</p>
             <ul class="govuk-list govuk-list--bullet">
@@ -38,7 +39,7 @@
                 <li>anything a union has written: bulletins, discussions, replies, polls or mail</li>
                 <li>who vouched for whom</li>
                 <li>how anyone voted. Votes are secret, and only totals are stored.</li>
-                <li>who scanned a QR code</li>
+                <li>who scanned a QR code or entered the demo</li>
             </ul>
             <p class="govuk-body">
                 To keep the platform working, administrators can access the database directly, and only do so when they need

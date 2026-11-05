@@ -3,7 +3,7 @@
 These changes to the original entity diagram were agreed before the build, and explain why the
 schema looks as it does. The [entity diagram](<Entity Diagram.svg>) has since been redrawn from the database schema,
 so it shows every table and column as they are now, including tables added after these decisions
-(union mail, vouches, uploads, QR scans). Names in the "Diagram" column below are from the original.
+(union mail, vouches, uploads, QR scans, demo sessions). Names in the "Diagram" column below are from the original.
 
 ## Naming
 Table names follow Laravel conventions (snake_case plurals). Spelling in the diagram is corrected:
@@ -97,6 +97,8 @@ Every table gets an auto-increment `id` primary key and `created_at` / `updated_
 * `uploaded_images`: images uploaded into rich text (see `uploads.md`). `building_id`,
   `uploader_contact_id`, `disk`, `path`, `mime_type`, `width`, `height`, `size`, `original_size`,
   `original_name`, `cache_warmed_at`.
+* `demo_sessions`: one row each time someone enters the demo, with only `created_at`, for the count
+  in `/admin` (see `admin.md`). Not tied to a building, since the demo union is rebuilt every night.
 
 ## Lookup data
 `landlord_types` (Individual, Company, Housing association, Local authority) and `contact_types`

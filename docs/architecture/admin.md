@@ -26,7 +26,8 @@ Admins run the platform. They aren't union officers and have no say in any union
 `/admin` also totals QR code scans across the platform by kind: join codes, vouching codes, campaign
 leaflets and demo codes (`App\Enums\QrScanKind`).
 
-The demo union is listed, tagged "Demo", but left out of the totals: its unions, members, accounts
+The demo union is listed, tagged "Demo", but left out of the totals (it has its own count of
+[demo sessions](#counting-demo-sessions)): its unions, members, accounts
 and scans of its codes aren't counted, as they're visitors trying it out rather than real use. Scans
 of demo flyers, which aren't tied to a union, still count under demo codes.
 
@@ -40,6 +41,13 @@ can be told apart from someone following a copied link. The `qr-scan:{kind}` mid
 (which kind, which building if any, and when) the first time each code is opened in a browser session.
 It never records who scanned it. Codes printed before this was added don't carry `?via=qr`, so they
 aren't counted.
+
+### Counting demo sessions
+Each time someone enters the [demo](demo.md) (`DemoController::enter`), a `demo_sessions` row records
+when, and nothing else: not who, their IP address or what they did. Everyone in the demo shares one
+account, so there's nobody to record anyway. The rows aren't tied to the demo union, so they survive
+its nightly rebuild. `/admin` shows the sessions in the last 30 days and in all, while the demo is on
+or once any have been recorded. Real unions' sessions aren't counted.
 
 ## Campaign printables
 `/admin/printables` (`InviteMaterialsController::campaign`) prints posters, flyers, door slips and letters for

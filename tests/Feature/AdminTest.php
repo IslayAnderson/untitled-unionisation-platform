@@ -5,6 +5,7 @@ use App\Enums\QrScanKind;
 use App\Models\Building;
 use App\Models\Bulletin;
 use App\Models\Contact;
+use App\Models\DemoSession;
 use App\Models\Landlord;
 use App\Models\MailingList;
 use App\Models\Poll;
@@ -118,6 +119,23 @@ it('leaves the demo union out of the totals but still lists it', function () {
         ->assertSeeInOrder(['Unions', '1', 'Members', '2', 'Waiting to be vouched for', '0', 'Accounts', '3', 'Active unions (last 30 days)', '1', 'Inactive unions (nothing new in 30 days)', '0'])
         ->assertSeeInOrder(['Join codes scanned', '1', 'Vouching codes scanned', '0', 'Campaign leaflets scanned', '0', 'Demo codes scanned', '1', 'All QR code scans', '2'])
         ->assertSeeInOrder(['Larkspur House', 'Demo', '5']);
+});
+
+it('counts demo sessions, not who started them', function () {
+    config(['demo.enabled' => true]);
+    $this->travel(-40)->days();
+    DemoSession::create();
+    $this->travelBack();
+    DemoSession::create();
+    DemoSession::create();
+
+    $this->actingAs($this->admin)->get(route('admin.unions.index'))
+        ->assertOk()
+        ->assertSeeInOrder(['Demo sessions (last 30 days)', '2', 'All demo sessions', '3']);
+
+    config(['demo.enabled' => false]);
+    DemoSession::query()->delete();
+    $this->actingAs($this->admin)->get(route('admin.unions.index'))->assertDontSeeText('Demo sessions');
 });
 
 it('counts unions with nothing new in 30 days as inactive', function () {

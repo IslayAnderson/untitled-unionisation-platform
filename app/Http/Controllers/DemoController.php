@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DemoSession;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class DemoController extends Controller
 
         Auth::login($user);
         $request->session()->regenerate();
+        DemoSession::create();
 
         return redirect()->route('dashboard');
     }

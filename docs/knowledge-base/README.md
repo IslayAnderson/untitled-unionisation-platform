@@ -288,7 +288,7 @@ python3 docs/architecture/diagrams/entities.py
 ```
 
 ```
-Drew 28 tables and 52 relationships in docs/architecture/Entity Diagram.drawio
+Drew 29 tables and 52 relationships in docs/architecture/Entity Diagram.drawio
 ```
 
 It runs the migrations into a throwaway SQLite database, so your own database isn't touched. A new

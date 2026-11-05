@@ -4,6 +4,7 @@ use App\Http\Controllers\DemoEmailController;
 use App\Models\Building;
 use App\Models\Bulletin;
 use App\Models\Contact;
+use App\Models\DemoSession;
 use App\Models\Referendum;
 use App\Models\User;
 use App\Services\Cleanup;
@@ -70,6 +71,7 @@ it('lets anyone look around as the tenant of C503', function () {
     $this->get(route('demo.show'))->assertOk()->assertSeeText('Enter the demo');
     $this->post(route('demo.enter'))->assertRedirect(route('dashboard'));
     $this->assertAuthenticatedAs(demoVisitor());
+    expect(DemoSession::count())->toBe(1);
 
     $this->get(route('dashboard'))
         ->assertOk()

@@ -32,7 +32,7 @@ COLOURS = {  # the original diagram's groups, plus union mail and uploads
 EDGE = {"buildings": "#1f6fd1", "contacts": "#2e8b3e"}
 COLUMNS = [
     ("governance", ["constitutions", "policies", "referendums", "referendum_voters"]),
-    ("building", ["buildings", "units", "qr_scans"]),
+    ("building", ["buildings", "units", "qr_scans", "demo_sessions:files"]),
     ("building", ["landlords", "landlord_types", "mailing_lists:people", "contact_mailing_list:people", "contact_types:people"]),
     ("people", ["contacts", "users", "vouches", "roles", "role_actions", "contact_role"]),
     ("mail", ["union_mails", "union_mail_approvers", "union_mail_attachments", "uploaded_images:files"]),

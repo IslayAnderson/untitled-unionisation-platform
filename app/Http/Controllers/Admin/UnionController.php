@@ -7,6 +7,7 @@ use App\Enums\UnionMailStatus;
 use App\Http\Controllers\Controller;
 use App\Jobs\DeleteUnion;
 use App\Models\Building;
+use App\Models\DemoSession;
 use App\Models\QrScan;
 use App\Models\User;
 use App\Services\Cleanup;
@@ -41,6 +42,10 @@ class UnionController extends Controller
                 'Inactive unions (nothing new in 30 days)' => $real->count() - $active,
             ],
             'qrScans' => $this->qrScansByKind(),
+            'demoSessions' => config('demo.enabled') || DemoSession::exists() ? [
+                'Demo sessions (last 30 days)' => DemoSession::where('created_at', '>', now()->subDays(30))->count(),
+                'All demo sessions' => DemoSession::count(),
+            ] : [],
         ]);
     }
 

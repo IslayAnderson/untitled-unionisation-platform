@@ -27,6 +27,17 @@
                     <dd class="govuk-summary-list__value govuk-!-font-tabular-numbers govuk-!-font-weight-bold">{{ number_format(array_sum($qrScans)) }}</dd>
                 </div>
             </dl>
+            @if ($demoSessions)
+                <dl class="govuk-summary-list">
+                    @foreach ($demoSessions as $label => $value)
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">{{ $label }}</dt>
+                            <dd class="govuk-summary-list__value govuk-!-font-tabular-numbers">{{ number_format($value) }}</dd>
+                        </div>
+                    @endforeach
+                </dl>
+                <p class="govuk-body-s">A demo session is someone entering the demo. Only the time is recorded, never who.</p>
+            @endif
         </div>
     </div>
 

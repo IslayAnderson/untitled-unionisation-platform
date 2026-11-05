@@ -71,6 +71,7 @@
                 <li>
                     how many times each of our QR codes is scanned. We record which code and when, never who scanned it.
                 </li>
+                <li>when someone enters the demo union, so we know how many people look around it. We record the time only, never who.</li>
             </ul>
 
             <h2 class="govuk-heading-l">Why we use it</h2>
