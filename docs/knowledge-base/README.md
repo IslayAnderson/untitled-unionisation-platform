@@ -279,7 +279,7 @@ php artisan config:show mail
 ## Redrawing the diagrams
 
 The diagrams in [docs/architecture](../architecture) are drawn by scripts in
-[docs/architecture/diagrams](../architecture/diagrams). They need Python 3 and nothing else.
+[docs/architecture/diagrams](../architecture/diagrams). They need Python 3 and nothing else, except `export.py`, which needs draw.io.
 
 **After changing the database**, redraw the entity diagram so it matches:
 
@@ -309,9 +309,23 @@ python3 docs/architecture/diagrams/processes.py
 Each diagram is laid out by hand in the script: a step, decision, Object box or note at a position,
 then the arrows between them. `make.py` holds the shapes. Running the script rewrites every diagram,
 so make changes in the script rather than in draw.io, or they'll be lost the next time it runs.
-Open a diagram in draw.io (or export it with
-`/Applications/draw.io.app/Contents/MacOS/draw.io -x -f png "docs/architecture/signup process.drawio"`)
-to check the result.
+Open a diagram in draw.io to check the result.
+
+**After redrawing**, export the SVG copies, which are what the docs link to for viewing in a browser or
+on GitHub:
+
+```bash
+python3 docs/architecture/diagrams/export.py
+```
+
+```
+Exported docs/architecture/Entity Diagram.svg
+Exported docs/architecture/clean-up process.svg
+…
+```
+
+It needs the [draw.io desktop app](https://www.drawio.com). Commit the `.drawio` and `.svg` files
+together, so they match.
 
 ## Tinker
 
